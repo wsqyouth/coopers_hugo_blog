@@ -1,0 +1,58 @@
+{{ define "main" }}
+<div class="main-container single-post-layout">
+    <div class="single-content-wrapper">
+        <a class="back-home-link" href="{{ .Site.BaseURL }}">‹ 返回首页</a>
+
+        <article class="post-single">
+            <header class="post-header">
+                <h1 class="post-title">{{ .Title }}</h1>
+                <div class="post-meta">
+                    🕒 {{ .Date.Format "2006年01月02日" }} · {{ .WordCount }} 字
+                    {{- if .Params.categories }}
+                    · 📂 {{ range .Params.categories }}<a href="{{ printf " categories/%s" (. | urlize) | absLangURL
+                        }}">{{ . }}</a>{{ end }}
+                    {{- end }}
+                </div>
+            </header>
+
+            <div class="post-content">
+                {{ .Content }}
+            </div>
+
+            <footer class="post-footer">
+                <!-- Tags -->
+                {{- if .Params.tags }}
+                <ul class="post-tags">
+                    {{ range .Params.tags }}
+                    <li><a href="{{ " tags/" | absLangURL }}{{ . | urlize }}">{{ . }}</a></li>
+                    {{ end }}
+                </ul>
+                {{- end }}
+
+                <!-- Edit Button (Hidden by default, shown for admin) -->
+                {{ if .File.Path }}
+                <a id="edit-btn"
+                   href="https://github.com/wsqyouth/blog/edit/main/content/{{ .File.Path }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   style="display: none;">
+                    📝 编辑此文
+                </a>
+                <script>
+                    (function () {
+                        // 检查是否是管理员
+                        const isAdmin = localStorage.getItem('blog-admin');
+                        if (isAdmin === 'true') {
+                            const btn = document.getElementById('edit-btn');
+                            if (btn) {
+                                btn.style.display = 'inline-block';
+                            }
+                        }
+                    })();
+                </script>
+                {{ end }}
+            </footer>
+        </article>
+    </div>
+</div>
+{{ end }}

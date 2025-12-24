@@ -1,0 +1,202 @@
+/* 推荐页面样式 */
+
+.rec-category {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.rec-category:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.rec-category-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+}
+
+.rec-icon {
+    font-size: 1.5rem;
+}
+
+.rec-count {
+    font-size: 1rem;
+    color: var(--secondary);
+    font-weight: normal;
+}
+
+.rec-category-desc {
+    color: var(--secondary);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+/* 列表布局 */
+.rec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* 列表项样式 */
+.rec-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    transition: all 0.2s ease;
+}
+
+.rec-item:hover {
+    background: rgba(128, 128, 128, 0.05);
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    border-radius: 4px;
+}
+
+.rec-bullet {
+    color: var(--primary);
+    font-size: 1.2rem;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.rec-item-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.rec-item-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.rec-item-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    color: var(--content);
+    line-height: 1.4;
+}
+
+.rec-item-desc {
+    font-size: 0.9rem;
+    color: var(--secondary);
+    margin: 0;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    transition: all 0.3s ease;
+}
+
+.rec-item:hover .rec-item-desc {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+}
+
+.rec-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .rec-item-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .rec-item-meta {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+/* 评分显示 */
+.rec-rating {
+    font-size: 0.9rem;
+    color: var(--secondary);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+
+.rec-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.rec-link:hover {
+    color: var(--tertiary);
+    gap: 0.4rem;
+}
+
+/* 展开更多按钮 */
+.rec-more {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.rec-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--secondary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    list-style: none;
+    user-select: none;
+}
+
+.rec-more-btn::-webkit-details-marker {
+    display: none;
+}
+
+.rec-more-btn::before {
+    content: '▼';
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.rec-more[open] .rec-more-btn::before {
+    transform: rotate(180deg);
+}
+
+.rec-more-btn:hover {
+    color: var(--primary);
+}
+
+.rec-more[open] .rec-more-btn {
+    margin-bottom: 1rem;
+}
+
+.rec-more-content {
+    margin-top: 0.75rem;
+}

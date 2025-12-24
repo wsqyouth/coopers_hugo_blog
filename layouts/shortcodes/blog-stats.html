@@ -1,0 +1,23 @@
+{{$scratch := newScratch}}
+{{ range (where .Site.RegularPages "Section" "posts" )}}
+{{$scratch.Add "total" .WordCount}}
+{{ end }}
+
+<div style="display: flex; gap: 2rem; margin-bottom: 2rem; padding: 1rem; background: var(--entry); border-radius: var(--radius); border: 1px solid var(--border);">
+  <div style="flex: 1;">
+    <div style="font-size: 0.9rem; color: var(--secondary); margin-bottom: 0.5rem;">
+      📚 文章数
+    </div>
+    <div style="font-size: 1.5rem; font-weight: bold;">
+      {{ len (where .Site.RegularPages "Section" "posts") }}
+    </div>
+  </div>
+  <div style="flex: 1;">
+    <div style="font-size: 0.9rem; color: var(--secondary); margin-bottom: 0.5rem;">
+      ✍️ 总字数
+    </div>
+    <div style="font-size: 1.5rem; font-weight: bold;">
+      {{ div ($scratch.Get "total") 1000.0 | lang.FormatNumber 2 }}K
+    </div>
+  </div>
+</div>

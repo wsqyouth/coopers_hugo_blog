@@ -1,0 +1,35 @@
+
+# 本地开发配置 - 使用 test-repo 后端
+# 生产环境请改回 git-gateway
+backend:
+  name: test-repo
+  # name: git-gateway
+  # branch: main
+
+media_folder: "static/img" # Media files will be stored in the repo under static/images
+public_folder: "/img" # The src attribute for uploaded media will begin with /images
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: "posts" # Used in routes, e.g., /admin/collections/blog
+    label: "文章" # Used in the UI
+    folder: "content/posts" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "Layout", name: "layout", widget: "hidden", default: "posts"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Author", name: "author", widget: "list", default: ["Cooper"]}
+      - {label: "Categories", name: "categories", widget: "list"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Draft", name: "draft", widget: "boolean", default: false}
+      - {label: "Featured Image", name: "cover", widget: "object", fields: [{label: "Image", name: "image", widget: "image", required: false}, {label: "Alt", name: "alt", widget: "string", required: false}, {label: "Caption", name: "caption", widget: "string", required: false}]}
+      - {label: "Description", name: "description", widget: "text", required: false}
+      - {label: "Weight", name: "weight", widget: "number", value_type: "int", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Show TOC", name: "showToc", widget: "boolean", default: true}

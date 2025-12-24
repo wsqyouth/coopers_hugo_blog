@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>技术博客 on Cooper&#39;s Blog</title>
+    <link>http://localhost:53664/tags/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/</link>
+    <description>Recent content in 技术博客 on Cooper&#39;s Blog</description>
+    <generator>Hugo -- 0.148.2</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 15 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:53664/tags/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>阮一峰的网络日志</title>
+      <link>http://localhost:53664/recommendations/blogs/ruanyifeng/</link>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:53664/recommendations/blogs/ruanyifeng/</guid>
+      <description>&lt;p&gt;知名技术博客,每周五发布科技爱好者周刊,分享前端技术、编程语言、开发工具等内容,文章通俗易懂。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

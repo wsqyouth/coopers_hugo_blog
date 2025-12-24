@@ -1,0 +1,53 @@
+<aside class="sidebar">
+    <!-- Search Widget -->
+    <section class="widget search-widget">
+        <div class="search-wrapper">
+            <a href="/search" class="search-link" title="点击进入搜索页面">
+                <input type="text" placeholder="搜索文章..." readonly>
+                <span class="search-icon">搜索</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Stats Widget -->
+    <section class="widget stats">
+        <h3 class="widget-title">博客统计</h3>
+        <div class="widget-body stats-grid">
+            <div class="stat-item">
+                <span class="count">{{ len .Site.RegularPages }}</span>
+                <span class="label">文章</span>
+            </div>
+            <div class="stat-item">
+                <span class="count">{{ len .Site.Taxonomies.categories }}</span>
+                <span class="label">分类</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Widget -->
+    <section class="widget categories">
+        <h3 class="widget-title">📂 分类</h3>
+        <ul class="widget-list">
+            {{ range .Site.Taxonomies.categories.ByCount }}
+            <li>
+                <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+                <span class="count">({{ .Count }})</span>
+            </li>
+            {{ end }}
+        </ul>
+    </section>
+
+    <!-- Archives Widget -->
+    <section class="widget archives">
+        <h3 class="widget-title">📅 归档</h3>
+        <ul class="widget-list">
+            <!-- Group by Year-Month, e.g. 2025年12月 -->
+            {{ range .Site.RegularPages.GroupByDate "2006年01月" }}
+            <li>
+                <a href="{{ "archives/" | relLangURL }}#{{ .Key | urlize }}">{{ .Key }}</a>
+                <span class="count">({{ len .Pages }})</span>
+            </li>
+            {{ end }}
+        </ul>
+    </section>
+</aside>

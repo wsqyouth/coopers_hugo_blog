@@ -1,0 +1,25 @@
+{{- $rating := .Params.rating | default 0 -}}
+{{- $link := .Params.link | default "#" -}}
+
+<div class="rec-item">
+  <span class="rec-bullet">•</span>
+  <div class="rec-item-content">
+    <div class="rec-item-main">
+      <h3 class="rec-item-title">{{ .Title }}</h3>
+      <p class="rec-item-desc">
+        {{- if .Content -}}
+          {{ .Content | plainify }}
+        {{- else -}}
+          暂无描述
+        {{- end -}}
+      </p>
+    </div>
+
+    <div class="rec-item-meta">
+      <span class="rec-rating">{{ $rating }}/5.0</span>
+      <a href="{{ $link }}" target="_blank" rel="noopener noreferrer" class="rec-link">
+        访问 →
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>个人博客项目复盘 - 从零到一的完整实践 | Cooper&#39;s Blog</title>
+<meta name="keywords" content="项目复盘, Next.js, 博客搭建, 技术选型">
+<meta name="description" content="回顾个人博客从设计到上线的完整过程，分享技术选型、开发经验和遇到的挑战。">
+<meta name="author" content="Cooper">
+<link rel="canonical" href="http://localhost:1313/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3a03b24dcf4f9157cfd4aadabdb9b507d3b072faa70e28f7f74818e75e0f30d0.css" integrity="sha256-OgOyTc9PkVfP1Kravbm1B9OwcvqnDij390gY514PMNA=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/Q.gif">
+<link rel="apple-touch-icon" href="http://localhost:1313/Q.gif">
+<link rel="mask-icon" href="http://localhost:1313/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/assets/css/shortcode.min.56cb41cd6a71c3c7dc58d21c9aebe0a4e9d7be9ddff6e7e8edd1c9869af7ce6f.css" integrity="sha256-VstBzWpxw8fcWNIcmuvgpOnXvp3f9ufo7dHJhpr3zm8=" crossorigin="anonymous">
+<meta property="og:url" content="http://localhost:1313/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/">
+  <meta property="og:site_name" content="Cooper&#39;s Blog">
+  <meta property="og:title" content="个人博客项目复盘 - 从零到一的完整实践">
+  <meta property="og:description" content="回顾个人博客从设计到上线的完整过程，分享技术选型、开发经验和遇到的挑战。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:tag" content="项目复盘">
+    <meta property="article:tag" content="Next.js">
+    <meta property="article:tag" content="博客搭建">
+    <meta property="article:tag" content="技术选型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="个人博客项目复盘 - 从零到一的完整实践">
+<meta name="twitter:description" content="回顾个人博客从设计到上线的完整过程，分享技术选型、开发经验和遇到的挑战。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "个人博客项目复盘 - 从零到一的完整实践",
+      "item": "http://localhost:1313/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "个人博客项目复盘 - 从零到一的完整实践",
+  "name": "个人博客项目复盘 - 从零到一的完整实践",
+  "description": "回顾个人博客从设计到上线的完整过程，分享技术选型、开发经验和遇到的挑战。",
+  "keywords": [
+    "项目复盘", "Next.js", "博客搭建", "技术选型"
+  ],
+  "articleBody": "个人博客项目复盘 - 从零到一的完整实践 作为一名开发者，拥有自己的技术博客一直是我的愿望。经过两个月的开发，我的个人博客终于上线了。在这篇复盘中，我想分享整个项目的思考过程、技术决策和经验教训。\n🎯 项目目标 核心需求 内容管理简单 - 支持 Markdown 写作，易于维护 性能优秀 - 快速加载，良好的用户体验 SEO 友好 - 利于搜索引擎收录 扩展性强 - 便于后续功能迭代 期望效果 打造个人技术品牌 记录学习成长过程 与技术社区互动交流 🛠️ 技术选型 前端框架：Next.js 15 选择理由：\n✅ 优秀的 SEO 支持 ✅ 静态生成能力 ✅ 丰富的生态系统 ✅ TypeScript 原生支持 替代方案对比：\nGatsby: 学习成本较高，插件体系复杂 Nuxt.js: Vue 生态，团队更熟悉 React 纯静态: 缺乏动态功能扩展性 UI 框架：Tailwind CSS 选择理由：\n✅ 快速开发，无需写 CSS ✅ 响应式设计友好 ✅ 文件体积可控 ✅ 设计系统一致性 内容管理：文件系统 + Gray Matter 选择理由：\n✅ 简单直接，无需数据库 ✅ 版本控制友好 ✅ 离线编辑支持 ✅ 部署简单 📊 架构设计 目录结构 1 2 3 4 5 6 7 8 9 10 11 cooper-blog/ ├── posts/ # 📝 Markdown 文章 │ ├── tech/ # 技术分类 │ ├── thinking/ # 思考笔记 │ └── project-review/ # 项目复盘 ├── src/ │ ├── app/ # Next.js App Router │ ├── components/ # React 组件 │ ├── lib/ # 工具函数 │ └── config/ # 配置文件 └── public/ # 静态资源 数据流设计 构建时: 扫描 posts 目录，解析 Markdown 运行时: 静态生成所有页面 用户访问: 直接返回静态 HTML 🏗️ 开发过程 第一阶段：基础搭建（Week 1-2） 项目初始化和基础配置 组件库搭建（Button, Card, Badge） 布局组件开发（Header, Footer） 主题系统实现 第二阶段：核心功能（Week 3-4） Markdown 文章解析 文章列表和详情页 分类和标签系统 搜索功能 第三阶段：优化完善（Week 5-6） SEO 优化 性能调优 错误处理 移动端适配 第四阶段：部署上线（Week 7-8） Vercel 部署配置 域名绑定 CDN 配置 监控告警 💡 关键技术实现 动态分类系统 实现了配置驱动的分类管理，无需修改代码即可添加新分类：\n1 2 3 4 5 6 7 8 9 10 // config/categories.ts export const categoryMap = { '项目复盘': { name: '项目复盘', slug: 'project-review', description: '项目总结与经验分享', icon: '🔄', color: '#722ed1' } } 智能标签映射 自动处理中文标签的 URL 生成：\n1 2 3 4 5 const slugMap = { '项目复盘': 'project-review', '技术选型': 'tech-selection', '性能优化': 'performance' } 代码高亮优化 实现了语法高亮的 Markdown 渲染器：\n关键字高亮（紫色） 类型高亮（蓝色） 字符串高亮（黄色） 注释高亮（绿色） 🎯 性能优化 构建优化 静态生成: 所有页面预生成，无服务器压力 图片优化: Next.js Image 组件，自动 WebP 转换 代码分割: 按路由自动分割，减少初始加载 运行时优化 懒加载: 非关键资源延迟加载 缓存策略: 静态资源长期缓存 预加载: 关键页面预获取 性能指标 首屏加载: \u003c 2s Lighthouse 评分: 95+ Core Web Vitals: 全部通过 🐛 遇到的挑战 1. Next.js 15 兼容性问题 问题: 升级到 Next.js 15 后，params 类型从同步变为异步\n解决:\n1 2 3 4 5 6 7 8 9 10 // 之前 function Page({ params }: { params: { slug: string } }) { const post = getPost(params.slug) } // 修改后 async function Page({ params }: { params: Promise\u003c{ slug: string }\u003e }) { const { slug } = await params const post = getPost(slug) } 2. 中文标签 URL 处理 问题: 中文标签生成的 URL 不美观，影响 SEO\n解决: 实现了智能映射系统，自动转换中文标签为英文 slug\n3. 图片路径管理 问题: Markdown 中的相对路径图片无法正确显示\n解决:\n创建图片路径处理工具 自动修正相对路径为绝对路径 统一图片资源管理 📈 成果总结 技术收获 Next.js 15: 深入理解了 App Router 和 SSG TypeScript: 提升了类型系统设计能力 性能优化: 掌握了现代前端优化技巧 工程化: 建立了完整的开发工作流 业务价值 内容创作: 简化了文章发布流程 知识管理: 建立了个人知识库 品牌建设: 提升了个人技术影响力 数据表现 页面加载速度: 2s 内完成首屏渲染 SEO 表现: Google 收录率 95%+ 用户体验: 移动端适配良好 🔮 未来规划 短期目标（Q1） 评论系统集成 RSS 订阅支持 文章统计分析 搜索功能增强 中期目标（Q2-Q3） 多语言支持 内容推荐算法 社交媒体集成 性能监控完善 长期目标（Q4+） 内容管理后台 用户系统 付费内容支持 移动端 App 🤔 经验教训 做得好的地方 技术选型: 选择了成熟稳定的技术栈 架构设计: 考虑了扩展性和维护性 用户体验: 注重性能和交互设计 文档记录: 完整记录了开发过程 需要改进的地方 测试覆盖: 自动化测试不够完善 错误监控: 缺乏生产环境错误追踪 内容备份: 需要建立内容备份机制 安全防护: CDDoS 防护需要加强 关键成功因素 渐进式开发: 分阶段实现，避免过度设计 技术调研: 充分对比技术方案 用户视角: 始终以用户体验为中心 持续迭代: 根据反馈不断优化 🎉 总结 这次博客项目让我对现代前端开发有了更深的理解。从技术选型到架构设计，从开发实现到部署优化，每个环节都是很好的学习机会。\n最大的收获是学会了如何平衡技术复杂度和业务需求，既要保证功能的完整性，又要控制项目的复杂度。\n下一步计划是持续优化博客功能，同时将这些经验应用到更多项目中。\n💡 思考: 好的项目不仅是技术的实现，更是对业务理解和用户需求的深度思考。每个技术选择都应该有明确的理由，每个功能都应该创造真正的价值。\n项目地址: Cooper’s Blog\n源码仓库: GitHub\n",
+  "wordCount" : "1992",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Cooper"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Cooper's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Cooper&#39;s Blog (Alt + H)">Cooper&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+<div class="main-container single-post-layout">
+    <div class="single-content-wrapper">
+        <a class="back-home-link" href="http://localhost:1313/">‹ 返回首页</a>
+
+        <article class="post-single">
+            <header class="post-header">
+                <h1 class="post-title">个人博客项目复盘 - 从零到一的完整实践</h1>
+                <div class="post-meta">
+                    🕒 0001年01月01日 · 1992 字
+                    · 📂 <a href="http://localhost:1313/%20categories/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98">项目复盘</a>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <h1 id="个人博客项目复盘---从零到一的完整实践">个人博客项目复盘 - 从零到一的完整实践</h1>
+<p>作为一名开发者，拥有自己的技术博客一直是我的愿望。经过两个月的开发，我的个人博客终于上线了。在这篇复盘中，我想分享整个项目的思考过程、技术决策和经验教训。</p>
+<h2 id="-项目目标">🎯 项目目标</h2>
+<h3 id="核心需求">核心需求</h3>
+<ul>
+<li><strong>内容管理简单</strong> - 支持 Markdown 写作，易于维护</li>
+<li><strong>性能优秀</strong> - 快速加载，良好的用户体验</li>
+<li><strong>SEO 友好</strong> - 利于搜索引擎收录</li>
+<li><strong>扩展性强</strong> - 便于后续功能迭代</li>
+</ul>
+<h3 id="期望效果">期望效果</h3>
+<ul>
+<li>打造个人技术品牌</li>
+<li>记录学习成长过程</li>
+<li>与技术社区互动交流</li>
+</ul>
+<h2 id="-技术选型">🛠️ 技术选型</h2>
+<h3 id="前端框架nextjs-15">前端框架：Next.js 15</h3>
+<p><strong>选择理由：</strong></p>
+<ul>
+<li>✅ 优秀的 SEO 支持</li>
+<li>✅ 静态生成能力</li>
+<li>✅ 丰富的生态系统</li>
+<li>✅ TypeScript 原生支持</li>
+</ul>
+<p><strong>替代方案对比：</strong></p>
+<ul>
+<li><strong>Gatsby</strong>: 学习成本较高，插件体系复杂</li>
+<li><strong>Nuxt.js</strong>: Vue 生态，团队更熟悉 React</li>
+<li><strong>纯静态</strong>: 缺乏动态功能扩展性</li>
+</ul>
+<h3 id="ui-框架tailwind-css">UI 框架：Tailwind CSS</h3>
+<p><strong>选择理由：</strong></p>
+<ul>
+<li>✅ 快速开发，无需写 CSS</li>
+<li>✅ 响应式设计友好</li>
+<li>✅ 文件体积可控</li>
+<li>✅ 设计系统一致性</li>
+</ul>
+<h3 id="内容管理文件系统--gray-matter">内容管理：文件系统 + Gray Matter</h3>
+<p><strong>选择理由：</strong></p>
+<ul>
+<li>✅ 简单直接，无需数据库</li>
+<li>✅ 版本控制友好</li>
+<li>✅ 离线编辑支持</li>
+<li>✅ 部署简单</li>
+</ul>
+<h2 id="-架构设计">📊 架构设计</h2>
+<h3 id="目录结构">目录结构</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cooper-blog/
+</span></span><span class="line"><span class="cl">├── posts/              # 📝 Markdown 文章
+</span></span><span class="line"><span class="cl">│   ├── tech/           # 技术分类
+</span></span><span class="line"><span class="cl">│   ├── thinking/       # 思考笔记
+</span></span><span class="line"><span class="cl">│   └── project-review/ # 项目复盘
+</span></span><span class="line"><span class="cl">├── src/
+</span></span><span class="line"><span class="cl">│   ├── app/           # Next.js App Router
+</span></span><span class="line"><span class="cl">│   ├── components/    # React 组件
+</span></span><span class="line"><span class="cl">│   ├── lib/          # 工具函数
+</span></span><span class="line"><span class="cl">│   └── config/       # 配置文件
+</span></span><span class="line"><span class="cl">└── public/           # 静态资源
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="数据流设计">数据流设计</h3>
+<ol>
+<li><strong>构建时</strong>: 扫描 posts 目录，解析 Markdown</li>
+<li><strong>运行时</strong>: 静态生成所有页面</li>
+<li><strong>用户访问</strong>: 直接返回静态 HTML</li>
+</ol>
+<h2 id="-开发过程">🏗️ 开发过程</h2>
+<h3 id="第一阶段基础搭建week-1-2">第一阶段：基础搭建（Week 1-2）</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 项目初始化和基础配置</li>
+<li><input checked="" disabled="" type="checkbox"> 组件库搭建（Button, Card, Badge）</li>
+<li><input checked="" disabled="" type="checkbox"> 布局组件开发（Header, Footer）</li>
+<li><input checked="" disabled="" type="checkbox"> 主题系统实现</li>
+</ul>
+<h3 id="第二阶段核心功能week-3-4">第二阶段：核心功能（Week 3-4）</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Markdown 文章解析</li>
+<li><input checked="" disabled="" type="checkbox"> 文章列表和详情页</li>
+<li><input checked="" disabled="" type="checkbox"> 分类和标签系统</li>
+<li><input checked="" disabled="" type="checkbox"> 搜索功能</li>
+</ul>
+<h3 id="第三阶段优化完善week-5-6">第三阶段：优化完善（Week 5-6）</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> SEO 优化</li>
+<li><input checked="" disabled="" type="checkbox"> 性能调优</li>
+<li><input checked="" disabled="" type="checkbox"> 错误处理</li>
+<li><input checked="" disabled="" type="checkbox"> 移动端适配</li>
+</ul>
+<h3 id="第四阶段部署上线week-7-8">第四阶段：部署上线（Week 7-8）</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Vercel 部署配置</li>
+<li><input checked="" disabled="" type="checkbox"> 域名绑定</li>
+<li><input checked="" disabled="" type="checkbox"> CDN 配置</li>
+<li><input checked="" disabled="" type="checkbox"> 监控告警</li>
+</ul>
+<h2 id="-关键技术实现">💡 关键技术实现</h2>
+<h3 id="动态分类系统">动态分类系统</h3>
+<p>实现了配置驱动的分类管理，无需修改代码即可添加新分类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// config/categories.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">categoryMap</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;项目复盘&#39;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;项目复盘&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">slug</span><span class="o">:</span> <span class="s1">&#39;project-review&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;项目总结与经验分享&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">icon</span><span class="o">:</span> <span class="s1">&#39;🔄&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;#722ed1&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="智能标签映射">智能标签映射</h3>
+<p>自动处理中文标签的 URL 生成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">slugMap</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;项目复盘&#39;</span><span class="o">:</span> <span class="s1">&#39;project-review&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;技术选型&#39;</span><span class="o">:</span> <span class="s1">&#39;tech-selection&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;性能优化&#39;</span><span class="o">:</span> <span class="s1">&#39;performance&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="代码高亮优化">代码高亮优化</h3>
+<p>实现了语法高亮的 Markdown 渲染器：</p>
+<ul>
+<li>关键字高亮（紫色）</li>
+<li>类型高亮（蓝色）</li>
+<li>字符串高亮（黄色）</li>
+<li>注释高亮（绿色）</li>
+</ul>
+<h2 id="-性能优化">🎯 性能优化</h2>
+<h3 id="构建优化">构建优化</h3>
+<ul>
+<li><strong>静态生成</strong>: 所有页面预生成，无服务器压力</li>
+<li><strong>图片优化</strong>: Next.js Image 组件，自动 WebP 转换</li>
+<li><strong>代码分割</strong>: 按路由自动分割，减少初始加载</li>
+</ul>
+<h3 id="运行时优化">运行时优化</h3>
+<ul>
+<li><strong>懒加载</strong>: 非关键资源延迟加载</li>
+<li><strong>缓存策略</strong>: 静态资源长期缓存</li>
+<li><strong>预加载</strong>: 关键页面预获取</li>
+</ul>
+<h3 id="性能指标">性能指标</h3>
+<ul>
+<li><strong>首屏加载</strong>: &lt; 2s</li>
+<li><strong>Lighthouse 评分</strong>: 95+</li>
+<li><strong>Core Web Vitals</strong>: 全部通过</li>
+</ul>
+<h2 id="-遇到的挑战">🐛 遇到的挑战</h2>
+<h3 id="1-nextjs-15-兼容性问题">1. Next.js 15 兼容性问题</h3>
+<p><strong>问题</strong>: 升级到 Next.js 15 后，params 类型从同步变为异步</p>
+<p><strong>解决</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// 之前
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">Page</span><span class="p">({</span> <span class="nx">params</span> <span class="p">}</span><span class="o">:</span> <span class="p">{</span> <span class="nx">params</span><span class="o">:</span> <span class="p">{</span> <span class="nx">slug</span>: <span class="kt">string</span> <span class="p">}</span> <span class="p">})</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">post</span> <span class="o">=</span> <span class="nx">getPost</span><span class="p">(</span><span class="nx">params</span><span class="p">.</span><span class="nx">slug</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 修改后  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">Page</span><span class="p">({</span> <span class="nx">params</span> <span class="p">}</span><span class="o">:</span> <span class="p">{</span> <span class="nx">params</span>: <span class="kt">Promise</span><span class="o">&lt;</span><span class="p">{</span> <span class="nx">slug</span>: <span class="kt">string</span> <span class="p">}</span><span class="o">&gt;</span> <span class="p">})</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">{</span> <span class="nx">slug</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">params</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">post</span> <span class="o">=</span> <span class="nx">getPost</span><span class="p">(</span><span class="nx">slug</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-中文标签-url-处理">2. 中文标签 URL 处理</h3>
+<p><strong>问题</strong>: 中文标签生成的 URL 不美观，影响 SEO</p>
+<p><strong>解决</strong>: 实现了智能映射系统，自动转换中文标签为英文 slug</p>
+<h3 id="3-图片路径管理">3. 图片路径管理</h3>
+<p><strong>问题</strong>: Markdown 中的相对路径图片无法正确显示</p>
+<p><strong>解决</strong>:</p>
+<ul>
+<li>创建图片路径处理工具</li>
+<li>自动修正相对路径为绝对路径</li>
+<li>统一图片资源管理</li>
+</ul>
+<h2 id="-成果总结">📈 成果总结</h2>
+<h3 id="技术收获">技术收获</h3>
+<ul>
+<li><strong>Next.js 15</strong>: 深入理解了 App Router 和 SSG</li>
+<li><strong>TypeScript</strong>: 提升了类型系统设计能力</li>
+<li><strong>性能优化</strong>: 掌握了现代前端优化技巧</li>
+<li><strong>工程化</strong>: 建立了完整的开发工作流</li>
+</ul>
+<h3 id="业务价值">业务价值</h3>
+<ul>
+<li><strong>内容创作</strong>: 简化了文章发布流程</li>
+<li><strong>知识管理</strong>: 建立了个人知识库</li>
+<li><strong>品牌建设</strong>: 提升了个人技术影响力</li>
+</ul>
+<h3 id="数据表现">数据表现</h3>
+<ul>
+<li><strong>页面加载速度</strong>: 2s 内完成首屏渲染</li>
+<li><strong>SEO 表现</strong>: Google 收录率 95%+</li>
+<li><strong>用户体验</strong>: 移动端适配良好</li>
+</ul>
+<h2 id="-未来规划">🔮 未来规划</h2>
+<h3 id="短期目标q1">短期目标（Q1）</h3>
+<ul>
+<li><input disabled="" type="checkbox"> 评论系统集成</li>
+<li><input disabled="" type="checkbox"> RSS 订阅支持</li>
+<li><input disabled="" type="checkbox"> 文章统计分析</li>
+<li><input disabled="" type="checkbox"> 搜索功能增强</li>
+</ul>
+<h3 id="中期目标q2-q3">中期目标（Q2-Q3）</h3>
+<ul>
+<li><input disabled="" type="checkbox"> 多语言支持</li>
+<li><input disabled="" type="checkbox"> 内容推荐算法</li>
+<li><input disabled="" type="checkbox"> 社交媒体集成</li>
+<li><input disabled="" type="checkbox"> 性能监控完善</li>
+</ul>
+<h3 id="长期目标q4">长期目标（Q4+）</h3>
+<ul>
+<li><input disabled="" type="checkbox"> 内容管理后台</li>
+<li><input disabled="" type="checkbox"> 用户系统</li>
+<li><input disabled="" type="checkbox"> 付费内容支持</li>
+<li><input disabled="" type="checkbox"> 移动端 App</li>
+</ul>
+<h2 id="-经验教训">🤔 经验教训</h2>
+<h3 id="做得好的地方">做得好的地方</h3>
+<ol>
+<li><strong>技术选型</strong>: 选择了成熟稳定的技术栈</li>
+<li><strong>架构设计</strong>: 考虑了扩展性和维护性</li>
+<li><strong>用户体验</strong>: 注重性能和交互设计</li>
+<li><strong>文档记录</strong>: 完整记录了开发过程</li>
+</ol>
+<h3 id="需要改进的地方">需要改进的地方</h3>
+<ol>
+<li><strong>测试覆盖</strong>: 自动化测试不够完善</li>
+<li><strong>错误监控</strong>: 缺乏生产环境错误追踪</li>
+<li><strong>内容备份</strong>: 需要建立内容备份机制</li>
+<li><strong>安全防护</strong>: CDDoS 防护需要加强</li>
+</ol>
+<h3 id="关键成功因素">关键成功因素</h3>
+<ul>
+<li><strong>渐进式开发</strong>: 分阶段实现，避免过度设计</li>
+<li><strong>技术调研</strong>: 充分对比技术方案</li>
+<li><strong>用户视角</strong>: 始终以用户体验为中心</li>
+<li><strong>持续迭代</strong>: 根据反馈不断优化</li>
+</ul>
+<h2 id="-总结">🎉 总结</h2>
+<p>这次博客项目让我对现代前端开发有了更深的理解。从技术选型到架构设计，从开发实现到部署优化，每个环节都是很好的学习机会。</p>
+<p><strong>最大的收获</strong>是学会了如何平衡技术复杂度和业务需求，既要保证功能的完整性，又要控制项目的复杂度。</p>
+<p><strong>下一步计划</strong>是持续优化博客功能，同时将这些经验应用到更多项目中。</p>
+<hr>
+<blockquote>
+<p>💡 <strong>思考</strong>: 好的项目不仅是技术的实现，更是对业务理解和用户需求的深度思考。每个技术选择都应该有明确的理由，每个功能都应该创造真正的价值。</p></blockquote>
+<p><strong>项目地址</strong>: <a href="https://cooper-blog.vercel.app">Cooper&rsquo;s Blog</a><br>
+<strong>源码仓库</strong>: <a href="https://github.com/cooper/blog">GitHub</a></p>
+
+            </div>
+
+            <footer class="post-footer">
+                
+                <ul class="post-tags">
+                    
+                    <li><a href="http://localhost:1313/%20tags/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98">项目复盘</a></li>
+                    
+                    <li><a href="http://localhost:1313/%20tags/next.js">Next.js</a></li>
+                    
+                    <li><a href="http://localhost:1313/%20tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA">博客搭建</a></li>
+                    
+                    <li><a href="http://localhost:1313/%20tags/%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B">技术选型</a></li>
+                    
+                </ul>
+
+                
+                
+                <a id="edit-btn"
+                   href="https://github.com/wsqyouth/blog/edit/main/content/posts/other/project-review-blog.md"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   style="display: none;">
+                    📝 编辑此文
+                </a>
+                <script>
+                    (function () {
+                        
+                        const isAdmin = localStorage.getItem('blog-admin');
+                        if (isAdmin === 'true') {
+                            const btn = document.getElementById('edit-btn');
+                            if (btn) {
+                                btn.style.display = 'inline-block';
+                            }
+                        }
+                    })();
+                </script>
+                
+            </footer>
+        </article>
+    </div>
+</div>
+
+    </main>
+    
+<footer class="footer">
+    <div class="footer-slogan">凡是过往，皆为序章</div>
+    <span>&copy; 2025 <a href="http://localhost:1313/">Cooper&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        
+        if (codeblock.closest('.pe-code-block-wrap')) {
+            return;
+        }
+
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeBlock) => {
+        const codeBlockWrap = codeBlock.closest('.pe-code-block-wrap')
+        if (!codeBlockWrap) return;
+
+        const copyButton = codeBlockWrap.querySelector('button')
+        if (!copyButton) return;
+
+        function copyingDone() {
+            copyButton.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="pe-icon"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.0633 5.67375C18.5196 5.98487 18.6374 6.607 18.3262 7.06331L10.8262 18.0633C10.6585 18.3093 10.3898 18.4678 10.0934 18.4956C9.79688 18.5234 9.50345 18.4176 9.29289 18.2071L4.79289 13.7071C4.40237 13.3166 4.40237 12.6834 4.79289 12.2929C5.18342 11.9023 5.81658 11.9023 6.20711 12.2929L9.85368 15.9394L16.6738 5.93664C16.9849 5.48033 17.607 5.36263 18.0633 5.67375Z" fill="currentColor"></path></svg>'
+            setTimeout(() => {
+                copyButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="pe-icon"><path fill="currentColor" fill-rule="evenodd" d="M7 5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-2v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h2zm2 2h5a3 3 0 0 1 3 3v5h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1zM5 9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1z" clip-rule="evenodd"></path></svg>'
+            }, 2000);
+        }
+
+        copyButton.addEventListener('click', (cb) => {
+            
+            cb.stopPropagation();
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                    copyingDone();
+                })
+                return;
+            }
+            const range = document.createRange();
+            range.selectNodeContents(codeBlock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            selection.removeRange(range);
+        });
+    });
+
+    let peCodeDetails = document.getElementsByClassName('pe-code-details')
+    for (let element of peCodeDetails) {
+        const peCodeSummary = element.getElementsByClassName('pe-code-details-summary')[0];
+        if (peCodeSummary) {
+            peCodeSummary.addEventListener('click', () => {
+                if (element.classList.contains('open')) {
+                    element.classList.remove('open');
+                    element.classList.remove('scrollable');
+                } else {
+                    element.classList.add('open');
+                    setTimeout(() => {
+                        element.classList.add('scrollable');
+                    }, 800);
+                }
+            }, false);
+        }
+    }
+</script></body>
+
+</html>

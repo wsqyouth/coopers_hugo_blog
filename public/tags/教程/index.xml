@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>教程 on Cooper&#39;s Blog</title>
+    <link>http://localhost:53664/tags/%E6%95%99%E7%A8%8B/</link>
+    <description>Recent content in 教程 on Cooper&#39;s Blog</description>
+    <generator>Hugo -- 0.148.2</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 15 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:53664/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MDN Web Docs</title>
+      <link>http://localhost:53664/recommendations/tutorials/mdn/</link>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:53664/recommendations/tutorials/mdn/</guid>
+      <description>&lt;p&gt;Mozilla 维护的 Web 开发文档,涵盖 HTML、CSS、JavaScript 等 Web 技术,是前端开发者必备的参考资料。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go by Example</title>
+      <link>http://localhost:53664/recommendations/tutorials/go-by-example/</link>
+      <pubDate>Mon, 13 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:53664/recommendations/tutorials/go-by-example/</guid>
+      <description>&lt;p&gt;通过带注释的示例程序学习 Go 语言,每个示例都可以直接运行,适合快速上手 Go 语言。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

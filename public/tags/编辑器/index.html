@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>编辑器 | Cooper&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="Coopers">
+<link rel="canonical" href="http://localhost:1313/tags/%E7%BC%96%E8%BE%91%E5%99%A8/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3a03b24dcf4f9157cfd4aadabdb9b507d3b072faa70e28f7f74818e75e0f30d0.css" integrity="sha256-OgOyTc9PkVfP1Kravbm1B9OwcvqnDij390gY514PMNA=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/img/Q.gif">
+<link rel="apple-touch-icon" href="http://localhost:1313/Q.gif">
+<link rel="mask-icon" href="http://localhost:1313/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/%E7%BC%96%E8%BE%91%E5%99%A8/index.xml" title="rss">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/tags/%E7%BC%96%E8%BE%91%E5%99%A8/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/assets/css/shortcode.min.56cb41cd6a71c3c7dc58d21c9aebe0a4e9d7be9ddff6e7e8edd1c9869af7ce6f.css" integrity="sha256-VstBzWpxw8fcWNIcmuvgpOnXvp3f9ufo7dHJhpr3zm8=" crossorigin="anonymous">
+<meta property="og:url" content="http://localhost:1313/tags/%E7%BC%96%E8%BE%91%E5%99%A8/">
+  <meta property="og:site_name" content="Cooper&#39;s Blog">
+  <meta property="og:title" content="编辑器">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编辑器">
+<meta name="twitter:description" content="">
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Cooper&#39;s Blog (Alt + H)">Cooper&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+<div class="main-container">
+    <div class="content-left">
+        <header class="page-header">
+            <h1>编辑器</h1>
+        </header>
+
+        
+        <article class="post-entry">
+            <header class="entry-header">
+                <h2>
+                    <a href="http://localhost:1313/recommendations/tools/vscode/">Visual Studio Code</a>
+                </h2>
+            </header>
+            <div class="entry-content">
+                <p>微软开发的免费代码编辑器,支持丰富的插件生态,内置 Git 集成、调试器、智能代码补全等功能。
+</p>
+                <a class="read-more" href="http://localhost:1313/recommendations/tools/vscode/">阅读全文 > </a>
+            </div>
+            <footer class="entry-footer">
+                <span title='2025-01-14 00:00:00'>
+                    🕒 2025年01月14日
+                </span>
+                &nbsp;·&nbsp;
+                <span>43 字</span>
+            </footer>
+        </article>
+        
+    </div>
+
+    <div class="sidebar-right">
+        <aside class="sidebar">
+    
+    <section class="widget search-widget">
+        <div class="search-wrapper">
+            <a href="/search" class="search-link" title="点击进入搜索页面">
+                <input type="text" placeholder="搜索文章..." readonly>
+                <span class="search-icon">搜索</span>
+            </a>
+        </div>
+    </section>
+
+    
+    <section class="widget stats">
+        <h3 class="widget-title">博客统计</h3>
+        <div class="widget-body stats-grid">
+            <div class="stat-item">
+                <span class="count">40</span>
+                <span class="label">文章</span>
+            </div>
+            <div class="stat-item">
+                <span class="count">9</span>
+                <span class="label">分类</span>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="widget categories">
+        <h3 class="widget-title">📂 分类</h3>
+        <ul class="widget-list">
+            
+            <li>
+                <a href="http://localhost:1313/categories/tech/">Tech</a>
+                <span class="count">(3)</span>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+                <span class="count">(2)</span>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a>
+                <span class="count">(2)</span>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/categories/project-review/">Project-Review</a>
+                <span class="count">(1)</span>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/categories/thinking/">Thinking</a>
+                <span class="count">(1)</span>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/categories/%E5%88%86%E7%B1%BB1/">分类1</a>
+                <span class="count">(1)</span>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/categories/%E5%88%86%E7%B1%BB2/">分类2</a>
+                <span class="count">(1)</span>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/categories/%E6%80%9D%E8%80%83%E7%AC%94%E8%AE%B0/">思考笔记</a>
+                <span class="count">(1)</span>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/categories/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98/">项目复盘</a>
+                <span class="count">(1)</span>
+            </li>
+            
+        </ul>
+    </section>
+
+    
+    <section class="widget archives">
+        <h3 class="widget-title">📅 归档</h3>
+        <ul class="widget-list">
+            
+            
+            <li>
+                <a href="/archives/#2025%25E5%25B9%25B410%25E6%259C%2588">2025年10月</a>
+                <span class="count">(5)</span>
+            </li>
+            
+            <li>
+                <a href="/archives/#2025%25E5%25B9%25B409%25E6%259C%2588">2025年09月</a>
+                <span class="count">(2)</span>
+            </li>
+            
+            <li>
+                <a href="/archives/#2025%25E5%25B9%25B401%25E6%259C%2588">2025年01月</a>
+                <span class="count">(23)</span>
+            </li>
+            
+            <li>
+                <a href="/archives/#2024%25E5%25B9%25B401%25E6%259C%2588">2024年01月</a>
+                <span class="count">(3)</span>
+            </li>
+            
+            <li>
+                <a href="/archives/#0001%25E5%25B9%25B401%25E6%259C%2588">0001年01月</a>
+                <span class="count">(7)</span>
+            </li>
+            
+        </ul>
+    </section>
+</aside>
+    </div>
+</div>
+
+    </main>
+    
+<footer class="footer">
+    <div class="footer-slogan">凡是过往，皆为序章</div>
+    <span>&copy; 2025 <a href="http://localhost:1313/">Cooper&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeBlock) => {
+        const codeBlockWrap = codeBlock.closest('.pe-code-block-wrap')
+        if (!codeBlockWrap) return;
+
+        const copyButton = codeBlockWrap.querySelector('button')
+        if (!copyButton) return;
+
+        function copyingDone() {
+            copyButton.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="pe-icon"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.0633 5.67375C18.5196 5.98487 18.6374 6.607 18.3262 7.06331L10.8262 18.0633C10.6585 18.3093 10.3898 18.4678 10.0934 18.4956C9.79688 18.5234 9.50345 18.4176 9.29289 18.2071L4.79289 13.7071C4.40237 13.3166 4.40237 12.6834 4.79289 12.2929C5.18342 11.9023 5.81658 11.9023 6.20711 12.2929L9.85368 15.9394L16.6738 5.93664C16.9849 5.48033 17.607 5.36263 18.0633 5.67375Z" fill="currentColor"></path></svg>'
+            setTimeout(() => {
+                copyButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="pe-icon"><path fill="currentColor" fill-rule="evenodd" d="M7 5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-2v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h2zm2 2h5a3 3 0 0 1 3 3v5h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1zM5 9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1z" clip-rule="evenodd"></path></svg>'
+            }, 2000);
+        }
+
+        copyButton.addEventListener('click', (cb) => {
+            
+            cb.stopPropagation();
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                    copyingDone();
+                })
+                return;
+            }
+            const range = document.createRange();
+            range.selectNodeContents(codeBlock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            selection.removeRange(range);
+        });
+    });
+
+    let peCodeDetails = document.getElementsByClassName('pe-code-details')
+    for (let element of peCodeDetails) {
+        const peCodeSummary = element.getElementsByClassName('pe-code-details-summary')[0];
+        if (peCodeSummary) {
+            peCodeSummary.addEventListener('click', () => {
+                if (element.classList.contains('open')) {
+                    element.classList.remove('open');
+                    element.classList.remove('scrollable');
+                } else {
+                    element.classList.add('open');
+                    setTimeout(() => {
+                        element.classList.add('scrollable');
+                    }, 800);
+                }
+            }, false);
+        }
+    }
+</script></body>
+
+</html>

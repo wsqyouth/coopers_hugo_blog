@@ -1,0 +1,73 @@
+{{- define "main" }}
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title">
+      {{ .Title }}
+    </h1>
+    {{- if .Description }}
+    <div class="post-description">
+      {{ .Description }}
+    </div>
+    {{- end }}
+  </header>
+
+  {{- if .Content }}
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+  {{- end }}
+
+  <div style="height: 40px;"></div>
+
+  {{- /* 获取所有推荐分类 */ -}}
+  {{- $recSection := .Site.GetPage "/recommendations" -}}
+  {{- $categories := $recSection.Sections -}}
+
+  {{- range $categories -}}
+    {{- $categoryPage := . -}}
+    {{- $items := .Pages -}}
+    {{- $itemCount := len $items -}}
+    {{- $defaultShow := .Params.defaultShow | default 6 -}}
+    {{- $icon := .Params.icon | default "📁" -}}
+
+    <section class="rec-category">
+      <h2 class="rec-category-title">
+        <span class="rec-icon">{{ $icon }}</span>
+        {{ .Title }}
+        <span class="rec-count">({{ $itemCount }})</span>
+      </h2>
+
+      {{- if .Content }}
+      <div class="rec-category-desc">
+        {{ .Content }}
+      </div>
+      {{- end }}
+
+      <div class="rec-list">
+        {{- range first $defaultShow $items -}}
+          {{- partial "recommendation-card.html" . -}}
+        {{- end -}}
+      </div>
+
+      {{- if gt $itemCount $defaultShow }}
+      <details class="rec-more">
+        <summary class="rec-more-btn">
+          展开更多 ({{ sub $itemCount $defaultShow }})
+        </summary>
+        <div class="rec-more-content">
+          <div class="rec-list">
+            {{- range after $defaultShow $items -}}
+              {{- partial "recommendation-card.html" . -}}
+            {{- end -}}
+          </div>
+        </div>
+      </details>
+      {{- end }}
+    </section>
+
+    <div style="height: 60px;"></div>
+  {{- end }}
+
+</article>
+{{- end }}{{/* end main */}}

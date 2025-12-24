@@ -1,0 +1,55 @@
+/* ==================== 单篇文章独立布局 ==================== */
+
+/* Override flex layout for single post */
+.main-container.single-post-layout {
+    display: block !important;
+    max-width: 800px !important;
+    /* 限制阅读宽度，提高可读性 */
+    margin: 40px auto !important;
+    padding: 0 20px !important;
+}
+
+.single-content-wrapper {
+    width: 100%;
+}
+
+/* 返回首页链接 */
+.back-home-link {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.back-home-link:hover {
+    color: var(--theme-color);
+    transform: translateX(-4px);
+    /* 悬停微动效果 */
+}
+
+/* 调整单篇文章的卡片样式，使其更简洁 */
+.single-post-layout .post-single {
+    padding: 40px 0;
+    /* 减少内边距或调整为垂直间距 */
+    border: none;
+    /* 移除边框，呈现更纯粹的阅读体验 */
+    background: transparent;
+    /* 移除卡片背景 */
+    box-shadow: none;
+    /* 移除阴影 */
+    border-radius: 0;
+}
+
+.single-post-layout .post-title {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.single-post-layout .post-meta {
+    color: var(--text-gray);
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border-color);
+}
