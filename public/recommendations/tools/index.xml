@@ -13,11 +13,7 @@
       <link>http://localhost:60062/recommendations/tools/tool-15/</link>
       <pubDate>Thu, 16 Jan 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:60062/recommendations/tools/tool-15/</guid>
-<<<<<<< HEAD
-      <description>&lt;p&gt;这是第 15 个测试工具的描述, 用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
-=======
       <description>&lt;p&gt;这是第 15 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
->>>>>>> 55809d5 (base hugo build coopers blog)
     </item>
     <item>
       <title>GitHub</title>
