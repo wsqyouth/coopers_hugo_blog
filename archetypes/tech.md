@@ -3,17 +3,19 @@ title: "{{ replace .Name "-" " " | title }}"
 date: "{{ dateFormat "2006-01-02" .Date }}"
 author: "Cooper"
 categories: ["tech"]
-tags: ["待添加"]
+tags: ["技术", "教程"]
 description: "文章简短描述，100-160字符"
 slug: "{{ .Name }}"
 draft: true
 featured: false
 ---
 
-> 文章引言或摘要（可选）
+> 技术文章简介
 
 <!--more-->
 
-## 正文开始
+## 背景
 
-在这里写你的内容...
+## 实现
+
+## 总结

@@ -1,38 +1,36 @@
 {{- define "main" }}
 
-<div class="main-container">
-    <div class="content-left">
-        {{- if .Title }}
-        <header class="page-header">
-            <h1>{{ .Title }}</h1>
-            {{- if .Description }}
-            <div class="post-description">
-                {{ .Description }}
-            </div>
-            {{- end }}
-        </header>
-        {{- end }}
-
-        <ul class="terms-tags">
-            {{- $type := .Type }}
-            {{- range $key, $value := .Data.Terms.ByCount }}
-            {{- $name := .Name }}
-            {{- $count := .Count }}
-            {{- with site.GetPage (printf "/%s/%s" $type $name) }}
-            <li>
-                <a href="{{ .Permalink }}">
-                    <span class="tag-name">{{ .Name }}</span>
-                    <span class="tag-count">{{ $count }}</span>
-                </a>
-            </li>
-            {{- end }}
-            {{- end }}
-        </ul>
+{{- if .Title }}
+<header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{- if .Description }}
+    <div class="post-description">
+        {{ .Description }}
     </div>
+    {{- end }}
+</header>
+{{- end }}
 
-    <div class="sidebar-right">
-        {{ partial "sidebar.html" . }}
-    </div>
-</div>
+<ul class="terms-tags">
+    {{- $type := .Type }}
+    {{- range $key, $value := .Data.Terms.Alphabetical }}
+    {{- $name := .Name }}
+    {{- $count := .Count }}
+    {{- with site.GetPage (printf "/%s/%s" $type $name) }}
+    <li>
+        <a href="{{ .Permalink }}">
+            {{- if eq $type "categories" }}
+                {{- $categoryKey := .Name }}
+                {{- $categoryName := index $.Site.Params.categoryNames $categoryKey | default .Name }}
+                {{ $categoryName }}
+            {{- else }}
+                {{ .Name }}
+            {{- end }}
+            <sup><strong><sup>{{ $count }}</sup></strong></sup>
+        </a>
+    </li>
+    {{- end }}
+    {{- end }}
+</ul>
 
-{{- end }}{{/* end main */}}
+{{- end }}{{/* end main */ -}}

@@ -2,18 +2,24 @@
 title: "{{ replace .Name "-" " " | title }}"
 date: "{{ dateFormat "2006-01-02" .Date }}"
 author: "Cooper"
-categories: ["tech"]
-tags: ["待添加"]
+categories: ["project-review"]
+tags: ["复盘", "项目"]
 description: "文章简短描述，100-160字符"
 slug: "{{ .Name }}"
 draft: true
 featured: false
 ---
 
-> 文章引言或摘要（可选）
+> 项目复盘与经验总结
 
 <!--more-->
 
-## 正文开始
+## 项目概况
 
-在这里写你的内容...
+## 技术选型
+
+## 遇到的问题
+
+## 解决方案
+
+## 经验总结
