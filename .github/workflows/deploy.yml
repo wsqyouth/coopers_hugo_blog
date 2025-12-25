@@ -1,0 +1,57 @@
+name: 部署Hugo博客到服务器
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # 如果主题使用了submodule
+          fetch-depth: 0    # 获取完整历史以便Hugo正确设置.GitInfo和.Lastmod
+
+      - name: 安装Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.148.2'
+          extended: true
+
+      - name: 构建Hugo网站
+        run: hugo --minify
+        env:
+          HUGO_ENV: production
+
+      - name: 部署到服务器
+        uses: easingthemes/ssh-deploy@v5.1.0
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT || 22 }}
+          SOURCE: "public/"
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: ".git*, .github*, node_modules*, **/.DS_Store"
+          SCRIPT_BEFORE: |
+            echo "开始部署..."
+          SCRIPT_AFTER: |
+            echo "部署完成！"
+            # 可以在这里添加其他命令，如重启nginx等
+            # sudo systemctl reload nginx
+
+# 配置说明：
+# 需要在GitHub仓库 Settings -> Secrets and variables -> Actions 中配置以下secrets：
+#
+# 必需的Secrets：
+# - SSH_PRIVATE_KEY: SSH私钥内容
+# - REMOTE_HOST: 服务器IP或域名
+# - REMOTE_USER: SSH登录用户名
+# - REMOTE_TARGET: 网站文件目标路径（如：/var/www/sulvblog.cn/）
+#
+# 可选的Secrets：
+# - REMOTE_PORT: SSH端口（默认22）

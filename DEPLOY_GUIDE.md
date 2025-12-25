@@ -42,7 +42,7 @@ localStorage.removeItem('blog-admin');
 ### 1. 创建 GitHub 仓库
 
 1. 访问 https://github.com/new
-2. 仓库名称：`blog`
+2. 仓库名称：`coopers_hugo_blog`（已创建）
 3. 选择 Public 或 Private
 4. 不要勾选 "Initialize this repository with a README"
 5. 点击 "Create repository"
@@ -52,7 +52,7 @@ localStorage.removeItem('blog-admin');
 在博客目录下执行：
 
 ```bash
-cd /Users/cooperswang/Documents/coopersWork/demotest/hugoblog
+cd /Users/cooperswang/Documents/wsqyouth/coopers_hugo_blog
 
 # 添加所有文件到暂存区
 git add .
@@ -60,8 +60,8 @@ git add .
 # 创建初始提交
 git commit -m "Initial commit: Hugo blog setup"
 
-# 添加远程仓库
-git remote add origin https://github.com/wsqyouth/blog.git
+# 添加远程仓库（已完成）
+git remote add origin https://github.com/wsqyouth/coopers_hugo_blog.git
 
 # 推送到 GitHub
 git push -u origin main
@@ -103,7 +103,7 @@ chmod 600 ~/.ssh/authorized_keys
 
 ### 3. 配置 GitHub Secrets
 
-1. 访问仓库页面：https://github.com/wsqyouth/blog
+1. 访问仓库页面：https://github.com/wsqyouth/coopers_hugo_blog
 2. 点击 Settings -> Secrets and variables -> Actions
 3. 点击 "New repository secret" 添加以下密钥：
 
@@ -188,7 +188,7 @@ git push
 
 ### 方式三：直接在 GitHub 网页编辑
 
-1. 访问 https://github.com/wsqyouth/blog
+1. 访问 https://github.com/wsqyouth/coopers_hugo_blog
 2. 找到要编辑的文件（如 `content/posts/xxx.md`）
 3. 点击编辑按钮（铅笔图标）
 4. 编辑并提交
@@ -229,7 +229,7 @@ git push
 
 ### 如何添加协作者？
 
-1. 访问 https://github.com/wsqyouth/blog/settings/access
+1. 访问 https://github.com/wsqyouth/coopers_hugo_blog/settings/access
 2. 点击 "Add people"
 3. 输入 GitHub 用户名并邀请
 
@@ -239,9 +239,9 @@ git push
 
 由于使用 Git 管理，所有历史版本都保存在 GitHub：
 
-- 查看历史：https://github.com/wsqyouth/blog/commits/main
+- 查看历史：https://github.com/wsqyouth/coopers_hugo_blog/commits/main
 - 回滚到某个版本：`git reset --hard <commit-id> && git push -f`
-- 下载备份：`git clone https://github.com/wsqyouth/blog.git`
+- 下载备份：`git clone https://github.com/wsqyouth/coopers_hugo_blog.git`
 
 ---
 
