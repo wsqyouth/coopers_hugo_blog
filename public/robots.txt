@@ -1,7 +1,0 @@
-User-agent: *
-Disallow:
-<<<<<<< HEAD
-Sitemap: http://localhost:53664/sitemap.xml
-=======
-Sitemap: http://localhost:60062/sitemap.xml
->>>>>>> 55809d5 (base hugo build coopers blog)
