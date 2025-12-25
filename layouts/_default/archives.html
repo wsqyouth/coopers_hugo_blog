@@ -29,27 +29,21 @@
   {{- end }}
 </header>
 
-{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $pages := site.RegularPages.ByDate.Reverse }}
 
-{{- if site.Params.ShowAllPagesInArchive }}
-{{- $pages = site.RegularPages }}
-{{- end }}
-
-{{- range $pages.GroupByPublishDate "2006" }}
-{{- if ne .Key "0001" }}
+{{- range $pages.GroupByDate "2006" }}
 <div class="archive-year">
-  {{- $year := replace .Key "0001" "" }}
-  <h2 class="archive-year-header" id="{{ $year }}">
-    <a class="archive-header-link" href="#{{ $year }}">
-      {{- $year }}年
+  <h2 class="archive-year-header" id="{{ .Key }}">
+    <a class="archive-header-link" href="#{{ .Key }}">
+      {{ (index .Pages 0).Date.Format "2006" }}年
     </a>
     <sup class="archive-count">&nbsp;{{ len .Pages }}</sup>
   </h2>
-  {{- range .Pages.GroupByDate "2006年01月" }}
+  {{- range .Pages.GroupByDate "2006-01" }}
   <div class="archive-month">
-    <h3 class="archive-month-header" id="{{ .Key | urlize }}">
-      <a class="archive-header-link" href="#{{ .Key | urlize }}">
-        {{- .Key -}}
+    <h3 class="archive-month-header" id="{{ .Key }}">
+      <a class="archive-header-link" href="#{{ .Key }}">
+        {{ (index .Pages 0).Date.Format "2006年01月" }}
       </a>
       <sup class="archive-count">&nbsp;{{ len .Pages }}</sup>
     </h3>
@@ -81,7 +75,6 @@
   </div>
   {{- end }}
 </div>
-{{- end }}
 {{- end }}
   </div>
 

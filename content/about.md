@@ -1,6 +1,6 @@
 ---
 title: "关于"
-date: 2025-10-09T22:08:50+08:00
+date: "2023-01-01"
 author: ["Cooper"]
 hidemeta: true
 comments: false

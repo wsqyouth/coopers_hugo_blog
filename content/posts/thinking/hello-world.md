@@ -1,13 +1,20 @@
 ---
-id: "hello-world"
-slug: "hello-world"
 title: "Hello World - 我的第一篇博客文章"
-summary: "欢迎来到我的博客！这是第一篇文章，介绍了博客的基本功能和特色。"
+date: "2025-01-01"
+author: "Cooper"
+categories: ["thinking"]
+tags: ["博客", "Welcome"]
+description: "欢迎来到我的博客！这是第一篇文章，介绍了博客的基本功能和特色。"
+slug: "hello-world"
+draft: false
+featured: true
 ---
 
 # Hello World - 欢迎来到我的博客
 
 欢迎来到我的个人博客！这是我的第一篇文章，我想在这里分享一下创建这个博客的经历和想法。
+
+<!--more-->
 
 ## 为什么要创建这个博客？
 

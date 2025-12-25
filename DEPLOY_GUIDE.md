@@ -99,6 +99,8 @@ echo "公钥内容" >> ~/.ssh/authorized_keys
 
 # 设置权限
 chmod 600 ~/.ssh/authorized_keys
+
+https://www.wsqyouth.cn/
 ```
 
 ### 3. 配置 GitHub Secrets
@@ -114,7 +116,7 @@ chmod 600 ~/.ssh/authorized_keys
 | `SSH_PRIVATE_KEY` | SSH 私钥内容 | 将 `~/.ssh/github_actions_key` 的全部内容复制粘贴 |
 | `REMOTE_HOST` | 服务器 IP 或域名 | `123.45.67.89` 或 `server.example.com` |
 | `REMOTE_USER` | SSH 登录用户名 | `root` 或 `www-data` |
-| `REMOTE_TARGET` | 网站文件目标路径 | `/var/www/sulvblog.cn/`（注意末尾的 `/`） |
+| `REMOTE_TARGET` | 网站文件目标路径 | `/var/www/wsqyouth.cn/`（注意末尾的 `/`） |
 
 **可选的 Secrets：**
 
@@ -132,7 +134,7 @@ chmod 600 ~/.ssh/authorized_keys
 
 ### 5. 配置域名（如需要）
 
-如果使用自定义域名 `www.sulvblog.cn`：
+如果使用自定义域名 `www.wsqyouth.cn`：
 
 1. 在域名服务商配置 DNS：
    - 类型：A 记录
@@ -144,9 +146,9 @@ chmod 600 ~/.ssh/authorized_keys
 ```nginx
 server {
     listen 80;
-    server_name www.sulvblog.cn sulvblog.cn;
+    server_name www.wsqyouth.cn wsqyouth.cn;
 
-    root /var/www/sulvblog.cn;
+    root /var/www/wsqyouth.cn;
     index index.html;
 
     location / {

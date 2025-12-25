@@ -1,43 +1,30 @@
 ---
 title: "代码块功能测试"
-date: 2025-10-09T22:44:41+08:00
-lastmod: 2025-10-09T22:44:41+08:00
-author: ["Cooper"]
-tags: ["测试", "代码"]
-categories: ["技术"]
-description: "测试代码块折叠、高亮和复制功能"
-weight: # 输入数字可以置顶文章，用来给文章展示排序
+date: "2025-01-01"
+author: "Cooper"
+categories: ["tech"]
+tags: ["代码", "示例", "教程"]
+description: "展示博客的代码块功能，包括语法高亮、代码折叠、一键复制等特性"
 slug: "code-block-test"
-draft: false # 是否为草稿
-comments: true
-showToc: true # 显示目录
-TocOpen: true # 自动展开目录
-hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
-disableShare: true # 底部不显示分享栏
-showbreadcrumbs: true # 顶部显示当前路径
-searchHidden: false # 优化SEO
-ShowReadingTime: true
-ShowWordCount: true
-cover:
-    image: ""
-    caption: ""
-    alt: ""
-    relative: false
+draft: false
+featured: true
 ---
 
 ## 介绍
 
-这篇文章用于测试博客的代码块增强功能，包括：
-- 代码块折叠/展开
-- 一键复制代码
-- 自定义标题
-- 多语言高亮
+这篇文章展示了博客的代码块增强功能。<!--more--> 
+包括：
+- 🎨 多语言语法高亮
+- 📋 一键复制代码
+- 📁 代码块折叠/展开
+- 🏷️ 自定义标题
+- 🌓 明暗主题自适应
 
 ## Python 代码示例
 
-下面是一个 Python 函数示例：
+下面是一个 Python 快速排序算法实现：
 
-{{< code lang="python" title="快速排序算法" >}}
+```python
 def quick_sort(arr):
     """快速排序算法实现"""
     if len(arr) <= 1:
@@ -53,13 +40,14 @@ def quick_sort(arr):
 # 测试
 numbers = [3, 6, 8, 10, 1, 2, 1]
 print(quick_sort(numbers))
-{{< /code >}}
+# 输出: [1, 1, 2, 3, 6, 8, 10]
+```
 
-## JavaScript 代码示例
+## JavaScript/React 示例
 
-React Hook 使用示例：
+React 自定义 Hook 示例：
 
-{{< code lang="javascript" title="自定义 Hook - useLocalStorage" >}}
+```javascript
 import { useState, useEffect } from 'react';
 
 function useLocalStorage(key, initialValue) {
@@ -89,13 +77,13 @@ function useLocalStorage(key, initialValue) {
 }
 
 export default useLocalStorage;
-{{< /code >}}
+```
 
-## Go 代码示例
+## Go 语言示例
 
-HTTP 服务器示例：
+简单的 HTTP 服务器：
 
-{{< code lang="go" title="简单的 HTTP 服务器" >}}
+```go
 package main
 
 import (
@@ -123,14 +111,14 @@ func main() {
         log.Fatal(err)
     }
 }
-{{< /code >}}
+```
 
 ## SQL 查询示例
 
-数据库查询示例：
+复杂的数据库查询：
 
-{{< code lang="sql" title="用户统计查询" >}}
--- 查询每个部门的员工数量和平均工资
+```sql
+-- 查询每个部门的员工统计信息
 SELECT
     d.department_name,
     COUNT(e.employee_id) as employee_count,
@@ -149,13 +137,13 @@ HAVING
     COUNT(e.employee_id) > 5
 ORDER BY
     avg_salary DESC;
-{{< /code >}}
+```
 
 ## CSS 样式示例
 
-响应式布局样式：
+响应式卡片组件：
 
-{{< code lang="css" title="卡片组件样式" >}}
+```css
 .card {
     background: var(--card-bg);
     border-radius: 8px;
@@ -176,12 +164,6 @@ ORDER BY
     color: var(--primary-color);
 }
 
-.card-content {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--text-color);
-}
-
 /* 响应式设计 */
 @media (max-width: 768px) {
     .card {
@@ -192,13 +174,13 @@ ORDER BY
         font-size: 1.1rem;
     }
 }
-{{< /code >}}
+```
 
 ## Bash 脚本示例
 
 自动化部署脚本：
 
-{{< code lang="bash" title="部署脚本" >}}
+```bash
 #!/bin/bash
 
 # 颜色定义
@@ -227,13 +209,13 @@ npm run build
 pm2 restart app
 
 echo -e "${GREEN}部署完成！${NC}"
-{{< /code >}}
+```
 
 ## YAML 配置示例
 
-Docker Compose 配置：
+Docker Compose 配置文件：
 
-{{< code lang="yaml" title="docker-compose.yml" >}}
+```yaml
 version: '3.8'
 
 services:
@@ -272,16 +254,16 @@ services:
 
 volumes:
   pgdata:
-{{< /code >}}
+```
 
 ## 总结
 
 代码块功能特性：
-- ✅ 支持代码折叠/展开
-- ✅ 一键复制代码
-- ✅ 自定义标题显示
-- ✅ 多语言语法高亮
+- ✅ 多语言语法高亮（Python, JavaScript, Go, SQL, CSS, Bash, YAML等）
+- ✅ 一键复制代码到剪贴板
+- ✅ 代码块折叠/展开功能
 - ✅ 明暗主题自适应
+- ✅ 行号显示
 - ✅ 滚动条美化
 
-点击代码块标题栏可以折叠/展开代码，点击右侧复制按钮可以快速复制代码内容。
+这些功能让技术文章的代码展示更加专业和易读！

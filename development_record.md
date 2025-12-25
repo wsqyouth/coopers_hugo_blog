@@ -281,7 +281,7 @@ hugo list all
 
 ```yaml
 title: Cooper's Blog
-baseURL: https://www.sulvblog.cn
+baseURL: http://www.wsqyouth.cn/
 languageCode: zh-cn
 theme: PaperMod
 

@@ -305,11 +305,20 @@ main.main {
     line-height: 1.8;
     margin-bottom: 16px;
     font-size: 16px;
+    overflow: visible !important;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
 }
 
 .post-entry .entry-content p {
     font-size: 16px;
     margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;  /* 限制摘要显示2行 */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Read More Link - 深绿色样式 */

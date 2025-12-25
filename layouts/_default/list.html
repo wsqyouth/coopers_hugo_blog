@@ -1,9 +1,12 @@
 {{ define "main" }}
 <div class="main-container">
     <div class="content-left">
-        {{- $pages := union .RegularPages .Sections }}
+        {{- $pages := .RegularPages }}
         {{- if .IsHome }}
         {{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
+        {{- end }}
+        {{- if $pages }}
+        {{- $pages = $pages.ByDate.Reverse }}
         {{- end }}
 
         {{- $paginator := .Paginate $pages }}
@@ -30,6 +33,7 @@
                 <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
                 <a class="read-more" href="{{ .Permalink }}">阅读全文 > </a>
             </div>
+            {{- if not (in (slice "search" "archives") .Layout) }}
             <footer class="entry-footer">
                 <span title='{{ .Date.Format "2006-01-02 15:04:05" }}'>
                     🕒 {{ .Date.Format "2006年01月02日" }}
@@ -37,6 +41,7 @@
                 &nbsp;·&nbsp;
                 <span>{{ .WordCount }} 字</span>
             </footer>
+            {{- end }}
         </article>
         {{ end }}
 

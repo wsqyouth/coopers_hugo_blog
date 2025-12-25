@@ -1,5 +1,4 @@
-baseURL: https://www.sulvblog.cn
-# baseURL: https://www.sulvblog.cn  # 绑定的域名
+baseURL: http://www.wsqyouth.cn/ # 绑定的域名
 languageCode: zh-cn # en-us
 title: Cooper's Blog
 theme: PaperMod # 主题名字，和themes文件夹下的一致
@@ -13,6 +12,8 @@ hasCJKLanguage: true # 自动检测是否包含 中文日文韩文 如果文章�
 buildDrafts: false
 buildFuture: false
 buildExpired: false
+
+summaryLength: 70  # 摘要字数限制（中文约35字）
 
 #googleAnalytics: UA-123-45 # 谷歌统计
 # Copyright: Cooper
@@ -71,6 +72,16 @@ params:
     # description: "这是一个纯粹的博客......"
     author: Coopers
     # author: ["Me", "You"] # multiple authors
+
+    mainSections: ["posts"]
+    ShowAllPagesInArchive: true
+
+    # 分类中英文映射
+    categoryNames:
+        tech: "技术分享"
+        thinking: "思考笔记"
+        diary: "生活日记"
+        project-review: "项目复盘"
 
     profileMode:
         enabled: true
@@ -135,11 +146,11 @@ params:
     #         SiteVerificationTag: "XYZabc"
 
     assets:
-        favicon: "img/Q.gif"
-        favicon16x16: "img/Q.gif"
-        favicon32x32: "img/Q.gif"
-        apple_touch_icon: "Q.gif"
-        safari_pinned_tab: "Q.gif"
+        favicon: "img/favicon.ico"
+        favicon16x16: "img/favicon.ico"
+        favicon32x32: "img/favicon.ico"
+        apple_touch_icon: "favicon.ico"
+        safari_pinned_tab: "favicon.ico"
 
     # cover:
     #     hidden: true # hide everywhere but not in structured data

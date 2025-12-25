@@ -1,16 +1,18 @@
 ---
-title: "Markdown 语法功能排版验证"
-slug: "markdown"
-summary: "Markdown 语法功能排版验证。"
-date: "2025-09-23"
+title: "Markdown 语法完整参考"
+date: "2025-01-01"
+author: "Cooper"
 categories: ["tech"]
-tags: ["markdown", "最佳实践"]
-author: "Coopers"
+tags: ["Markdown", "语法", "参考"]
+description: "Markdown 语法完整参考指南，涵盖所有常用语法和特殊功能"
+slug: "markdown-syntax-guide"
 draft: false
-featured: false
+featured: true
 ---
+Markdown 语法完整参考指南，涵盖所有常用语法和特殊功能
+<!--more-->
 
-> Markdown 语法功能排版验证。问题或建议，请公众号留言。**[测试](#jump_8)**
+> 问题或建议，请公众号留言。**[测试](#jump_8)**
 
 建议使用 **Chrome** 浏览器，体验最佳效果。
 

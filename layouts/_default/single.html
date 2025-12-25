@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div class="main-container single-post-layout">
     <div class="single-content-wrapper">
-        <a class="back-home-link" href="{{ .Site.BaseURL }}">‹ 返回首页</a>
+        <a class="back-home-link" href="/">‹ 返回首页</a>
 
         <article class="post-single">
             <header class="post-header">
@@ -9,8 +9,11 @@
                 <div class="post-meta">
                     🕒 {{ .Date.Format "2006年01月02日" }} · {{ .WordCount }} 字
                     {{- if .Params.categories }}
-                    · 📂 {{ range .Params.categories }}<a href="{{ printf " categories/%s" (. | urlize) | absLangURL
-                        }}">{{ . }}</a>{{ end }}
+                    · 📂 {{ range .Params.categories }}
+                    {{- $categoryKey := . }}
+                    {{- $categoryName := index $.Site.Params.categoryNames $categoryKey | default . }}
+                    <a href="{{ printf "/categories/%s" (. | urlize) }}">{{ $categoryName }}</a>
+                    {{- end }}
                     {{- end }}
                 </div>
             </header>
@@ -24,7 +27,7 @@
                 {{- if .Params.tags }}
                 <ul class="post-tags">
                     {{ range .Params.tags }}
-                    <li><a href="{{ " tags/" | absLangURL }}{{ . | urlize }}">{{ . }}</a></li>
+                    <li><a href="/tags/{{ . | urlize }}">{{ . }}</a></li>
                     {{ end }}
                 </ul>
                 {{- end }}

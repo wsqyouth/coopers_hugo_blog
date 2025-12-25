@@ -53,13 +53,20 @@
     color: var(--code-color);
 }
 
-/* 代码块样式 */
+/* 代码块样式 - macOS 风格 */
 .pe-code-block-wrap {
-    border-radius: var(--radius);
+    border-radius: 8px;
     margin: var(--content-gap) auto;
     background-color: var(--pe-code-block-header-bg-color);
-    font-family: Consolas, sans-serif;
+    font-family: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .pe-code-block-wrap {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .pe-code-block-header {
@@ -68,8 +75,40 @@
     align-items: center;
     color: var(--pe-code-block-header-color);
     justify-content: space-between;
-    padding: .4rem 1rem;
+    padding: 0.75rem 1rem;
     font-size: 0.875rem;
+    background: linear-gradient(to bottom, var(--pe-code-block-header-bg-color) 0%, var(--pe-code-block-header-bg-color) 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .pe-code-block-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* macOS 窗口控制按钮 */
+.pe-code-block-header::before {
+    content: '';
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 12px;
+    background-image:
+        radial-gradient(circle, #ff5f57 0%, #ff5f57 40%, transparent 40%),
+        radial-gradient(circle, #ffbd2e 0%, #ffbd2e 40%, transparent 40%),
+        radial-gradient(circle, #28ca42 0%, #28ca42 40%, transparent 40%);
+    background-size: 12px 12px;
+    background-position: 0 center, 20px center, 40px center;
+    background-repeat: no-repeat;
+    width: 52px;
+    height: 12px;
+}
+
+/* 鼠标悬停时显示按钮符号 */
+.pe-code-block-header:hover::before {
+    background-image:
+        radial-gradient(circle, #ff5f57 0%, #ff5f57 40%, transparent 40%),
+        radial-gradient(circle, #ffbd2e 0%, #ffbd2e 40%, transparent 40%),
+        radial-gradient(circle, #28ca42 0%, #28ca42 40%, transparent 40%);
 }
 
 .pe-code-block-header-left {
@@ -95,13 +134,184 @@
     margin: unset;
     background: var(--pe-code-block-bg-color) !important;
     border-radius: unset;
+    padding: 1rem 0;
 }
 
-.post-content pre code {
+.post-content pre {
+    margin: 0 !important;
+    padding: 1rem 1.25rem !important;
     background-color: var(--pe-code-block-bg-color) !important;
+    overflow-x: auto;
+    overflow-y: auto;
+    line-height: 1.6;
+    max-height: 600px; /* 限制最大高度，超出显示滚动条 */
+}
+
+/* 调整 highlight 容器内的 pre 元素，避免双重 padding-top */
+.post-content > div.highlight > div > pre {
+    padding-top: 0 !important;
+}
+
+/* 代码内容样式 */
+.post-content pre code {
+    display: block;
+    white-space: pre;
+    word-wrap: normal;
+    overflow-wrap: normal;
+    background-color: transparent !important;
     font-size: 0.875rem;
     color: var(--pe-code-block-color);
     border-radius: unset;
+    padding: 0 !important;
+    font-family: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
+}
+
+/* 标准 Markdown 代码块（带三个反引号的） - macOS 风格 */
+.post-content > div.highlight,
+.post-content > pre {
+    position: relative;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 2.5rem !important;
+}
+
+.dark .post-content > div.highlight,
+.dark .post-content > pre {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 代码块顶部栏 - 模拟 macOS 窗口标题栏 */
+.post-content > div.highlight::before,
+.post-content > pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2.5rem;
+    background: var(--pe-code-block-header-bg-color);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    z-index: 1;
+}
+
+.dark .post-content > div.highlight::before,
+.dark .post-content > pre::before {
+    background: var(--pe-code-block-header-bg-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* macOS 窗口控制按钮（红黄绿三色） */
+.post-content > div.highlight::after,
+.post-content > pre::after {
+    content: '';
+    position: absolute;
+    top: 0.8rem;
+    left: 1rem;
+    width: 52px;
+    height: 12px;
+    background-image:
+        radial-gradient(circle, #ff5f57 0%, #ff5f57 40%, transparent 40%),
+        radial-gradient(circle, #ffbd2e 0%, #ffbd2e 40%, transparent 40%),
+        radial-gradient(circle, #28ca42 0%, #28ca42 40%, transparent 40%);
+    background-size: 12px 12px;
+    background-position: 0 center, 20px center, 40px center;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+
+/* ==================== 复制按钮样式 ==================== */
+.code-copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    color: #24292f;
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transform: translateY(-2px);
+    pointer-events: none;
+}
+
+/* 悬停代码块时显示复制按钮 */
+.post-content > div.highlight:hover .code-copy-btn,
+.post-content > pre:hover .code-copy-btn {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* 隐藏嵌套的复制按钮，只保留最外层的 */
+.code-copy-btn .code-copy-btn {
+    display: none !important;
+}
+
+.dark .code-copy-btn {
+    background: rgba(45, 45, 45, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #c9d1d9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.code-copy-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    transform: scale(1.05);
+}
+
+.dark .code-copy-btn:hover {
+    background: rgba(55, 55, 55, 1);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.code-copy-btn.copied {
+    background: #28ca42;
+    border-color: #28ca42;
+    color: white;
+}
+
+.dark .code-copy-btn.copied {
+    background: #28ca42;
+    border-color: #28ca42;
+}
+
+.code-copy-btn svg {
+    width: 12px;
+    height: 12px;
+    stroke-width: 2.5;
+    flex-shrink: 0;
+}
+
+.code-copy-btn .copy-text {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica', 'Arial', sans-serif;
+    white-space: nowrap;
+}
+
+/* 小屏幕只显示图标，隐藏文字 */
+@media (max-width: 768px) {
+    .code-copy-btn .copy-text {
+        display: none;
+    }
+
+    .code-copy-btn {
+        padding: 0.375rem;
+    }
 }
 
 .pe-icon {
@@ -117,10 +327,47 @@
     padding: 0 0 0 1.2rem !important;
 }
 
-/* 滚动条 */
-.post-content :not(table) ::-webkit-scrollbar-thumb {
-    border: .2rem solid var(--pe-code-block-bg-color);
+/* ==================== 滚动条美化 ==================== */
+/* 代码块滚动条 */
+.post-content pre::-webkit-scrollbar,
+.post-content div.highlight::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.post-content pre::-webkit-scrollbar-track,
+.post-content div.highlight::-webkit-scrollbar-track {
+    background: var(--pe-code-block-bg-color);
+    border-radius: 0 0 8px 0;
+}
+
+.post-content pre::-webkit-scrollbar-thumb,
+.post-content div.highlight::-webkit-scrollbar-thumb {
     background: var(--pe-scrollbar-bg-color);
+    border-radius: 5px;
+    border: 2px solid var(--pe-code-block-bg-color);
+}
+
+.post-content pre::-webkit-scrollbar-thumb:hover,
+.post-content div.highlight::-webkit-scrollbar-thumb:hover {
+    background: var(--pe-scrollbar-hover-bg-color);
+}
+
+.post-content pre::-webkit-scrollbar-corner,
+.post-content div.highlight::-webkit-scrollbar-corner {
+    background: var(--pe-code-block-bg-color);
+}
+
+/* 通用代码块内容滚动条 */
+.post-content :not(table) ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.post-content :not(table) ::-webkit-scrollbar-thumb {
+    border: 2px solid var(--pe-code-block-bg-color);
+    background: var(--pe-scrollbar-bg-color);
+    border-radius: 5px;
 }
 
 .post-content :not(table) ::-webkit-scrollbar-thumb:hover {

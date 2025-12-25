@@ -51,7 +51,7 @@ jobs:
 # - SSH_PRIVATE_KEY: SSH私钥内容
 # - REMOTE_HOST: 服务器IP或域名
 # - REMOTE_USER: SSH登录用户名
-# - REMOTE_TARGET: 网站文件目标路径（如：/var/www/sulvblog.cn/）
+# - REMOTE_TARGET: 网站文件目标路径（如：/var/www/wsqyouth.cn/）
 #
 # 可选的Secrets：
 # - REMOTE_PORT: SSH端口（默认22）

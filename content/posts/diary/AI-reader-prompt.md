@@ -1,11 +1,19 @@
 ---
 title: "AI 阅读助手 Prompt 总结"
-date: 2025-09-21T10:00:00+08:00
+date: "2025-09-21"
+author: "Cooper"
+categories: ["diary"]
+tags: ["AI", "Prompt"]
+description: "AI阅读助手的Prompt设计总结"
+slug: "ai-reader-prompt"
+draft: false
+featured: false
 ---
 ## 目标
 
 帮助用户自动总结文章内容，并根据文章质量自动选择深度/轻量模式，生成结构化、可操作的 Markdown 报告。
 
+<!--more-->
 ---
 
 ## 1. 基本说明

@@ -1,17 +1,17 @@
 ---
 title: "欢迎来到 Cooper's Blog"
 date: "2025-01-20"
-categories: ["thinking"]
-tags: ["Welcome", "博客", "个人"]
 author: "Cooper"
-description: "这是第一篇测试文章，欢迎来到我的个人博客。"
-cover:
-  image: "/images/common/welcome.jpg"
+categories: ["thinking"]
+tags: ["Welcome", "博客"]
+description: "欢迎来到我的个人博客"
+slug: "welcome"
+draft: false
+featured: true
 ---
 
-# 欢迎来到 Cooper's Blog
-
 这是我的第一篇博客文章！🎉
+<!--more-->
 
 ## 关于这个博客
 

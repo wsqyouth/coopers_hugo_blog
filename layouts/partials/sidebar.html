@@ -14,7 +14,7 @@
         <h3 class="widget-title">博客统计</h3>
         <div class="widget-body stats-grid">
             <div class="stat-item">
-                <span class="count">{{ len .Site.RegularPages }}</span>
+                <span class="count">{{ len (where .Site.RegularPages "Section" "posts") }}</span>
                 <span class="label">文章</span>
             </div>
             <div class="stat-item">
@@ -30,7 +30,9 @@
         <ul class="widget-list">
             {{ range .Site.Taxonomies.categories.ByCount }}
             <li>
-                <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+                {{- $categoryKey := .Page.Title }}
+                {{- $categoryName := index $.Site.Params.categoryNames $categoryKey | default .Page.Title }}
+                <a href="{{ .Page.Permalink }}">{{ $categoryName }}</a>
                 <span class="count">({{ .Count }})</span>
             </li>
             {{ end }}
@@ -41,10 +43,9 @@
     <section class="widget archives">
         <h3 class="widget-title">📅 归档</h3>
         <ul class="widget-list">
-            <!-- Group by Year-Month, e.g. 2025年12月 -->
-            {{ range .Site.RegularPages.GroupByDate "2006年01月" }}
+            {{ range (.Site.RegularPages.ByDate.Reverse).GroupByDate "2006-01" }}
             <li>
-                <a href="{{ "archives/" | relLangURL }}#{{ .Key | urlize }}">{{ .Key }}</a>
+                <a href="/archives/#{{ .Key }}">{{ (index .Pages 0).Date.Format "2006年01月" }}</a>
                 <span class="count">({{ len .Pages }})</span>
             </li>
             {{ end }}

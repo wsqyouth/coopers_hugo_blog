@@ -1,0 +1,8 @@
+{{- /* 自定义 JavaScript - 在页面底部加载 */ -}}
+
+{{- /* 代码复制功能 */ -}}
+{{ $codeCopy := resources.Get "js/code-copy.js" }}
+{{ if $codeCopy }}
+  {{ $codeCopyMin := $codeCopy | minify | fingerprint }}
+  <script src="{{ $codeCopyMin.RelPermalink }}" defer></script>
+{{ end }}

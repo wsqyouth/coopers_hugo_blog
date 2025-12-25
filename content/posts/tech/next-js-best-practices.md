@@ -1,20 +1,19 @@
 ---
 title: "Next.js 最佳实践指南"
-slug: "next-js-best-practices"
-summary: "深入探讨 Next.js 开发中的最佳实践，包括性能优化、SEO 配置、部署策略等核心话题。"
 date: "2024-01-20"
+author: "Cooper"
 categories: ["tech"]
 tags: ["Next.js", "React", "性能优化", "最佳实践"]
-author: "Cooper"
+description: "深入探讨 Next.js 开发中的最佳实践，包括性能优化、SEO 配置、部署策略等核心话题"
+slug: "next-js-best-practices"
 draft: false
-featured: false
-coverImage: "/images/posts/nextjs-best-practices.svg"
+featured: true
 ---
 
 # Next.js 最佳实践指南
 
 Next.js 作为现代 React 全栈框架，提供了强大的功能和灵活性。在实际开发中，遵循最佳实践可以帮助我们构建更快、更可靠的应用程序。
-
+<!--more-->
 ## 1. 项目结构组织
 
 ### 推荐的目录结构
