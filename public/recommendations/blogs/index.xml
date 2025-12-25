@@ -2,24 +2,43 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>大佬博客 on Cooper&#39;s Blog</title>
+<<<<<<< HEAD
     <link>http://localhost:53664/recommendations/blogs/</link>
+=======
+    <link>http://localhost:60062/recommendations/blogs/</link>
+>>>>>>> 55809d5 (base hugo build coopers blog)
     <description>Recent content in 大佬博客 on Cooper&#39;s Blog</description>
     <generator>Hugo -- 0.148.2</generator>
     <language>en</language>
     <lastBuildDate>Wed, 15 Jan 2025 00:00:00 +0000</lastBuildDate>
+<<<<<<< HEAD
     <atom:link href="http://localhost:53664/recommendations/blogs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>阮一峰的网络日志</title>
       <link>http://localhost:53664/recommendations/blogs/ruanyifeng/</link>
       <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:53664/recommendations/blogs/ruanyifeng/</guid>
+=======
+    <atom:link href="http://localhost:60062/recommendations/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>阮一峰的网络日志</title>
+      <link>http://localhost:60062/recommendations/blogs/ruanyifeng/</link>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:60062/recommendations/blogs/ruanyifeng/</guid>
+>>>>>>> 55809d5 (base hugo build coopers blog)
       <description>&lt;p&gt;知名技术博客,每周五发布科技爱好者周刊,分享前端技术、编程语言、开发工具等内容,文章通俗易懂。&lt;/p&gt;</description>
     </item>
     <item>
       <title>张鑫旭的个人博客</title>
+<<<<<<< HEAD
       <link>http://localhost:53664/recommendations/blogs/zhangxinxu/</link>
       <pubDate>Tue, 14 Jan 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:53664/recommendations/blogs/zhangxinxu/</guid>
+=======
+      <link>http://localhost:60062/recommendations/blogs/zhangxinxu/</link>
+      <pubDate>Tue, 14 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:60062/recommendations/blogs/zhangxinxu/</guid>
+>>>>>>> 55809d5 (base hugo build coopers blog)
       <description>&lt;p&gt;国内知名前端大佬,专注于CSS、HTML等前端技术,文章深入浅出,有大量实用案例和技巧分享。&lt;/p&gt;</description>
     </item>
   </channel>

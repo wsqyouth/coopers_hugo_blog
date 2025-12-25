@@ -2,17 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Markdown on Cooper&#39;s Blog</title>
+<<<<<<< HEAD
     <link>http://localhost:53664/tags/markdown/</link>
+=======
+    <link>http://localhost:60062/tags/markdown/</link>
+>>>>>>> 55809d5 (base hugo build coopers blog)
     <description>Recent content in Markdown on Cooper&#39;s Blog</description>
     <generator>Hugo -- 0.148.2</generator>
     <language>en</language>
     <lastBuildDate>Tue, 23 Sep 2025 00:00:00 +0000</lastBuildDate>
+<<<<<<< HEAD
     <atom:link href="http://localhost:53664/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Markdown 语法功能排版验证</title>
       <link>http://localhost:53664/2025/09/23/markdown/</link>
       <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:53664/2025/09/23/markdown/</guid>
+=======
+    <atom:link href="http://localhost:60062/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown 语法功能排版验证</title>
+      <link>http://localhost:60062/2025/09/23/markdown/</link>
+      <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:60062/2025/09/23/markdown/</guid>
+>>>>>>> 55809d5 (base hugo build coopers blog)
       <description>Markdown 语法功能排版验证。</description>
     </item>
   </channel>

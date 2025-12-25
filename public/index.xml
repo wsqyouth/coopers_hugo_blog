@@ -2,54 +2,61 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Cooper&#39;s Blog</title>
-    <link>http://localhost:53664/</link>
+    <link>http://localhost:60062/</link>
     <description>Recent content on Cooper&#39;s Blog</description>
     <generator>Hugo -- 0.148.2</generator>
     <language>en</language>
     <lastBuildDate>Thu, 09 Oct 2025 22:44:41 +0800</lastBuildDate>
-    <atom:link href="http://localhost:53664/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:60062/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>代码块功能测试</title>
-      <link>http://localhost:53664/2025/10/09/code-block-test/</link>
+      <link>http://localhost:60062/2025/10/09/code-block-test/</link>
       <pubDate>Thu, 09 Oct 2025 22:44:41 +0800</pubDate>
-      <guid>http://localhost:53664/2025/10/09/code-block-test/</guid>
+      <guid>http://localhost:60062/2025/10/09/code-block-test/</guid>
       <description>测试代码块折叠、高亮和复制功能</description>
     </item>
     <item>
       <title>测试侧边目录和阅读进度功能</title>
-      <link>http://localhost:53664/2025/10/09/%E6%B5%8B%E8%AF%95%E4%BE%A7%E8%BE%B9%E7%9B%AE%E5%BD%95%E5%92%8C%E9%98%85%E8%AF%BB%E8%BF%9B%E5%BA%A6%E5%8A%9F%E8%83%BD/</link>
+      <link>http://localhost:60062/2025/10/09/%E6%B5%8B%E8%AF%95%E4%BE%A7%E8%BE%B9%E7%9B%AE%E5%BD%95%E5%92%8C%E9%98%85%E8%AF%BB%E8%BF%9B%E5%BA%A6%E5%8A%9F%E8%83%BD/</link>
       <pubDate>Thu, 09 Oct 2025 22:20:32 +0800</pubDate>
-      <guid>http://localhost:53664/2025/10/09/%E6%B5%8B%E8%AF%95%E4%BE%A7%E8%BE%B9%E7%9B%AE%E5%BD%95%E5%92%8C%E9%98%85%E8%AF%BB%E8%BF%9B%E5%BA%A6%E5%8A%9F%E8%83%BD/</guid>
+      <guid>http://localhost:60062/2025/10/09/%E6%B5%8B%E8%AF%95%E4%BE%A7%E8%BE%B9%E7%9B%AE%E5%BD%95%E5%92%8C%E9%98%85%E8%AF%BB%E8%BF%9B%E5%BA%A6%E5%8A%9F%E8%83%BD/</guid>
       <description>测试博客的侧边目录和阅读进度百分比功能</description>
     </item>
     <item>
+      <title>文章使用模板</title>
+      <link>http://localhost:60062/2025/10/09/%E6%96%87%E7%AB%A0%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%9D%BF/</link>
+      <pubDate>Thu, 09 Oct 2025 22:11:22 +0800</pubDate>
+      <guid>http://localhost:60062/2025/10/09/%E6%96%87%E7%AB%A0%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%9D%BF/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>关于</title>
-      <link>http://localhost:53664/about/</link>
+      <link>http://localhost:60062/about/</link>
       <pubDate>Thu, 09 Oct 2025 22:08:50 +0800</pubDate>
-      <guid>http://localhost:53664/about/</guid>
+      <guid>http://localhost:60062/about/</guid>
       <description>&lt;h1 id=&#34;-hi-im-coopers&#34;&gt;👋 Hi, I&amp;rsquo;m Coopers&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;全栈开发工程师 · 技术写作者 · 开源爱好者&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;热爱编程和技术分享，专注于现代 Web 开发技术栈。通过这个博客分享技术心得、项目经验和个人思考，希望能与更多开发者交流学习，共同成长。&lt;/p&gt;</description>
     </item>
     <item>
       <title>文章名称</title>
-      <link>http://localhost:53664/2025/10/09/%E6%96%87%E7%AB%A0%E5%90%8D%E7%A7%B0/</link>
+      <link>http://localhost:60062/2025/10/09/%E6%96%87%E7%AB%A0%E5%90%8D%E7%A7%B0/</link>
       <pubDate>Thu, 09 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/2025/10/09/%E6%96%87%E7%AB%A0%E5%90%8D%E7%A7%B0/</guid>
+      <guid>http://localhost:60062/2025/10/09/%E6%96%87%E7%AB%A0%E5%90%8D%E7%A7%B0/</guid>
       <description></description>
     </item>
     <item>
       <title>Markdown 语法功能排版验证</title>
-      <link>http://localhost:53664/2025/09/23/markdown/</link>
+      <link>http://localhost:60062/2025/09/23/markdown/</link>
       <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/2025/09/23/markdown/</guid>
+      <guid>http://localhost:60062/2025/09/23/markdown/</guid>
       <description>Markdown 语法功能排版验证。</description>
     </item>
     <item>
       <title>AI 阅读助手 Prompt 总结</title>
-      <link>http://localhost:53664/2025/09/21/ai-%E9%98%85%E8%AF%BB%E5%8A%A9%E6%89%8B-prompt-%E6%80%BB%E7%BB%93/</link>
+      <link>http://localhost:60062/2025/09/21/ai-%E9%98%85%E8%AF%BB%E5%8A%A9%E6%89%8B-prompt-%E6%80%BB%E7%BB%93/</link>
       <pubDate>Sun, 21 Sep 2025 10:00:00 +0800</pubDate>
-      <guid>http://localhost:53664/2025/09/21/ai-%E9%98%85%E8%AF%BB%E5%8A%A9%E6%89%8B-prompt-%E6%80%BB%E7%BB%93/</guid>
+      <guid>http://localhost:60062/2025/09/21/ai-%E9%98%85%E8%AF%BB%E5%8A%A9%E6%89%8B-prompt-%E6%80%BB%E7%BB%93/</guid>
       <description>&lt;h2 id=&#34;目标&#34;&gt;目标&lt;/h2&gt;
 &lt;p&gt;帮助用户自动总结文章内容，并根据文章质量自动选择深度/轻量模式，生成结构化、可操作的 Markdown 报告。&lt;/p&gt;
 &lt;hr&gt;
@@ -58,219 +65,223 @@
     </item>
     <item>
       <title>欢迎来到 Cooper&#39;s Blog</title>
-      <link>http://localhost:53664/2025/01/20/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0-coopers-blog/</link>
+      <link>http://localhost:60062/2025/01/20/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0-coopers-blog/</link>
       <pubDate>Mon, 20 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/2025/01/20/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0-coopers-blog/</guid>
+      <guid>http://localhost:60062/2025/01/20/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0-coopers-blog/</guid>
       <description>这是第一篇测试文章，欢迎来到我的个人博客。</description>
     </item>
     <item>
       <title>开发工具 15</title>
-      <link>http://localhost:53664/recommendations/tools/tool-15/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-15/</link>
       <pubDate>Thu, 16 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-15/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-15/</guid>
+<<<<<<< HEAD
+      <description>&lt;p&gt;这是第 15 个测试工具的描述, 用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
+=======
       <description>&lt;p&gt;这是第 15 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
+>>>>>>> 55809d5 (base hugo build coopers blog)
     </item>
     <item>
       <title>GitHub</title>
-      <link>http://localhost:53664/recommendations/tools/github/</link>
+      <link>http://localhost:60062/recommendations/tools/github/</link>
       <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/github/</guid>
+      <guid>http://localhost:60062/recommendations/tools/github/</guid>
       <description>&lt;p&gt;全球最大的代码托管平台,支持 Git 版本控制、Issue 跟踪、CI/CD 等功能,是开发者协作和开源项目的首选平台。&lt;/p&gt;</description>
     </item>
     <item>
       <title>MDN Web Docs</title>
-      <link>http://localhost:53664/recommendations/tutorials/mdn/</link>
+      <link>http://localhost:60062/recommendations/tutorials/mdn/</link>
       <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tutorials/mdn/</guid>
+      <guid>http://localhost:60062/recommendations/tutorials/mdn/</guid>
       <description>&lt;p&gt;Mozilla 维护的 Web 开发文档,涵盖 HTML、CSS、JavaScript 等 Web 技术,是前端开发者必备的参考资料。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 14</title>
-      <link>http://localhost:53664/recommendations/tools/tool-14/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-14/</link>
       <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-14/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-14/</guid>
       <description>&lt;p&gt;这是第 14 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>阮一峰的网络日志</title>
-      <link>http://localhost:53664/recommendations/blogs/ruanyifeng/</link>
+      <link>http://localhost:60062/recommendations/blogs/ruanyifeng/</link>
       <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/blogs/ruanyifeng/</guid>
+      <guid>http://localhost:60062/recommendations/blogs/ruanyifeng/</guid>
       <description>&lt;p&gt;知名技术博客,每周五发布科技爱好者周刊,分享前端技术、编程语言、开发工具等内容,文章通俗易懂。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Visual Studio Code</title>
-      <link>http://localhost:53664/recommendations/tools/vscode/</link>
+      <link>http://localhost:60062/recommendations/tools/vscode/</link>
       <pubDate>Tue, 14 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/vscode/</guid>
+      <guid>http://localhost:60062/recommendations/tools/vscode/</guid>
       <description>&lt;p&gt;微软开发的免费代码编辑器,支持丰富的插件生态,内置 Git 集成、调试器、智能代码补全等功能。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 13</title>
-      <link>http://localhost:53664/recommendations/tools/tool-13/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-13/</link>
       <pubDate>Tue, 14 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-13/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-13/</guid>
       <description>&lt;p&gt;这是第 13 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>张鑫旭的个人博客</title>
-      <link>http://localhost:53664/recommendations/blogs/zhangxinxu/</link>
+      <link>http://localhost:60062/recommendations/blogs/zhangxinxu/</link>
       <pubDate>Tue, 14 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/blogs/zhangxinxu/</guid>
+      <guid>http://localhost:60062/recommendations/blogs/zhangxinxu/</guid>
       <description>&lt;p&gt;国内知名前端大佬,专注于CSS、HTML等前端技术,文章深入浅出,有大量实用案例和技巧分享。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Go by Example</title>
-      <link>http://localhost:53664/recommendations/tutorials/go-by-example/</link>
+      <link>http://localhost:60062/recommendations/tutorials/go-by-example/</link>
       <pubDate>Mon, 13 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tutorials/go-by-example/</guid>
+      <guid>http://localhost:60062/recommendations/tutorials/go-by-example/</guid>
       <description>&lt;p&gt;通过带注释的示例程序学习 Go 语言,每个示例都可以直接运行,适合快速上手 Go 语言。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 12</title>
-      <link>http://localhost:53664/recommendations/tools/tool-12/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-12/</link>
       <pubDate>Mon, 13 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-12/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-12/</guid>
       <description>&lt;p&gt;这是第 12 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Postman</title>
-      <link>http://localhost:53664/recommendations/tools/postman/</link>
+      <link>http://localhost:60062/recommendations/tools/postman/</link>
       <pubDate>Sun, 12 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/postman/</guid>
+      <guid>http://localhost:60062/recommendations/tools/postman/</guid>
       <description>&lt;p&gt;API 开发和测试工具,支持 HTTP 请求测试、Mock Server、自动化测试、API 文档生成等功能。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 11</title>
-      <link>http://localhost:53664/recommendations/tools/tool-11/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-11/</link>
       <pubDate>Sun, 12 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-11/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-11/</guid>
       <description>&lt;p&gt;这是第 11 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 10</title>
-      <link>http://localhost:53664/recommendations/tools/tool-10/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-10/</link>
       <pubDate>Sat, 11 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-10/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-10/</guid>
       <description>&lt;p&gt;这是第 10 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 9</title>
-      <link>http://localhost:53664/recommendations/tools/tool-9/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-9/</link>
       <pubDate>Fri, 10 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-9/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-9/</guid>
       <description>&lt;p&gt;这是第 9 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 8</title>
-      <link>http://localhost:53664/recommendations/tools/tool-8/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-8/</link>
       <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-8/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-8/</guid>
       <description>&lt;p&gt;这是第 8 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 7</title>
-      <link>http://localhost:53664/recommendations/tools/tool-7/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-7/</link>
       <pubDate>Wed, 08 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-7/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-7/</guid>
       <description>&lt;p&gt;这是第 7 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 6</title>
-      <link>http://localhost:53664/recommendations/tools/tool-6/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-6/</link>
       <pubDate>Tue, 07 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-6/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-6/</guid>
       <description>&lt;p&gt;这是第 6 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 5</title>
-      <link>http://localhost:53664/recommendations/tools/tool-5/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-5/</link>
       <pubDate>Mon, 06 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-5/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-5/</guid>
       <description>&lt;p&gt;这是第 5 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 4</title>
-      <link>http://localhost:53664/recommendations/tools/tool-4/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-4/</link>
       <pubDate>Sun, 05 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-4/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-4/</guid>
       <description>&lt;p&gt;这是第 4 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 3</title>
-      <link>http://localhost:53664/recommendations/tools/tool-3/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-3/</link>
       <pubDate>Sat, 04 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-3/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-3/</guid>
       <description>&lt;p&gt;这是第 3 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 2</title>
-      <link>http://localhost:53664/recommendations/tools/tool-2/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-2/</link>
       <pubDate>Fri, 03 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-2/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-2/</guid>
       <description>&lt;p&gt;这是第 2 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>开发工具 1</title>
-      <link>http://localhost:53664/recommendations/tools/tool-1/</link>
+      <link>http://localhost:60062/recommendations/tools/tool-1/</link>
       <pubDate>Thu, 02 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/recommendations/tools/tool-1/</guid>
+      <guid>http://localhost:60062/recommendations/tools/tool-1/</guid>
       <description>&lt;p&gt;这是第 1 个测试工具的描述,用于验证当分类下有很多推荐项时的展示效果。&lt;/p&gt;</description>
     </item>
     <item>
       <title>React 19 新特性深度解析</title>
-      <link>http://localhost:53664/2024/01/25/react-19-features/</link>
+      <link>http://localhost:60062/2024/01/25/react-19-features/</link>
       <pubDate>Thu, 25 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/2024/01/25/react-19-features/</guid>
+      <guid>http://localhost:60062/2024/01/25/react-19-features/</guid>
       <description>全面解析 React 19 的新特性，包括 Actions、use Hook、服务器组件等重要更新。</description>
     </item>
     <item>
       <title>我的第一个项目复盘</title>
-      <link>http://localhost:53664/2024/01/25/project-review-example/</link>
+      <link>http://localhost:60062/2024/01/25/project-review-example/</link>
       <pubDate>Thu, 25 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/2024/01/25/project-review-example/</guid>
+      <guid>http://localhost:60062/2024/01/25/project-review-example/</guid>
       <description>回顾最近完成的博客项目，总结经验教训和技术收获。</description>
     </item>
     <item>
       <title>Next.js 最佳实践指南</title>
-      <link>http://localhost:53664/2024/01/20/next-js-best-practices/</link>
+      <link>http://localhost:60062/2024/01/20/next-js-best-practices/</link>
       <pubDate>Sat, 20 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/2024/01/20/next-js-best-practices/</guid>
+      <guid>http://localhost:60062/2024/01/20/next-js-best-practices/</guid>
       <description>深入探讨 Next.js 开发中的最佳实践，包括性能优化、SEO 配置、部署策略等核心话题。</description>
     </item>
     <item>
       <title>Hello World - 我的第一篇博客文章</title>
-      <link>http://localhost:53664/1/01/01/hello-world-%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</link>
+      <link>http://localhost:60062/1/01/01/hello-world-%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/1/01/01/hello-world-%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</guid>
+      <guid>http://localhost:60062/1/01/01/hello-world-%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</guid>
       <description>欢迎来到我的博客！这是第一篇文章，介绍了博客的基本功能和特色。</description>
     </item>
     <item>
       <title>Hello World - 我的第一篇博客文章</title>
-      <link>http://localhost:53664/1/01/01/hello-world/</link>
+      <link>http://localhost:60062/1/01/01/hello-world/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/1/01/01/hello-world/</guid>
+      <guid>http://localhost:60062/1/01/01/hello-world/</guid>
       <description>欢迎来到我的博客！这是第一篇文章，介绍了博客的基本功能和特色。</description>
     </item>
     <item>
       <title>Next.js 最佳实践指南</title>
-      <link>http://localhost:53664/1/01/01/next.js-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/</link>
+      <link>http://localhost:60062/1/01/01/next.js-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/1/01/01/next.js-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/</guid>
+      <guid>http://localhost:60062/1/01/01/next.js-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/</guid>
       <description>深入探讨 Next.js 开发中的最佳实践，包括性能优化、SEO 配置、部署策略等核心话题。</description>
     </item>
     <item>
       <title>React 19 新特性深度解析</title>
-      <link>http://localhost:53664/1/01/01/react-19-%E6%96%B0%E7%89%B9%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/</link>
+      <link>http://localhost:60062/1/01/01/react-19-%E6%96%B0%E7%89%B9%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/1/01/01/react-19-%E6%96%B0%E7%89%B9%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/</guid>
+      <guid>http://localhost:60062/1/01/01/react-19-%E6%96%B0%E7%89%B9%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/</guid>
       <description>全面解析 React 19 的新特性，包括 Actions、use Hook、服务器组件等重要更新。</description>
     </item>
     <item>
       <title>个人博客项目复盘 - 从零到一的完整实践</title>
-      <link>http://localhost:53664/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/</link>
+      <link>http://localhost:60062/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:53664/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/</guid>
+      <guid>http://localhost:60062/1/01/01/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98-%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E8%B7%B5/</guid>
       <description>回顾个人博客从设计到上线的完整过程，分享技术选型、开发经验和遇到的挑战。</description>
     </item>
   </channel>
