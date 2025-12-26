@@ -6,7 +6,7 @@ categories: ["tech"]
 tags: ["Google Gemini CLI", "AI"]
 description: "Mac 下安装使用 Google Gemini CLI 及使用"
 slug: "gemini-demo"
-draft: true
+draft: false
 featured: false
 ---
 
