@@ -27,6 +27,18 @@ jobs:
         env:
           HUGO_ENV: production
 
+      - name: 校验构建产物（删除语义的安全闸）
+        run: |
+          # 必须在本地这一步做，不能放进 ssh-deploy 的 SCRIPT_BEFORE ——
+          # 那个脚本是经 SSH 送到**远端服务器**执行的，在那里查本地构建目录
+          # 必然落空；而且该 action 只把 SCRIPT_BEFORE 失败记成警告，
+          # 整条 run 仍显示绿色（假绿灯）。独立 step 才能真正拦住部署。
+          if [ ! -s public/index.html ]; then
+            echo "构建产物缺失或为空，拒绝部署（rsync --delete 会清空线上站点）" >&2
+            exit 1
+          fi
+          echo "构建产物校验通过：$(find public -type f | wc -l) 个文件"
+
       - name: 部署到服务器
         uses: easingthemes/ssh-deploy@v5.1.0
         with:
@@ -45,13 +57,6 @@ jobs:
           ARGS: "-rlgoDzvc -i --delete-delay"
           SCRIPT_BEFORE: |
             echo "开始部署..."
-            # 安全闸：开了 --delete 之后，源端为空就等于清空线上站点。
-            # 构建产物缺失/为空时直接失败，宁可不发布也不能把站点删空。
-            if [ ! -s "${{ github.workspace }}/public/index.html" ]; then
-              echo "构建产物缺失或为空，拒绝执行 rsync --delete（否则会清空线上站点）" >&2
-              exit 1
-            fi
-            echo "构建产物校验通过：$(find "${{ github.workspace }}/public" -type f | wc -l) 个文件"
           SCRIPT_AFTER: |
             echo "部署完成！"
             # 可以在这里添加其他命令，如重启nginx等
