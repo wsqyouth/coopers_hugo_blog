@@ -52,7 +52,7 @@ localStorage.removeItem('blog-admin');
 在博客目录下执行：
 
 ```bash
-cd /Users/cooperswang/Documents/wsqyouth/coopers_hugo_blog
+cd /Users/moegocooper/Documents/wsqyouth/coopers_hugo_blog
 
 # 添加所有文件到暂存区
 git add .

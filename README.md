@@ -8,6 +8,27 @@
 
 ---
 
+## ✍️ 写与发布（当前主流程）
+
+**在这个仓库里直接写文章是"旧路径"。现在的写法是：在 Obsidian 里写，一条命令发布。**
+
+```
+Obsidian  Blog/  文件夹  →  publish.py  →  本地 hugo 构建验证  →  git push  →  CI 部署（约 2-3 分钟）
+```
+
+| 环节 | 在哪 | 说明 |
+|---|---|---|
+| 写 | `/Users/moegocooper/Documents/ObsidianVault/Blog/` | 唯一写作源。带 front matter 的笔记；模板见 `ObsidianVault/_templates/博客文章.md` |
+| 发布 | `python3 <vault>/_skills/blog-publisher/scripts/publish.py "文章名"` | 一条命令：转格式 → 搬图 → 本地构建验证 → 提交 → 推送。**不需要人工确认** |
+| 上线 | GitHub Actions | `main` 分支 push 触发 `deploy.yml`，构建并 rsync 到服务器 |
+
+细节规则（Obsidian 方言如何转换、分类怎么推断、图片放哪、失败时怎么办）都在 skill 里：
+`ObsidianVault/_skills/blog-publisher/SKILL.md`。
+
+> **本地预览**：`hugo server -D` → http://localhost:1313 （需要先 `git submodule update --init --recursive`）
+
+---
+
 ## ✨ 功能特性
 
 - 🚀 **自动部署** - 推送代码自动触发 GitHub Actions 构建并部署到服务器
@@ -55,14 +76,21 @@ git submodule update --init --recursive
 
 #### 创建文章
 
-```bash
-# 创建新文章
-hugo new posts/my-new-post.md
+日常写作**不在这个仓库里做**——在 Obsidian 的 `Blog/` 文件夹里写，然后一条命令发布：
 
-# 编辑文章（使用你喜欢的编辑器）
-nano content/posts/my-new-post.md
-# 或
-code content/posts/my-new-post.md
+```bash
+# 在 Obsidian 里把笔记写进 Blog/ 文件夹，然后：
+python3 /Users/moegocooper/Documents/ObsidianVault/_skills/blog-publisher/scripts/publish.py "文章名"
+```
+
+脚本会完成：Obsidian 方言转换 → 生成 front matter → 搬运图片 → **本地 hugo 真构建验证** →
+`git commit` → `git push origin main`。
+
+下面的 `hugo new` 方式仍可用于**临时验证**，但它不参与正式发布流：
+
+```bash
+# 临时造一篇看效果（不进发布流）
+hugo new posts/my-new-post.md
 ```
 
 #### 本地预览
