@@ -1,0 +1,21 @@
+{{- /*
+  llms.txt —— 给 AI 爬虫的站点索引（llmstxt.org 约定）。
+  纯静态生成，构建时就把索引算好，不需要任何运行时。
+  模板查找：home 页 + llms 输出格式 → layouts/_default/home.llms.txt
+*/ -}}
+{{- $pages := site.RegularPages.ByDate.Reverse -}}
+# {{ site.Title }}
+
+> {{ site.Params.description | default "技术分享、思考笔记与项目复盘。以中文为主，面向工程师。" }}
+
+{{ with site.Params.categoriesDescription }}>{{ . }}
+
+{{ end }}
+本站为个人技术博客，内容偏工程实践与方法论。共 {{ len $pages }} 篇文章，最近更新于
+{{ with index $pages 0 }}{{ .Date.Format "2006-01-02" }}{{ end }}。
+
+## 最近文章
+
+{{ range first 40 $pages }}
+- [{{ .Title }}]({{ .Permalink }}){{ with .Description }}: {{ . | plainify | truncate 140 }}{{ end }}
+{{ end }}

@@ -1,0 +1,39 @@
+/* ==================== 要点速览（Key Takeaways） ==================== */
+
+.post-takeaways {
+    margin: 22px 0 28px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--theme-color);
+    border-radius: 8px;
+}
+
+.post-takeaways-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    color: var(--theme-color);
+    margin-bottom: 8px;
+}
+
+.post-takeaways ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.post-takeaways li {
+    margin: 4px 0;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--text-dark);
+}
+
+.post-takeaways li::marker {
+    color: var(--theme-color);
+}
+
+/* 列表里带了加粗时，别让加粗盖过主题色 */
+.post-takeaways li strong {
+    color: var(--title-black);
+}

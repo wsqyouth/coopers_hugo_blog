@@ -24,3 +24,6 @@
   {{ $codeCopyMin := $codeCopy | minify | fingerprint }}
   <script src="{{ $codeCopyMin.RelPermalink }}" defer></script>
 {{ end }}
+
+{{- /* Twikoo 评论 + 文章阅读量（envId 未配置时自动不输出） */ -}}
+{{- partial "twikoo.html" . -}}

@@ -1,4 +1,7 @@
-baseURL: http://www.wsqyouth.cn/ # 绑定的域名
+baseURL: https://www.wsqyouth.cn/ # 绑定的域名
+# baseURL 必须是**最终**地址（https）。之前写的是 http，而线上 http 会 301 跳 https，
+# 于是 canonical / og:url / twitter:url / schema.org JSON-LD / sitemap.xml / RSS
+# 全都指向了 http —— 等于告诉搜索引擎"正式地址是 http"，与实际访问到的地址不一致。
 languageCode: zh-cn # en-us
 title: Cooper's Blog
 theme: PaperMod # 主题名字，和themes文件夹下的一致
@@ -62,10 +65,20 @@ languages:
           #   weight: 7
 
 outputs:
-    home:
-        - HTML
-        - RSS
-        - JSON
+  home:
+    - HTML
+    - RSS
+    - JSON
+    - llms
+
+# llms.txt：给 AI 爬虫看的站点索引（llmstxt.org 约定）。纯静态生成，零成本。
+# 内容全在一页里，模型抓一次就知道这个站有什么、值不值得读。
+outputFormats:
+  llms:
+    mediaType: text/plain
+    baseName: llms
+    isPlainText: true
+    notAlternative: true
 
 params:
     env: production # to enable google analytics, opengraph, twitter-cards and schema.
@@ -166,8 +179,15 @@ params:
         minMatchCharLength: 0
         keys: ["title", "permalink", "summary"]
 
+    # Twikoo 评论 + 文章阅读量。
+    # 跑在腾讯云 CloudBase 云函数上，本博客只是调用方 —— 零新增服务要自己运维。
+    # envId 填了才会启用；留空则评论与阅读量都不输出（宁可没有，不要坏掉的评论区）。
+    # 怎么拿 envId：腾讯云 CloudBase 新建环境（基础版免费）→ 部署 Twikoo 云函数
+    # → 复制环境 ID 填到这里。region 是环境所在地域（上海 ap-shanghai / 广州 ap-guangzhou）。
     twikoo:
       version: 1.4.11
+      envId: ""
+      region: "ap-shanghai"
 
 taxonomies:
     category: categories

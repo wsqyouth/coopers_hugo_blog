@@ -15,12 +15,24 @@
                     <a href="{{ printf "/categories/%s" (. | urlize) }}">{{ $categoryName }}</a>
                     {{- end }}
                     {{- end }}
+                    {{- if site.Params.twikoo.envId }}
+                    · <span class="post-pv" data-twikoo-pv="{{ .RelPermalink }}" title="本文阅读量">👁 <span class="pv-loading">…</span></span>
+                    {{- end }}
                 </div>
             </header>
+
+            {{- partial "takeaways.html" . }}
 
             <div class="post-content">
                 {{ .Content }}
             </div>
+
+            {{- if site.Params.twikoo.envId }}
+            <section class="post-comments">
+                <h2 class="post-comments-title">评论</h2>
+                <div id="tcomment"></div>
+            </section>
+            {{- end }}
 
             <footer class="post-footer">
                 <!-- Tags -->

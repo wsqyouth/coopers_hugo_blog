@@ -1,0 +1,27 @@
+{{- /*
+  要点速览（Key Takeaways）。
+
+  在 front matter 里用列表写，渲染成标题与正文之间的摘要块：
+
+      takeaways:
+        - "结论一"
+        - "结论二"
+
+  为什么要它：长文最缺的是"读者 10 秒内能不能判断值不值得读完"。一个摘要块
+  同时解决两件事——读者能快速取舍，AI 搜索引擎能提取到可引用的结论段落
+  （这两年内容被 AI 引用/摘录的渠道权重在上升）。
+
+  没有 takeaways 的文章不渲染任何东西，所以旧文章零改动。
+*/ -}}
+{{- $tk := .Params.takeaways -}}
+{{- if $tk -}}
+{{- if not (reflect.IsSlice $tk) }}{{ $tk = slice $tk }}{{ end -}}
+<div class="post-takeaways">
+  <div class="post-takeaways-label">要点速览</div>
+  <ul>
+    {{- range $tk }}
+    <li>{{ . | markdownify }}</li>
+    {{- end }}
+  </ul>
+</div>
+{{- end -}}
