@@ -18,7 +18,7 @@ Obsidian  Blog/  文件夹  →  publish.py  →  本地 hugo 构建验证  → 
 
 | 环节 | 在哪 | 说明 |
 |---|---|---|
-| 写 | `/Users/moegocooper/Documents/ObsidianVault/Blog/` | 唯一写作源。**只写正文**，不用模板、不用自己写 front matter |
+| 写 | `ObsidianVault/3-个人/Blog/` | 唯一写作源。**只写正文**，不用模板、不用自己写 front matter |
 | 发布 | `python3 <vault>/_skills/blog-publisher/scripts/publish.py "文章名"` | 一条命令：AI 定分类与英文 slug（写回笔记 front matter）→ 转格式 → 搬图 → 本地构建验证 → 提交 → 推送。**不需要人工确认** |
 | 上线 | GitHub Actions | `main` 分支 push 触发 `deploy.yml`，构建并 rsync 到服务器 |
 
