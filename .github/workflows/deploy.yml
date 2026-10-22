@@ -37,8 +37,21 @@ jobs:
           SOURCE: "public/"
           TARGET: ${{ secrets.REMOTE_TARGET }}
           EXCLUDE: ".git*, .github*, node_modules*, **/.DS_Store"
+          # 默认参数是 "-rlgoDzvc -i"，**没有删除语义**：源端删掉的文件在服务器上
+          # 会永远留着 —— 于是「删文章」在线上是假的（实测：仓库只剩 207 个文件，
+          # 服务器堆着 373 个，其中 166 个是已删文章 / 旧 permalink 布局 / 旧 CSS 指纹）。
+          # --delete-delay 而非 --delete：把删除推迟到传输结束再执行，缩短线上
+          # 出现"文件已传完但旧文件还在"的中间态窗口。
+          ARGS: "-rlgoDzvc -i --delete-delay"
           SCRIPT_BEFORE: |
             echo "开始部署..."
+            # 安全闸：开了 --delete 之后，源端为空就等于清空线上站点。
+            # 构建产物缺失/为空时直接失败，宁可不发布也不能把站点删空。
+            if [ ! -s "${{ github.workspace }}/public/index.html" ]; then
+              echo "构建产物缺失或为空，拒绝执行 rsync --delete（否则会清空线上站点）" >&2
+              exit 1
+            fi
+            echo "构建产物校验通过：$(find "${{ github.workspace }}/public" -type f | wc -l) 个文件"
           SCRIPT_AFTER: |
             echo "部署完成！"
             # 可以在这里添加其他命令，如重启nginx等
