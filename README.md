@@ -18,11 +18,11 @@ Obsidian  Blog/  文件夹  →  publish.py  →  本地 hugo 构建验证  → 
 
 | 环节 | 在哪 | 说明 |
 |---|---|---|
-| 写 | `/Users/moegocooper/Documents/ObsidianVault/Blog/` | 唯一写作源。带 front matter 的笔记；模板见 `ObsidianVault/_templates/博客文章.md` |
-| 发布 | `python3 <vault>/_skills/blog-publisher/scripts/publish.py "文章名"` | 一条命令：转格式 → 搬图 → 本地构建验证 → 提交 → 推送。**不需要人工确认** |
+| 写 | `/Users/moegocooper/Documents/ObsidianVault/Blog/` | 唯一写作源。**只写正文**，不用模板、不用自己写 front matter |
+| 发布 | `python3 <vault>/_skills/blog-publisher/scripts/publish.py "文章名"` | 一条命令：AI 定分类与英文 slug（写回笔记 front matter）→ 转格式 → 搬图 → 本地构建验证 → 提交 → 推送。**不需要人工确认** |
 | 上线 | GitHub Actions | `main` 分支 push 触发 `deploy.yml`，构建并 rsync 到服务器 |
 
-细节规则（Obsidian 方言如何转换、分类怎么推断、图片放哪、失败时怎么办）都在 skill 里：
+细节规则（分类判据、英文 slug 规则、`publish: false` 约定、失败时怎么办）都在 skill 里：
 `ObsidianVault/_skills/blog-publisher/SKILL.md`。
 
 > **本地预览**：`hugo server -D` → http://localhost:1313 （需要先 `git submodule update --init --recursive`）
