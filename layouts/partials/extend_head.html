@@ -6,3 +6,25 @@
 {{ $styles := resources.Match "css/extended/shortcode/*.css" }}
 {{ $style := $styles | resources.Concat "assets/css/shortcode.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
+
+{{- /* ===== URL 守卫：三层一致性的最后一道闸 =====
+
+     一致性涉及三层：front matter 的取值（slug/标签/分类/系列）
+     → term 页的 key 与显示名 → 渲染层怎么取。
+
+     靠约定维持必然漏：Hugo 对中文 URL **不报任何错**，它会静默上线一个
+     难分享、难搜索的 URL。所以这里不靠"记得写英文"，而是让构建直接失败。
+
+     检查对象只取**当前页面自己的 RelPermalink**：
+     页面 URL 由 front matter 决定，标签/分类/系列页各自也有自己的 URL，
+     每个页面只报一次，不会刷屏。旧地址的跳转桩由 alias 生成、不走模板，
+     故意保留中文路径，不受影响。
+
+     判定方式：把 URL 解码后（url.URL.Path 是解码后的路径），
+     剔掉 [A-Za-z0-9/._-] 之外的字符；剔不干净 = 路径里有非 ASCII。 */ -}}
+{{- $path := .RelPermalink -}}
+{{- with urls.Parse .RelPermalink }}{{ $path = .Path }}{{ end -}}
+{{- $cleaned := replaceRE "[^A-Za-z0-9/._-]" "" $path -}}
+{{- if ne $cleaned $path -}}
+    {{- errorf "URL 守卫：%s 的对外 URL 含非 ASCII 字符（%s）。URL 必须全英文——改 front matter 的 slug/标签/系列值；中文显示名请放到 content/tags/<英文key>/_index.md 的 title 里。" .RelPermalink $path -}}
+{{- end -}}

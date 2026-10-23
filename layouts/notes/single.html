@@ -1,0 +1,23 @@
+{{- /* 单条笔记：同样不要标题、不要相关文章、不要上下篇、不要评论区。
+       笔记是轻的，页面也必须是轻的。 */ -}}
+{{- define "main" }}
+<div class="main-container single-post-layout">
+    <div class="single-content-wrapper">
+        <a class="back-home-link" href="/notes/">‹ 返回笔记流</a>
+
+        <article class="note-single">
+            <div class="note-meta">
+                <time datetime="{{ .Date }}">{{ .Date.Format "2006-01-02 15:04" }}</time>
+                {{- with .GetTerms "tags" }}
+                <span class="note-tags">
+                    {{- range . }}<a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>{{ end -}}
+                </span>
+                {{- end }}
+            </div>
+            <div class="note-body">
+                {{ .Content }}
+            </div>
+        </article>
+    </div>
+</div>
+{{- end }}

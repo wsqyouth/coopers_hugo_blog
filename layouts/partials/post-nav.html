@@ -1,0 +1,32 @@
+{{- /* 上一篇 / 下一篇：顺序与首页、列表页完全一致（全部 posts 按时间倒序）。
+     不用 .Prev/.Next，是因为它的作用域依赖 Hugo 的分节规则，这里显式按站点顺序算，行为可预期。
+     标签用「较新 / 较早」而不是「上 / 下一篇」——中文语境下这两个词方向经常被搞反。 */ -}}
+{{- $all := (where site.RegularPages "Type" "in" site.Params.mainSections).ByDate.Reverse -}}
+{{- $idx := -1 -}}
+{{- range $i, $p := $all -}}{{- if eq $p.Permalink $.Permalink -}}{{- $idx = $i -}}{{- end -}}{{- end -}}
+
+{{- if ge $idx 0 -}}
+{{- $newer := false -}}
+{{- $older := false -}}
+{{- if gt $idx 0 -}}{{- $newer = index $all (sub $idx 1) -}}{{- end -}}
+{{- if lt $idx (sub (len $all) 1) -}}{{- $older = index $all (add $idx 1) -}}{{- end -}}
+
+{{- if or $newer $older -}}
+<nav class="post-nav">
+    {{- with $newer -}}
+    <a class="post-nav-item nav-newer" href="{{ .Permalink }}">
+        <span class="nav-label">← 较新一篇</span>
+        <span class="nav-title">{{ .Title }}</span>
+        <span class="nav-date">{{ .Date.Format "2006-01-02" }}</span>
+    </a>
+    {{- end -}}
+    {{- with $older -}}
+    <a class="post-nav-item nav-older" href="{{ .Permalink }}">
+        <span class="nav-label">较早一篇 →</span>
+        <span class="nav-title">{{ .Title }}</span>
+        <span class="nav-date">{{ .Date.Format "2006-01-02" }}</span>
+    </a>
+    {{- end -}}
+</nav>
+{{- end -}}
+{{- end -}}

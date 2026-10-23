@@ -29,7 +29,9 @@
   {{- end }}
 </header>
 
-{{- $pages := site.RegularPages.ByDate.Reverse }}
+{{- /* 只列文章（posts）。原来用 site.RegularPages，会把"关于/搜索/时间轴"
+       这些非文章页也混进归档里；短笔记有自己的 /notes/ 流，也不并进来。 */ -}}
+{{- $pages := (where site.RegularPages "Type" "in" site.Params.mainSections).ByDate.Reverse }}
 
 {{- range $pages.GroupByDate "2006" }}
 <div class="archive-year">

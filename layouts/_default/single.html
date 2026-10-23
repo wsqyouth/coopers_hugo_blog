@@ -15,9 +15,6 @@
                     <a href="{{ printf "/categories/%s" (. | urlize) }}">{{ $categoryName }}</a>
                     {{- end }}
                     {{- end }}
-                    {{- if site.Params.twikoo.envId }}
-                    · <span class="post-pv" data-twikoo-pv="{{ .RelPermalink }}" title="本文阅读量">👁 <span class="pv-loading">…</span></span>
-                    {{- end }}
                 </div>
             </header>
 
@@ -27,20 +24,13 @@
                 {{ .Content }}
             </div>
 
-            {{- if site.Params.twikoo.envId }}
-            <section class="post-comments">
-                <h2 class="post-comments-title">评论</h2>
-                <div id="tcomment"></div>
-            </section>
-            {{- end }}
-
             <footer class="post-footer">
-                <!-- Tags -->
-                {{- if .Params.tags }}
+                <!-- Tags：链接用 term 页的英文 URL，显示名用 term 页标题（中文） -->
+                {{- with .GetTerms "tags" }}
                 <ul class="post-tags">
-                    {{ range .Params.tags }}
-                    <li><a href="/tags/{{ . | urlize }}">{{ . }}</a></li>
-                    {{ end }}
+                    {{- range . }}
+                    <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+                    {{- end }}
                 </ul>
                 {{- end }}
 
@@ -68,6 +58,12 @@
                 {{ end }}
             </footer>
         </article>
+
+        {{- /* 系列导航 / 相关文章 / 上一篇·下一篇 —— 纯模板计算，零后端零第三方依赖 */ -}}
+        {{- partial "series-nav.html" . }}
+        {{- partial "related-posts.html" . }}
+        {{- partial "post-nav.html" . }}
+        {{- partial "giscus.html" . }}
     </div>
 </div>
 {{ end }}

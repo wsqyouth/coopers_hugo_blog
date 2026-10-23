@@ -25,5 +25,5 @@
   <script src="{{ $codeCopyMin.RelPermalink }}" defer></script>
 {{ end }}
 
-{{- /* Twikoo 评论 + 文章阅读量（envId 未配置时自动不输出） */ -}}
-{{- partial "twikoo.html" . -}}
+{{- /* Twikoo（评论 + 阅读量）已于 2026-10-22 整体移除：判定为静态博客的伪需求，
+       且免费体验版部署不了（CORS 白名单为付费专属），要跑需 ¥19.9/月。相关 partial/css 已删。 */ -}}

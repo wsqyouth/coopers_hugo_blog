@@ -1,0 +1,131 @@
+/* ==================== 短笔记流 + 克制的评论区 ==================== */
+
+/* ---------- 笔记流（/notes/） ---------- */
+.notes-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.note-item {
+    position: relative;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: border-color .15s ease;
+}
+
+.note-item:hover {
+    border-color: var(--theme-color);
+}
+
+.note-meta {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: var(--text-gray);
+}
+
+.note-tags a {
+    margin-right: 6px;
+    color: var(--theme-color);
+    text-decoration: none;
+}
+
+.note-tags a:hover {
+    text-decoration: underline;
+}
+
+.note-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--text-dark);
+}
+
+/* 笔记常常只有一两句，别让段间距把它撑成一篇"文章" */
+.note-body p {
+    margin: 0 0 8px;
+}
+
+.note-body p:last-child {
+    margin-bottom: 0;
+}
+
+.note-body pre,
+.note-body img {
+    margin: 8px 0;
+}
+
+/* 固定链接：平时隐形， hover 才出现——不打扰阅读 */
+.note-permalink {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    opacity: 0;
+    text-decoration: none;
+    transition: opacity .15s ease;
+}
+
+.note-item:hover .note-permalink {
+    opacity: .55;
+}
+
+.notes-subscribe {
+    margin-top: 22px;
+    font-size: 13px;
+    color: var(--text-gray);
+}
+
+.notes-subscribe a {
+    color: var(--theme-color);
+}
+
+/* ---------- 克制的评论区入口 ---------- */
+.giscus-entry {
+    margin: 32px 0 8px;
+}
+
+.giscus-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--text-gray);
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+}
+
+.giscus-toggle:hover {
+    border-color: var(--theme-color);
+    color: var(--theme-color);
+}
+
+.giscus-toggle-text {
+    font-weight: 600;
+}
+
+.giscus-toggle-hint {
+    font-size: 12px;
+    opacity: .75;
+}
+
+.giscus-box {
+    margin-top: 16px;
+}
+
+.giscus-box iframe {
+    width: 100%;
+    border: none;
+}

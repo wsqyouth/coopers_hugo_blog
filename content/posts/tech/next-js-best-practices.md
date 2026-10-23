@@ -3,7 +3,7 @@ title: "Next.js 最佳实践指南"
 date: "2024-01-20"
 author: "Cooper"
 categories: ["tech"]
-tags: ["Next.js", "React", "性能优化", "最佳实践"]
+tags: ["Next.js", "React", "performance", "best-practices"]
 description: "深入探讨 Next.js 开发中的最佳实践，包括性能优化、SEO 配置、部署策略等核心话题"
 slug: "next-js-best-practices"
 draft: false

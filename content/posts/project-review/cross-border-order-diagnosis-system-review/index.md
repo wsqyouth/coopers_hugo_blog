@@ -3,7 +3,7 @@ title: "跨境订单智能诊断系统复盘"
 date: "2026-03-12"
 author: "Cooper"
 categories: ["project-review"]
-tags: ["Go", "系统设计", "AI 编程"]
+tags: ["Go", "system-design", "ai-coding"]
 description: "记录跨境订单智能诊断系统的完整开发历程，从产品定位、技术架构到 AI 编程范式和压测调试经验"
 slug: "cross-border-order-diagnosis-system-review"
 draft: false

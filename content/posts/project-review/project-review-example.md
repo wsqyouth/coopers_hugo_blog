@@ -3,7 +3,7 @@ title: "Cooper's Blog 使用指南与功能说明"
 date: "2025-12-25"
 author: "Cooper"
 categories: ["project-review"]
-tags: ["博客", "Hugo", "使用指南", "功能文档"]
+tags: ["blog", "Hugo", "usage-guide", "feature-docs"]
 description: "Cooper's Blog 完整功能说明、维护指南和最佳实践，包括如何添加文章、配置分类、使用代码块等"
 slug: "blog-guide-and-features"
 draft: false

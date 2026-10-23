@@ -1,0 +1,57 @@
+{{- /* 克制的评论区（Giscus / GitHub Discussions）。
+
+       设计取舍：绝大多数读者不会留言，所以评论区不该常驻占视觉空间。
+       默认只渲染一个入口按钮，点一下才真正加载 Giscus 脚本（懒加载）。
+
+       干净降级：repo / repoId / categoryId 任一没配，就什么都不输出——
+       宁可没有评论区，也不要一个坏掉的评论区。 */ -}}
+{{- $g := site.Params.giscus -}}
+{{- if and $g.repo $g.repoId $g.categoryId -}}
+{{- if ne (.Param "comments") false -}}
+<div class="giscus-entry">
+    <button class="giscus-toggle" id="giscus-toggle" type="button" aria-expanded="false">
+        <span class="giscus-toggle-text">💬 说点什么</span>
+        <span class="giscus-toggle-hint">GitHub 账号留言 · 点击才加载</span>
+    </button>
+    <div class="giscus-box" id="giscus-box" hidden></div>
+</div>
+<script>
+    (function () {
+        var btn = document.getElementById('giscus-toggle');
+        var box = document.getElementById('giscus-box');
+        if (!btn || !box) return;
+        btn.addEventListener('click', function () {
+            // 已加载过：只做展开/收起，不再请求
+            if (box.dataset.loaded) {
+                box.hidden = !box.hidden;
+                btn.setAttribute('aria-expanded', String(!box.hidden));
+                btn.querySelector('.giscus-toggle-text').textContent =
+                    box.hidden ? '💬 说点什么' : '收起评论';
+                return;
+            }
+            var s = document.createElement('script');
+            s.src = 'https://giscus.app/client.js';
+            s.setAttribute('data-repo', '{{ $g.repo }}');
+            s.setAttribute('data-repo-id', '{{ $g.repoId }}');
+            s.setAttribute('data-category', '{{ $g.category | default "Announcements" }}');
+            s.setAttribute('data-category-id', '{{ $g.categoryId }}');
+            s.setAttribute('data-mapping', '{{ $g.mapping | default "pathname" }}');
+            s.setAttribute('data-strict', '1');
+            s.setAttribute('data-reactions-enabled', '{{ $g.reactions | default "1" }}');
+            s.setAttribute('data-emit-metadata', '0');
+            s.setAttribute('data-input-position', '{{ $g.inputPosition | default "bottom" }}');
+            s.setAttribute('data-theme', 'preferred_color_scheme');
+            s.setAttribute('data-lang', '{{ $g.lang | default "zh-CN" }}');
+            s.setAttribute('data-loading', 'lazy');
+            s.crossOrigin = 'anonymous';
+            s.async = true;
+            box.appendChild(s);
+            box.dataset.loaded = '1';
+            box.hidden = false;
+            btn.setAttribute('aria-expanded', 'true');
+            btn.querySelector('.giscus-toggle-text').textContent = '收起评论';
+        });
+    })();
+</script>
+{{- end -}}
+{{- end -}}

@@ -3,7 +3,7 @@ title: "Hello World - 我的第一篇博客文章"
 date: "2025-01-01"
 author: "Cooper"
 categories: ["thinking"]
-tags: ["博客", "Welcome"]
+tags: ["blog", "Welcome"]
 description: "欢迎来到我的博客！这是第一篇文章，介绍了博客的基本功能和特色。"
 slug: "hello-world"
 draft: false

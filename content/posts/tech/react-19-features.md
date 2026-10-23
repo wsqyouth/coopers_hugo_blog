@@ -3,7 +3,7 @@ title: "React 19 新特性深度解析"
 date: "2024-01-25"
 author: "Cooper"
 categories: ["tech"]
-tags: ["React", "React 19", "前端开发"]
+tags: ["React", "React 19", "frontend"]
 description: "全面解析 React 19 的新特性，包括 Actions、use Hook、服务器组件等重要更新"
 slug: "react-19-features"
 draft: false

@@ -3,7 +3,7 @@ title: "2 小时小型项目实战执行手册（工程师高级版）"
 date: 2026-03-19
 author: "Cooper"
 categories: ["project-review"]
-tags: ["AI 协作", "项目管理", "工程方法论"]
+tags: ["ai-collaboration", "project-management", "engineering-methodology"]
 description: "一套经过实战验证的 2 小时小型项目执行方法论，涵盖需求对齐、技术规范、任务拆分、多 AI 并行开发、验收审核等完整流程，帮助工程师高效交付可控质量的项目。"
 slug: "2-hour-ai-project-handbook"
 draft: false

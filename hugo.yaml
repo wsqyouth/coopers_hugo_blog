@@ -55,14 +55,22 @@ languages:
             name: 分类
             url: categories/
             weight: 3
+          - identifier: notes
+            name: 笔记
+            url: notes/
+            weight: 4
+          - identifier: projects
+            name: 项目
+            url: projects/
+            weight: 5
           - identifier: about
             name: 关于
             url: about/
-            weight: 4
-          # - identifier: search
-          #   name: 🔍搜索
-          #   url: search
-          #   weight: 7
+            weight: 6
+          - identifier: search
+            name: 🔍 搜索
+            url: search
+            weight: 7
 
 outputs:
   home:
@@ -124,14 +132,18 @@ params:
     ShowCodeCopyButtons: true
     hideFooter: false # 隐藏页脚
     ShowWordCounts: true
-    VisitCount: true
+    # 关闭访客计数（PaperMod 的不蒜子）。个人思考博客的价值不在访问量指标，
+    # 阅读量/评论这类"互动装饰"已整体判定为伪需求并移除（见下方 comments 说明）。
+    VisitCount: false
 
     ShowLastMod: true #显示文章更新时间
 
     ShowToc: true # 显示目录
     TocOpen: true # 自动展开目录
 
-    comments: true
+    # 无评论系统（刻意为之）：Twikoo + 腾讯云 CloudBase 需 ¥19.9/月且引入第三方后端，
+    # 2026-10-22 判定为伪需求。将来若要评论，优先 GitHub Discussions / Giscus 这类零后端方案。
+    comments: false
     
     socialIcons:
         - name: github
@@ -179,15 +191,28 @@ params:
         minMatchCharLength: 0
         keys: ["title", "permalink", "summary"]
 
-    # Twikoo 评论 + 文章阅读量。
-    # 跑在腾讯云 CloudBase 云函数上，本博客只是调用方 —— 零新增服务要自己运维。
-    # envId 填了才会启用；留空则评论与阅读量都不输出（宁可没有，不要坏掉的评论区）。
-    # 怎么拿 envId：腾讯云 CloudBase 新建环境（基础版免费）→ 部署 Twikoo 云函数
-    # → 复制环境 ID 填到这里。region 是环境所在地域（上海 ap-shanghai / 广州 ap-guangzhou）。
-    twikoo:
-      version: 1.4.11
-      envId: ""
-      region: "ap-shanghai"
+    # Twikoo（评论 + 阅读量，腾讯云 CloudBase）曾配置于此，2026-10-22 判定为伪需求整体移除：
+    # 静态个人博客的价值在内容可读与可发现，不在互动指标；且免费体验版根本部署不了
+    # （CORS 白名单为付费专属），要跑起来得付 ¥19.9/月，性价比不成立。
+    # 相关 partial / shortcode / css 已同步删除，如需复活见 git history。
+
+    # 克制的评论区：Giscus，用 GitHub Discussions 当后端。
+    # 免费、无追踪、无广告，数据在自己仓库里；站点保持纯静态，不引入任何要运维的服务。
+    # 刻意不做成常驻评论区——绝大多数读者不留言，常驻只会占用阅读空间。
+    # 现在默认只渲染一个入口按钮，点一下才加载（见 layouts/partials/giscus.html）。
+    #
+    # 三个 id 齐了才会渲染，缺任何一个就什么都不输出（干净降级）。
+    # 开通步骤（一次性，约 2 分钟）：
+    #   1. 仓库 Settings → General → Features → 勾选 Discussions
+    #   2. 安装 giscus app：https://github.com/apps/giscus （选 coopers_hugo_blog）
+    #   3. 到 https://giscus.app 填仓库名，复制生成的 category-id 填到下面
+    giscus:
+      repo: "wsqyouth/coopers_hugo_blog"
+      repoId: "R_kgDOQuhelQ"
+      category: "Announcements"
+      categoryId: ""
+      mapping: "pathname"
+      lang: "zh-CN"
 
 taxonomies:
     category: categories

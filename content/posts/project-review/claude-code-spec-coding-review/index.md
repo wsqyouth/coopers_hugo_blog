@@ -3,7 +3,7 @@ title: "Claude Code 的 Spec Coding 项目实战总结"
 date: "2026-03-13"
 author: "Cooper"
 categories: ["project-review"]
-tags: ["AI 编程", "Spec Coding", "项目复盘"]
+tags: ["ai-coding", "Spec Coding", "project-review"]
 description: "10 天时间，10,428 行代码，基于 Claude Code 的 Spec Coding 方法实现从 0 到 1 的前后端项目搭建。本文复盘整个 AI 编程实战过程，分享规范编程经验与 AI 能力边界的思考。"
 slug: "claude-code-spec-coding-review"
 draft: false

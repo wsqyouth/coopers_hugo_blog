@@ -3,7 +3,7 @@ title: "基于 Claude 制作文章发布助手 Skill"
 date: "2026-03-06"
 author: "Cooper"
 categories: ["project-review"]
-tags: ["Claude", "Skill", "自动化", "Hugo"]
+tags: ["Claude", "Skill", "automation", "Hugo"]
 description: "通过创建 Claude Skill 实现博客发布自动化，将 Obsidian 笔记一键转换为 Hugo 博客文章，大幅提升发布效率"
 slug: "claude-blog-publisher-skill"
 draft: false

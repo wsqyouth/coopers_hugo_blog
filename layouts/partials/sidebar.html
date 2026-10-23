@@ -43,7 +43,8 @@
     <section class="widget archives">
         <h3 class="widget-title">📅 归档</h3>
         <ul class="widget-list">
-            {{ range (.Site.RegularPages.ByDate.Reverse).GroupByDate "2006-01" }}
+            {{- /* 只统文章（posts），别把"关于/搜索/装备/项目"这些页面混进时间线 */ -}}
+            {{ range (where .Site.RegularPages "Type" "in" site.Params.mainSections).ByDate.Reverse.GroupByDate "2006-01" }}
             <li>
                 <a href="/archives/#{{ .Key }}">{{ (index .Pages 0).Date.Format "2006年01月" }}</a>
                 <span class="count">({{ len .Pages }})</span>

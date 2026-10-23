@@ -1,0 +1,41 @@
+{{- /* 短笔记流：flomo 式的时间线——只有日期 + 内容，没有标题、没有摘要、没有"阅读全文"。
+       刻意不做分页：笔记是越滚越长的溪流，翻页反而打断阅读。 */ -}}
+{{- define "main" }}
+<div class="main-container">
+    <div class="content-left">
+        <header class="page-header">
+            <h1>{{ .Title }}</h1>
+            {{- with .Description }}
+            <div class="post-description">{{ . }}</div>
+            {{- end }}
+        </header>
+
+        <div class="notes-stream">
+            {{- range .RegularPages.ByDate.Reverse }}
+            <article class="note-item">
+                <div class="note-meta">
+                    <time datetime="{{ .Date }}">{{ .Date.Format "2006-01-02 15:04" }}</time>
+                    {{- with .GetTerms "tags" }}
+                    <span class="note-tags">
+                        {{- range . }}<a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>{{ end -}}
+                    </span>
+                    {{- end }}
+                </div>
+                <div class="note-body">
+                    {{ .Content }}
+                </div>
+                <a class="note-permalink" href="{{ .Permalink }}" title="这条笔记的固定链接" aria-label="permalink">🔗</a>
+            </article>
+            {{- end }}
+        </div>
+
+        <p class="notes-subscribe">
+            订阅：<a href="/notes/index.xml">短笔记 RSS</a>（与文章 RSS 分开，互不打扰）
+        </p>
+    </div>
+
+    <div class="sidebar-right">
+        {{ partial "sidebar.html" . }}
+    </div>
+</div>
+{{- end }}

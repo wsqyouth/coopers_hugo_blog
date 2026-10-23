@@ -24,7 +24,11 @@
                 {{- $categoryName := index $.Site.Params.categoryNames $categoryKey | default .Name }}
                 {{ $categoryName }}
             {{- else }}
-                {{ .Name }}
+                {{- /* term 页（content/<taxonomy>/<term>/_index.md）写了 title 就优先显示它：
+                       这样 series 能用英文 key 做 URL、中文做显示名 */ -}}
+                {{- $termTitle := .Name -}}
+                {{- with .Page }}{{ $termTitle = .Title }}{{ end -}}
+                {{ $termTitle }}
             {{- end }}
             <sup><strong><sup>{{ $count }}</sup></strong></sup>
         </a>

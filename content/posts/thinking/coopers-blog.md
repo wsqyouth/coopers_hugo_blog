@@ -3,7 +3,7 @@ title: "欢迎来到 Cooper's Blog"
 date: "2025-01-20"
 author: "Cooper"
 categories: ["thinking"]
-tags: ["Welcome", "博客"]
+tags: ["Welcome", "blog"]
 description: "欢迎来到我的个人博客"
 slug: "welcome"
 draft: false

@@ -37,3 +37,8 @@
 .post-takeaways li strong {
     color: var(--title-black);
 }
+
+/* 暗色下要点速览底色跟随卡片色（原放在 reading-stats.css，随 Twikoo 移除一并归档到这里） */
+.dark .post-takeaways {
+    background: var(--bg-card);
+}

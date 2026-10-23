@@ -3,7 +3,7 @@ title: "基于 golang 构建一个专家级 ReAct 学习助手"
 date: "2025-12-26"
 author: "Cooper"
 categories: ["tech"]
-tags: ["ReAct", "golang"]
+tags: ["re-act", "golang"]
 description: "基于 golang 构建一个专家级 ReAct 学习助手"
 slug: "react-demo"
 draft: false

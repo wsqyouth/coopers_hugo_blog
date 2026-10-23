@@ -1,0 +1,44 @@
+{{- /* 系列导航：front matter 写了 series: <英文key> 时才出现。
+     同系列按发布时间正序列出，标出"第几篇 / 共几篇"。
+     用英文 key（配 content/series/<key>/_index.md 写中文标题）是为了 URL 不含中文。 */ -}}
+{{- with .Params.series -}}
+{{- $key := . -}}
+{{- if reflect.IsSlice . }}{{ $key = index . 0 }}{{ end -}}
+{{- /* series 的展示页（content/series/<key>/_index.md），用它做中文显示名 + 链接 */ -}}
+{{- $termPage := site.GetPage (printf "/series/%s" (urlize $key)) -}}
+
+{{- /* 手工聚合而非 where "intersect"：同时兼容 string 与 list 两种写法 */ -}}
+{{- $siblings := slice -}}
+{{- range where site.RegularPages "Type" "in" site.Params.mainSections -}}
+    {{- $s := .Params.series -}}
+    {{- if reflect.IsSlice $s }}{{ $s = index $s 0 }}{{ end -}}
+    {{- if eq $s $key -}}
+        {{- $siblings = $siblings | append . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- /* 只有一篇不算系列，不渲染 */ -}}
+{{- if gt (len $siblings) 1 -}}
+{{- $siblings = $siblings.ByDate -}}
+{{- $idx := 0 -}}
+{{- range $i, $p := $siblings -}}{{- if eq $p.Permalink $.Permalink -}}{{- $idx = $i -}}{{- end -}}{{- end -}}
+
+<section class="series-nav">
+    <div class="series-head">
+        <span class="series-label">系列</span>
+        <span class="series-name">
+            {{- with $termPage -}}<a href="{{ .Permalink }}">{{ .Title }}</a>{{- else -}}{{ $key }}{{- end -}}
+        </span>
+        <span class="series-progress">第 {{ add $idx 1 }} / {{ len $siblings }} 篇</span>
+    </div>
+    <ol class="series-list">
+        {{- range $i, $p := $siblings -}}
+        <li class="series-item{{ if eq $p.Permalink $.Permalink }} is-current{{ end }}">
+            <a href="{{ $p.Permalink }}">{{ $p.Title }}</a>
+            <span class="series-item-date">{{ $p.Date.Format "2006-01-02" }}</span>
+        </li>
+        {{- end -}}
+    </ol>
+</section>
+{{- end -}}
+{{- end -}}

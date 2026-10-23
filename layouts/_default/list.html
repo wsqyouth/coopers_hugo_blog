@@ -30,7 +30,9 @@
                 </h2>
             </header>
             <div class="entry-content">
-                <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
+                {{- /* 摘要优先用 front matter 的 description（发布时由 AI 概括），
+                       没有才退回 Hugo 自动截断——自动截断常切在半句话上。 */ -}}
+                <p>{{ with .Description }}{{ . | plainify | htmlUnescape }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}{{ end }}</p>
                 <a class="read-more" href="{{ .Permalink }}">阅读全文 > </a>
             </div>
             {{- if not (in (slice "search" "archives") .Layout) }}

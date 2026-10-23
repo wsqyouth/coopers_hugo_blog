@@ -57,3 +57,11 @@ showToc: false
 - **Email**: [wsqyouth@qq.com](mailto:wsqyouth@qq.com)
 - **GitHub**: [wsqyouth](https://github.com/wsqyouth/)
 - **Phone**: 139-****-8760
+
+---
+
+## 在这个站上
+
+- [项目](/projects/)——我在做、并且在用的东西，按成熟度排
+- [装备](/uses/)——真正每天在用的工具
+- [笔记](/notes/)——比文章轻一档的短记录
