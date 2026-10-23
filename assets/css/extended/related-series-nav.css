@@ -13,7 +13,7 @@
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-left: 3px solid var(--theme-color);
-    border-radius: 8px;
+    border-radius: var(--radius);
 }
 
 .series-head {
@@ -32,7 +32,7 @@
     font-weight: 600;
     color: var(--bg-card);
     background: var(--theme-color);
-    border-radius: 4px;
+    border-radius: var(--radius);
 }
 
 .series-name {
@@ -147,9 +147,9 @@
     padding: 12px 16px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: var(--radius);
     text-decoration: none;
-    transition: border-color .15s ease;
+    transition: border-color var(--motion);
 }
 
 .post-nav-item:hover {

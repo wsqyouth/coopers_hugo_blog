@@ -1,73 +1,100 @@
-{{ define "main" }}
-<div class="main-container">
-    <div class="content-left">
-        {{- $pages := .RegularPages }}
-        {{- if .IsHome }}
-        {{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
-        {{- end }}
-        {{- if $pages }}
-        {{- $pages = $pages.ByDate.Reverse }}
-        {{- end }}
+{{- define "main" }}
+{{- $page := . -}}
 
-        {{- $paginator := .Paginate $pages }}
+{{- /* 页面身份决定页头怎么写：
+     · 首页      → 不出页头（直接是文章流），保持首屏干净
+     · term 页   → 出页头，标题用中文显示名（分类走 categoryNames 映射）
+     · 其它列表 → 出页头，标题用页面自己的 Title
+*/ -}}
+{{- $isTerm := eq .Kind "term" -}}
+{{- $title := .Title -}}
+{{- $eyebrow := "" -}}
+{{- $desc := "" -}}
 
-        {{- if and .Title (not .IsHome) }}
-        <header class="page-header">
-            <h1>{{ .Title }}</h1>
-            {{- if .Description }}
-            <div class="post-description">
-                {{ .Description }}
-            </div>
-            {{- end }}
-        </header>
-        {{- end }}
+{{- if .IsHome -}}
+    {{- /* 首页不显示 H1（站名已经在顶栏，重复一遍是噪音） */ -}}
+    {{- $title = "" -}}
+{{- end -}}
 
-        {{ range $paginator.Pages }}
+{{- if and $isTerm (eq .Type "categories") -}}
+    {{- $title = index site.Params.categoryNames .Data.Term | default .Title -}}
+{{- end -}}
+
+{{- $pages := .RegularPages -}}
+{{- if .IsHome -}}
+    {{- /* 用 Section 过滤而不是 Type —— Type 会被文章自己的 categories
+           覆盖（tech/thinking…），用它匹配 "posts" 会漏掉文章。
+           Section 稳定等于目录名 posts。 */ -}}
+    {{- $pages = where site.RegularPages "Section" "in" site.Params.mainSections -}}
+{{- end -}}
+{{- if $pages -}}
+    {{- $pages = $pages.ByDate.Reverse -}}
+{{- end -}}
+
+{{- $paginator := .Paginate $pages -}}
+
+{{- /* 正文区：文章流
+       注意：printf 产出的是普通字符串，直接输出会被 HTML 转义（&lt;article）。
+       所以每一步累积都要过 safeHTML 保持它是 template.HTML。 */ -}}
+{{- $body := "" -}}
+{{- range $paginator.Pages -}}
+    {{- $summary := partial "list-summary.html" . -}}
+    {{- $entry := printf `
         <article class="post-entry">
             <header class="entry-header">
-                <h2>
-                    <a href="{{ .Permalink }}">{{ .Title }}</a>
-                </h2>
+                <h2><a href="%s">%s</a></h2>
             </header>
             <div class="entry-content">
-                {{- /* 摘要优先用 front matter 的 description（发布时由 AI 概括），
-                       没有才退回 Hugo 自动截断——自动截断常切在半句话上。 */ -}}
-                <p>{{ with .Description }}{{ . | plainify | htmlUnescape }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}{{ end }}</p>
-                <a class="read-more" href="{{ .Permalink }}">阅读全文 > </a>
+                <p>%s</p>
             </div>
-            {{- if not (in (slice "search" "archives") .Layout) }}
             <footer class="entry-footer">
-                <span title='{{ .Date.Format "2006-01-02 15:04:05" }}'>
-                    🕒 {{ .Date.Format "2006年01月02日" }}
-                </span>
-                &nbsp;·&nbsp;
-                <span>{{ .WordCount }} 字</span>
+                <span class="entry-meta">%s</span>
+                <a class="read-more" href="%s" aria-label="阅读全文：%s">阅读全文 →</a>
             </footer>
-            {{- end }}
-        </article>
-        {{ end }}
+        </article>`
+        .Permalink
+        (.Title | htmlEscape)
+        ($summary | htmlEscape)
+        (partial "article-meta.html" .)
+        .Permalink
+        (.Title | htmlEscape)
+    -}}
+    {{- $body = (printf "%s%s" $body $entry) | safeHTML -}}
+{{- end -}}
 
-        {{- if gt $paginator.TotalPages 1 }}
+{{- if gt $paginator.TotalPages 1 -}}
+    {{- /* 分页链接不能用 cond —— Hugo 的 cond 两个分支都会求值，
+           没有上一页时访问 .Prev.URL 会命中 nil 而报错。
+           这里是两个独立的 if，各自只在自己成立时才求值。 */ -}}
+    {{- $prev := `<span class="prev disabled">上一页</span>` -}}
+    {{- if $paginator.HasPrev -}}
+        {{- $prev = printf `<a class="prev" href="%s">上一页</a>` $paginator.Prev.URL -}}
+    {{- end -}}
+    {{- $next := `<span class="next disabled">下一页</span>` -}}
+    {{- if $paginator.HasNext -}}
+        {{- $next = printf `<a class="next" href="%s">下一页</a>` $paginator.Next.URL -}}
+    {{- end -}}
+    {{- $pg := printf `
         <footer class="page-pagination">
             <nav class="pagination-bar">
-                {{- if $paginator.HasPrev }}
-                <a class="prev" href="{{ $paginator.Prev.URL }}">上一页</a>
-                {{- else }}
-                <span class="prev disabled">上一页</span>
-                {{- end }}
-                <span class="num">第 {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }} 页</span>
-                {{- if $paginator.HasNext }}
-                <a class="next" href="{{ $paginator.Next.URL }}">下一页</a>
-                {{- else }}
-                <span class="next disabled">下一页</span>
-                {{- end }}
+                %s
+                <span class="num">第 %d / %d 页</span>
+                %s
             </nav>
-        </footer>
-        {{- end }}
-    </div>
+        </footer>`
+        $prev
+        $paginator.PageNumber
+        $paginator.TotalPages
+        $next
+    -}}
+    {{- $body = (printf "%s%s" $body $pg) | safeHTML -}}
+{{- end -}}
 
-    <div class="sidebar-right">
-        {{ partial "sidebar.html" . }}
-    </div>
-</div>
-{{ end }}
+{{ partial "list-shell.html" (dict
+    "page" $page
+    "title" $title
+    "description" $desc
+    "eyebrow" $eyebrow
+    "body" $body
+) }}
+{{- end }}

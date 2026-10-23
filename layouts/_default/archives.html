@@ -1,88 +1,62 @@
 {{- define "main" }}
-
-<div class="main-container">
-  <div class="content-left">
-    <header class="page-header">
-  <h1>
-    {{ .Title }}
-    {{- if (.Param "ShowRssButtonInSectionTermList") }}
-    {{- $rss := (.OutputFormats.Get "rss") }}
-    {{- if (eq .Kind `page`) }}
-    {{- $rss = (.Parent.OutputFormats.Get "rss") }}
-    {{- end }}
-    {{- with $rss }}
-    <a href="{{ .RelPermalink }}" title="RSS" aria-label="RSS">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" height="23">
-        <path d="M4 11a9 9 0 0 1 9 9" />
-        <path d="M4 4a16 16 0 0 1 16 16" />
-        <circle cx="5" cy="19" r="1" />
-      </svg>
-    </a>
-    {{- end }}
-    {{- end }}
-  </h1>
-  {{- if .Description }}
-  <div class="post-description">
-    {{ .Description }}
-  </div>
-  {{- end }}
-</header>
+{{- $page := . -}}
 
 {{- /* 只列文章（posts）。原来用 site.RegularPages，会把"关于/搜索/时间轴"
-       这些非文章页也混进归档里；短笔记有自己的 /notes/ 流，也不并进来。 */ -}}
-{{- $pages := (where site.RegularPages "Type" "in" site.Params.mainSections).ByDate.Reverse }}
+       这些非文章页也混进归档里；短笔记有自己的 /notes/ 流，也不并进来。
+       过滤条件用 Section 而不是 Type —— Type 会被文章自己的 categories
+       覆盖，用 Section 才稳定等于 posts。 */ -}}
+{{- $pages := (where site.RegularPages "Section" "in" site.Params.mainSections).ByDate.Reverse -}}
 
-{{- range $pages.GroupByDate "2006" }}
-<div class="archive-year">
-  <h2 class="archive-year-header" id="{{ .Key }}">
-    <a class="archive-header-link" href="#{{ .Key }}">
-      {{ (index .Pages 0).Date.Format "2006" }}年
-    </a>
-    <sup class="archive-count">&nbsp;{{ len .Pages }}</sup>
-  </h2>
-  {{- range .Pages.GroupByDate "2006-01" }}
-  <div class="archive-month">
-    <h3 class="archive-month-header" id="{{ .Key }}">
-      <a class="archive-header-link" href="#{{ .Key }}">
-        {{ (index .Pages 0).Date.Format "2006年01月" }}
-      </a>
-      <sup class="archive-count">&nbsp;{{ len .Pages }}</sup>
-    </h3>
-    <div class="archive-posts">
-      {{- range .Pages }}
-      {{- if eq .Kind "page" }}
-      <div class="archive-entry">
-        <h3 class="archive-entry-title entry-hint-parent">
-          {{- .Title | markdownify }}
-          {{- if .Draft }}
-          <span class="entry-hint" title="Draft">
-            <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 -960 960 960" fill="currentColor">
-              <path
-                d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
-            </svg>
-          </span>
-          {{- end }}
-        </h3>
-        <div class="archive-meta">
-          <span>🕒 {{ .Date.Format "2006年01月02日" }}</span>
-          &nbsp;·&nbsp;
-          <span>{{ .WordCount }} 字</span>
-        </div>
-        <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
-      </div>
-      {{- end }}
-      {{- end }}
-    </div>
-  </div>
-  {{- end }}
-</div>
-{{- end }}
-  </div>
+{{- $body := "" -}}
+{{- range $pages.GroupByDate "2006" -}}
+    {{- $year := (index .Pages 0).Date.Format "2006" -}}
+    {{- $yearCount := len .Pages -}}
+    {{- $yearBlock := printf `<div class="archive-year">
+        <h2 class="archive-year-header" id="%s">
+            <a class="archive-header-link" href="#%s">%s年</a>
+            <sup class="archive-count">&nbsp;%d</sup>
+        </h2>` $year $year $year $yearCount -}}
 
-  <div class="sidebar-right">
-    {{ partial "sidebar.html" . }}
-  </div>
-</div>
+    {{- range .Pages.GroupByDate "2006-01" -}}
+        {{- $month := (index .Pages 0).Date.Format "2006年01月" -}}
+        {{- $monthKey := (index .Pages 0).Date.Format "2006-01" -}}
+        {{- $monthCount := len .Pages -}}
+        {{- $monthBlock := printf `<div class="archive-month">
+            <h3 class="archive-month-header" id="%s">
+                <a class="archive-header-link" href="#%s">%s</a>
+                <sup class="archive-count">&nbsp;%d</sup>
+            </h3>
+            <div class="archive-posts">` $monthKey $monthKey $month $monthCount -}}
 
+        {{- range .Pages -}}
+            {{- $item := printf `<div class="archive-entry">
+                <h3 class="archive-entry-title entry-hint-parent">%s</h3>
+                <div class="archive-meta">
+                    %s
+                </div>
+                <a class="entry-link" aria-label="post link to %s" href="%s"></a>
+            </div>`
+                (.Title | htmlEscape)
+                (partial "article-meta.html" .)
+                (.Title | plainify | htmlEscape)
+                .Permalink
+            -}}
+            {{- $monthBlock = printf "%s%s" $monthBlock $item -}}
+        {{- end -}}
+
+        {{- $monthBlock = printf "%s</div></div>" $monthBlock -}}
+        {{- $yearBlock = printf "%s%s" $yearBlock $monthBlock -}}
+    {{- end -}}
+
+    {{- $yearBlock = printf "%s</div>" $yearBlock -}}
+    {{- $body = (printf "%s%s" $body $yearBlock) | safeHTML -}}
+{{- end -}}
+
+{{ partial "list-shell.html" (dict
+    "page" $page
+    "title" "归档"
+    "description" ""
+    "eyebrow" ""
+    "body" $body
+) }}
 {{- end }}{{/* end main */}}

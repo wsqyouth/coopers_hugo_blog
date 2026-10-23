@@ -1,0 +1,25 @@
+{{- with site.Params.authorIntro }}
+<section class="author-intro" aria-label="关于作者">
+    <a class="author-heading" href="{{ "about/" | relURL }}">
+        <span class="author-monogram" aria-hidden="true">C</span>
+        <span>{{ site.Params.author }}</span>
+    </a>
+    <p class="author-bio">{{ .bio }}</p>
+    <p class="author-links"><a href="{{ "projects/" | relURL }}">我的作品</a><a href="{{ "about/" | relURL }}">关于我</a></p>
+    {{- with .wechatQR }}
+    <div class="author-wechat">
+        <img src="{{ . | relURL }}" width="88" height="88" loading="lazy"
+             alt="{{ if site.Params.authorIntro.wechatPlaceholder }}公众号二维码占位图，待替换，无法扫码{{ else }}公众号二维码{{ end }}">
+        <div>
+            <span class="wechat-label">公众号</span>
+            <p>{{ site.Params.authorIntro.wechatName }}</p>
+            {{- if site.Params.authorIntro.wechatPlaceholder }}
+            <small>二维码待替换</small>
+            {{- else }}
+            <a class="wechat-open" href="{{ . | relURL }}" target="_blank" rel="noopener">查看二维码 ↗</a>
+            {{- end }}
+        </div>
+    </div>
+    {{- end }}
+</section>
+{{- end }}

@@ -1,0 +1,9 @@
+{{- /* 作者选定的开头优先，其次发布时的导读，最后用 Hugo 摘要兜底。
+       服务端限长保证卡片不会输出全文，CSS 两行限制只负责视觉布局。 */ -}}
+{{- $summary := .Summary -}}
+{{- if not (findRE `(?m)^<!--more-->[ \t]*$` .RawContent) -}}
+    {{- with .Description -}}{{- $summary = . -}}{{- end -}}
+{{- end -}}
+{{- $summary = $summary | plainify | htmlUnescape -}}
+{{- $summary = replaceRE `\s+` " " $summary | strings.TrimSpace -}}
+{{- return ($summary | truncate 179 "…" | htmlUnescape) -}}

@@ -1,0 +1,24 @@
+{{- define "main" }}
+{{- $page := . -}}
+
+{{- /* 搜索页原本直接用主题的 search.html —— 它输出的是裸 <main>，
+       没套站点外壳，于是标题被裁切、页面宽度与其它页不一致。
+       这里保留主题的搜索逻辑（searchbox + index.json），
+       只把外壳与页头换成统一的 list-shell。 */ -}}
+
+{{- $body := `
+<div id="searchbox">
+    <input id="searchInput" autofocus placeholder="搜索标题、摘要与正文…"
+        aria-label="搜索文章" type="search" autocomplete="off" maxlength="64">
+    <ul id="searchResults" aria-label="search results"></ul>
+</div>
+` | safeHTML -}}
+
+{{ partial "list-shell.html" (dict
+    "page" $page
+    "title" "搜索"
+    "description" ""
+    "eyebrow" ""
+    "body" $body
+) }}
+{{- end }}{{/* end main */}}

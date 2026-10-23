@@ -1,15 +1,25 @@
 {{ define "main" }}
-<div class="main-container single-post-layout">
-    <div class="single-content-wrapper">
-        <a class="back-home-link" href="/">‹ 返回首页</a>
+<div class="main-container single-post-layout with-sidebar">
+    {{ partial "mobile-index.html" . }}
+    <div class="content-left single-content-wrapper">
+        {{- /* 文章与首页共用侧栏，面包屑保留当前文章的分类路径。 */ -}}
+        <nav class="breadcrumb" aria-label="面包屑">
+            <a href="/">首页</a>
+            {{- with .Params.categories }}
+            {{- $key := index . 0 }}
+            {{- $name := index site.Params.categoryNames $key | default $key }}
+            <span class="sep">›</span><a href="{{ printf "/categories/%s" ($key | urlize) }}">{{ $name }}</a>
+            {{- end }}
+            <span class="sep">›</span><span class="current">{{ .Title }}</span>
+        </nav>
 
         <article class="post-single">
             <header class="post-header">
                 <h1 class="post-title">{{ .Title }}</h1>
                 <div class="post-meta">
-                    🕒 {{ .Date.Format "2006年01月02日" }} · {{ .WordCount }} 字
+                    {{ partial "article-meta.html" . }}
                     {{- if .Params.categories }}
-                    · 📂 {{ range .Params.categories }}
+                    · {{ range .Params.categories }}
                     {{- $categoryKey := . }}
                     {{- $categoryName := index $.Site.Params.categoryNames $categoryKey | default . }}
                     <a href="{{ printf "/categories/%s" (. | urlize) }}">{{ $categoryName }}</a>
@@ -64,6 +74,9 @@
         {{- partial "related-posts.html" . }}
         {{- partial "post-nav.html" . }}
         {{- partial "giscus.html" . }}
+    </div>
+    <div class="sidebar-right article-sidebar">
+        {{ partial "sidebar.html" . }}
     </div>
 </div>
 {{ end }}

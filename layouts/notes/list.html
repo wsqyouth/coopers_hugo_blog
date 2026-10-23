@@ -2,12 +2,10 @@
        刻意不做分页：笔记是越滚越长的溪流，翻页反而打断阅读。 */ -}}
 {{- define "main" }}
 <div class="main-container">
+    {{ partial "mobile-index.html" . }}
     <div class="content-left">
         <header class="page-header">
             <h1>{{ .Title }}</h1>
-            {{- with .Description }}
-            <div class="post-description">{{ . }}</div>
-            {{- end }}
         </header>
 
         <div class="notes-stream">
@@ -30,7 +28,7 @@
         </div>
 
         <p class="notes-subscribe">
-            订阅：<a href="/notes/index.xml">短笔记 RSS</a>（与文章 RSS 分开，互不打扰）
+            <a href="/notes/index.xml">订阅笔记 RSS</a>
         </p>
     </div>
 

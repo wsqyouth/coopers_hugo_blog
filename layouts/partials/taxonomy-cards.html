@@ -1,0 +1,29 @@
+{{- /*
+聚合卡片：分类索引 / 标签索引 / 系列索引 共用。
+
+设计要点（读者视角）：
+  1. 卡片必须回答"点进去有什么"—— 所以带**最新一篇的标题和日期**，
+     而不是只有一个数字（原来只有计数，读者无法判断该不该点）。
+  2. 计数必须有意义 —— 显示"12 篇"，而不是孤零零的 "12"。
+  3. 尺寸/字号统一 —— 原来分类页卡片和标签页卡片是两套 CSS，
+     现在只有一套。
+
+参数：
+  terms —— 一个 map: key → {name, count, url, latest, date}
+*/ -}}
+{{- $terms := .terms -}}
+<ul class="taxonomy-cards">
+    {{- range $items := $terms }}
+    {{- $it := . -}}
+    <li class="taxonomy-card">
+        <a href="{{ $it.url }}">
+            <span class="taxonomy-card-name">{{ $it.name }}</span>
+            <span class="taxonomy-card-count">{{ $it.count }} 篇</span>
+            {{- with $it.latest }}
+            <span class="taxonomy-card-latest">最新：{{ . }}</span>
+            <span class="taxonomy-card-date">{{ $it.date }}</span>
+            {{- end }}
+        </a>
+    </li>
+    {{- end }}
+</ul>

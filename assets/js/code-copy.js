@@ -1,169 +1,68 @@
-// 代码复制功能
-document.addEventListener('DOMContentLoaded', function() {
-    // 只为顶层代码块添加复制按钮，避免嵌套元素重复添加
-    const codeBlocks = document.querySelectorAll('.post-content > div.highlight, .post-content > pre');
-
-    codeBlocks.forEach(function(codeBlock) {
-        // 避免重复添加
-        if (codeBlock.querySelector('.code-copy-btn')) {
-            return;
+// Copy only the code node; never infer line numbers or deduplicate source text.
+(() => {
+    document.querySelectorAll('.post-content .highlight, .post-content pre').forEach((block) => {
+        if (block.matches('pre') && (block.closest('.highlight') || block.matches('.mermaid'))) return;
+        const code = block.querySelector('.lntd:last-child code') || block.querySelector('code');
+        if (!code) return;
+        const source = code.cloneNode(true);
+        source.querySelectorAll('.ln, .lnt').forEach((number) => number.remove());
+        const text = source.textContent;
+        block.classList.add('code-panel');
+        if (text.split('\n').filter((_, i, lines) => i < lines.length - 1 || lines[i]).length <= 8) {
+            block.classList.add('code-panel-short');
         }
-
-        // 避免为已经包含在其他代码块中的元素添加按钮
-        const parent = codeBlock.parentElement;
-        if (parent && parent.classList.contains('highlight')) {
-            return;
+        const custom = block.closest('.pe-code-block-wrap');
+        let header = custom?.querySelector('.pe-code-block-header');
+        if (!header) {
+            header = document.createElement('div');
+            header.className = 'code-header';
+            const language = document.createElement('span');
+            language.textContent = code.dataset.lang || 'text';
+            header.append(language);
+            block.prepend(header);
         }
-
-        // 创建复制按钮
-        const copyButton = document.createElement('button');
-        copyButton.className = 'code-copy-btn';
-        copyButton.innerHTML = `
-            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            <span class="copy-text">复制</span>
-        `;
-        copyButton.title = '复制代码';
-
-        // 点击复制
-        copyButton.addEventListener('click', async function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            // 获取代码内容 - 优化的提取逻辑，避免重复
-            let textToCopy = '';
-
-            // 方法1: 尝试从 table 结构获取（Hugo 带行号的格式）
-            const codeTable = codeBlock.querySelector('table.lntable');
-            if (codeTable) {
-                // 获取所有代码行（第二列的所有 td）
-                const codeCells = codeTable.querySelectorAll('tbody tr td:nth-child(2)');
-                if (codeCells.length > 0) {
-                    // 每个 td 是一行代码
-                    textToCopy = Array.from(codeCells)
-                        .map(td => td.textContent || td.innerText || '')
-                        .join('\n');
-                }
-            }
-
-            // 方法2: 如果没有 table，从普通 code 元素获取
-            if (!textToCopy) {
-                // 先尝试找到最深层的 code 元素
-                const codeElement = codeBlock.querySelector('pre code');
-                if (codeElement) {
-                    textToCopy = codeElement.textContent || codeElement.innerText || '';
-                }
-            }
-
-            // 方法3: 从 pre 元素获取（但排除 table）
-            if (!textToCopy) {
-                const preElement = codeBlock.querySelector('div:not(.lntable) > pre');
-                if (preElement && !preElement.querySelector('table')) {
-                    textToCopy = preElement.textContent || preElement.innerText || '';
-                }
-            }
-
-            // 清理文本：移除行号和多余空白
-            if (textToCopy) {
-                const lines = textToCopy.split('\n');
-                textToCopy = lines
-                    .map(line => {
-                        // 移除开头的纯数字行号（如 "1 ", "2 " 等）
-                        return line.replace(/^\s*\d+\s+/, '');
-                    })
-                    .join('\n')
-                    .trim();
-
-                // 调试：输出到控制台（生产环境可删除）
-                console.log('复制的代码长度:', textToCopy.length, '行数:', textToCopy.split('\n').length);
-
-                // 去除可能的重复
-                // 按行检测是否整体重复
-                const allLines = textToCopy.split('\n');
-                const lineCount = allLines.length;
-                if (lineCount > 0 && lineCount % 2 === 0) {
-                    const halfCount = lineCount / 2;
-                    const firstHalfLines = allLines.slice(0, halfCount);
-                    const secondHalfLines = allLines.slice(halfCount);
-
-                    // 检查两半是否完全相同
-                    const isDuplicate = firstHalfLines.every((line, index) =>
-                        line === secondHalfLines[index]
-                    );
-
-                    if (isDuplicate) {
-                        console.log('检测到重复内容，已去重');
-                        textToCopy = firstHalfLines.join('\n');
+        const button = custom?.querySelector('.pe-code-copy-button') || document.createElement('button');
+        button.type = 'button';
+        button.className = 'code-copy-btn';
+        button.textContent = '复制';
+        button.setAttribute('aria-label', '复制代码');
+        const status = document.createElement('span');
+        status.className = 'code-copy-status';
+        status.setAttribute('role', 'status');
+        header.append(button, status);
+        let reset;
+        button.addEventListener('click', async (event) => {
+            event.stopPropagation();
+            clearTimeout(reset);
+            button.disabled = true;
+            try {
+                if (navigator.clipboard?.writeText) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    const input = document.createElement('textarea');
+                    input.value = text;
+                    input.style.cssText = 'position:fixed;left:-9999px;top:0';
+                    document.body.append(input);
+                    input.select();
+                    try {
+                        if (!document.execCommand('copy')) throw new Error('Copy failed');
+                    } finally {
+                        input.remove();
+                        button.focus({ preventScroll: true });
                     }
                 }
-            }
-
-            try {
-                // 使用现代 Clipboard API
-                await navigator.clipboard.writeText(textToCopy);
-
-                // 显示成功提示
-                copyButton.classList.add('copied');
-                copyButton.innerHTML = `
-                    <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span class="copy-text">已复制</span>
-                `;
-
-                // 2秒后恢复按钮状态
-                setTimeout(() => {
-                    copyButton.classList.remove('copied');
-                    copyButton.innerHTML = `
-                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                        <span class="copy-text">复制</span>
-                    `;
-                }, 2000);
-            } catch (err) {
-                // 降级方案：使用 execCommand
-                const textarea = document.createElement('textarea');
-                textarea.value = textToCopy;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-
-                try {
-                    document.execCommand('copy');
-                    copyButton.innerHTML = '✓ 已复制';
-                    setTimeout(() => {
-                        copyButton.innerHTML = `
-                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                            <span class="copy-text">复制</span>
-                        `;
-                    }, 2000);
-                } catch (err2) {
-                    copyButton.innerHTML = '✗ 失败';
-                    setTimeout(() => {
-                        copyButton.innerHTML = `
-                            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                            <span class="copy-text">复制</span>
-                        `;
-                    }, 2000);
-                }
-
-                document.body.removeChild(textarea);
+                button.textContent = '已复制';
+                status.textContent = '代码已复制';
+            } catch (_) {
+                button.textContent = '请手动复制';
+                status.textContent = '复制失败，请选中代码手动复制';
+            } finally {
+                button.disabled = false;
+                reset = setTimeout(() => {
+                    button.textContent = '复制';
+                    status.textContent = '';
+                }, 2500);
             }
         });
-
-        // 将按钮添加到代码块
-        codeBlock.style.position = 'relative';
-        codeBlock.appendChild(copyButton);
     });
-});
+})();

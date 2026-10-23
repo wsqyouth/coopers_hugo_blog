@@ -1,0 +1,230 @@
+/* ==================== 聚合维度页面（分类 / 标签 / 系列 / 归档）====================
+   统一这四类页面的观感：同一个外壳、同一个页头、同一种卡片。
+   原来它们各写各的模板，读者点一下导航就像换了个网站。 */
+
+.page-eyebrow {
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    color: var(--text-gray);
+    text-transform: none;
+    margin-bottom: 0.35rem;
+}
+
+/* 聚合卡片：分类 / 标签 / 系列索引共用 */
+.taxonomy-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.taxonomy-card a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    height: 100%;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--motion);
+}
+
+.taxonomy-card a:hover {
+    border-color: var(--theme-color);
+}
+
+.taxonomy-card-name {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--title-black);
+}
+
+.taxonomy-card-count {
+    font-size: 0.8rem;
+    color: var(--theme-color);
+    font-weight: 600;
+}
+
+.taxonomy-card-latest {
+    font-size: 0.86rem;
+    color: var(--text-dark);
+    line-height: 1.45;
+    /* 标题过长时截断，避免卡片高度失控 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.taxonomy-card-date {
+    font-size: 0.78rem;
+    color: var(--text-gray);
+    margin-top: auto;
+}
+
+/* ==================== 导航 ====================
+   主题默认 #menu 是 `white-space: nowrap; overflow-x: auto` ——
+   菜单项放不下时横向滚动，读者看不到后面的入口（而且没有滚动提示）。
+   导航项变多之后这在窄屏上是"入口消失"的问题，所以改成允许换行。
+   桌面宽屏不受影响（本来就放得下）。 */
+@media screen and (max-width: 900px) {
+    #menu {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        white-space: normal;
+        justify-content: flex-end;
+    }
+
+    #menu li {
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 768px) {
+    .taxonomy-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== 侧栏标签云 ====================
+   侧栏是"这个站有什么"的索引，天然适合展示"多而杂"的东西；
+   顶栏只放"少而重要"的骨架。所以标签只出现在侧栏，不进顶栏。
+
+   字号按文章数分三档：文章多的更显眼，让读者一眼看出
+   哪些是真有聚合价值的关键词（现在只有 10 个标签值得点）。 */
+.tag-cloud-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.45rem;
+    align-items: baseline;
+}
+
+.tag-cloud-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.15rem;
+    padding: 0.18rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: var(--bg-card);
+    color: var(--text-dark);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color var(--motion), border-color var(--motion);
+}
+
+.tag-cloud-item:hover {
+    color: var(--theme-color);
+    border-color: var(--theme-color);
+}
+
+.tag-cloud-item sup {
+    font-size: 0.68em;
+    color: var(--text-gray);
+}
+
+/* 按文章数分级：≥3 篇最显眼，2 篇居中，1 篇最轻 */
+.tag-cloud-item.big {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--title-black);
+    border-color: var(--theme-color);
+}
+
+.tag-cloud-item.big sup {
+    color: var(--theme-color);
+}
+
+.tag-cloud-item.mid {
+    font-size: 0.86rem;
+}
+
+.tag-cloud-item.small {
+    font-size: 0.78rem;
+    color: var(--text-gray);
+}
+
+/* 「全部标签 →」入口：标签云只列最有价值的 10 个，
+   想看全量的（比如找冷门关键词）从这里进。 */
+.widget-more {
+    margin: 0.6rem 0 0;
+    font-size: 0.8rem;
+}
+
+.widget-more a {
+    color: var(--theme-color);
+    text-decoration: none;
+}
+
+.widget-more a:hover {
+    text-decoration: underline;
+}
+
+/* 全部标签在左侧切换；隐藏原内容时保留表单和阅读位置。 */
+.main-container > [hidden] {
+    display: none !important;
+}
+
+[data-tags-toggle]:focus-visible,
+.search-link:focus-visible {
+    outline: 2px solid var(--theme-color);
+    outline-offset: 4px;
+}
+
+.archive-year-list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.search-placeholder {
+    flex: 1;
+    min-width: 0;
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+/* 标签是索引：名称和数量占一行，避免为每个词建立一张卡片。 */
+.tag-directory-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0 28px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.tag-directory-list a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+.tag-directory-list a:hover { color: var(--theme-color); }
+.tag-directory-count { font-size: 12px; color: var(--text-gray); white-space: nowrap; }
+.tag-directory-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tag-directory-header h1 { margin: 0; }
+.tags-return { padding: 12px 0 12px 12px; color: var(--theme-color); font-size: 14px; cursor: pointer; }
+.mobile-index { display: none; }
+
+@media (max-width: 1200px) {
+    .mobile-index { display: flex; gap: 24px; width: 100%; font-size: 14px; }
+    .mobile-index a { padding: 10px 0; color: var(--theme-color); }
+    .main-container { gap: 24px !important; margin-top: 24px !important; }
+    .sidebar .search-widget { display: none; }
+}
+
+@media (max-width: 480px) {
+    .tag-directory-list { grid-template-columns: 1fr; }
+}

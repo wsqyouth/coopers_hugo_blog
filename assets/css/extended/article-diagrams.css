@@ -1,0 +1,43 @@
+.post-content .article-diagram { margin: 28px 0; }
+.diagram-scroll {
+    max-height: 440px;
+    overflow: auto;
+    overscroll-behavior-x: contain;
+    background: var(--code-surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+}
+.diagram-zoom {
+    display: block;
+    width: max-content;
+    min-width: 100%;
+    padding: 20px;
+    background: transparent;
+    border: 0;
+    cursor: zoom-in;
+}
+.diagram-zoom svg { display: block; margin: auto; }
+.diagram-zoom:focus-visible { outline: 2px solid var(--secondary); outline-offset: -3px; }
+.post-content .article-diagram figcaption {
+    margin: 6px 0 0;
+    color: var(--secondary);
+    font: 12px/1.5 var(--font-sans, sans-serif);
+    text-align: right;
+}
+.article-diagram summary { color: var(--secondary); font-size: 14px; cursor: pointer; }
+.article-diagram .mermaid { white-space: pre; font-size: 13px; }
+.diagram-lightbox .image-lightbox-size { background: var(--code-surface); border-radius: 5px; }
+.diagram-lightbox svg {
+    display: block;
+    max-width: calc(100vw - 64px) !important;
+    max-height: calc(100dvh - 104px);
+    width: auto;
+    height: auto;
+}
+.diagram-lightbox .image-lightbox-size[aria-pressed="true"] svg { max-width: none !important; max-height: none; }
+@media (max-width: 768px) {
+    .diagram-scroll { max-height: 360px; }
+    .diagram-zoom { padding: 16px; }
+}
+
+.diagram-preview-hint { position: absolute; top: 12px; left: 12px; color: #ddd; font: 13px/1.5 sans-serif; }

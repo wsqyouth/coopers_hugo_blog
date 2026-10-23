@@ -1,0 +1,9 @@
+<header class="page-header tag-directory-header">
+    <h1 tabindex="-1">全部标签</h1>
+    <button type="button" class="tags-return" data-tags-return>← 返回</button>
+</header>
+{{- $items := slice -}}
+{{- range site.Taxonomies.tags.Alphabetical -}}
+    {{- $items = $items | append (dict "name" .Page.Title "count" .Count "url" .Page.RelPermalink) -}}
+{{- end -}}
+{{ partial "tag-links.html" (dict "terms" $items) }}

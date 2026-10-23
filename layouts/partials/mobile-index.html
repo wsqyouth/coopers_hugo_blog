@@ -1,0 +1,4 @@
+<nav class="mobile-index" aria-label="内容索引">
+    {{- if ne .RelPermalink "/search/" }}<a href="{{ "search/" | relURL }}">搜索</a>{{ end -}}
+    <a href="{{ "tags/" | relURL }}" data-tags-toggle>全部标签 →</a>
+</nav>

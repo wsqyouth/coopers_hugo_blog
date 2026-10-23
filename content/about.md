@@ -1,67 +1,38 @@
 ---
 title: "关于"
+layout: "plain"
+description: "我是谁，这个站在做什么，以及怎么找到我。"
 date: "2023-01-01"
-author: ["Cooper"]
+author: "Coopers"
 hidemeta: true
 comments: false
 showToc: false
 ---
 
-# Hi, I'm Coopers
+## 你好，我是 Coopers
 
-**后端开发工程师 · 技术写作者 · 开源爱好者**
-* 曾经经历公司：腾讯、AfterShip
-* 热爱编程和技术分享，专注于 Go 后端开发与系统设计。通过博客分享技术心得、项目经验和个人思考，累计产出 **100w+ 阅读量**。
+我是一名后端工程师，曾在腾讯、AfterShip 工作，主要关注 Go、系统设计与 AI 协作开发。
+我喜欢从自己的日常问题出发，把想法做成可以持续使用的作品，也把过程中的经验与判断写下来。
 
----
-## 技术栈
+## 最近在做的作品
 
-- **Backend**: Go, Gin, GORM, DDD, 消息队列 (Lmstfy/Redis), Cpp
-- **Frontend**: React, TypeScript, Next.js
-- **Infra**: Docker, Nginx, MySQL, Redis, systemd
-- **Tools**: pprof, k6, Git, CI/CD, Claude Code
+- **[EchoFlow](https://echo.wsqyouth.cn)**：目前最成熟的作品。自己选择信息源，安静地听，让发现与沉浸收听各有空间。
+- **[ReadFlow](https://read.wsqyouth.cn)**：RSS 阅读作品，把关注的信息源汇入一个专注的阅读空间。
+- **[NoteFlow](https://note.wsqyouth.cn)**：短笔记作品，让一个念头、一段摘录可以先被记下来。
 
----
+它们都来自我自己的需要：听、读、记。更多介绍放在[项目页](/projects/)。
 
-## 项目作品
+## 关于这个站
 
-### 跨境订单智能诊断平台 (OIP)
+文章记录展开后的思考，[短笔记](/notes/)留下还在生长的想法，作品呈现做过的事。
+写作留在 Obsidian，网站保持简单，方便阅读，也方便持续更新。
 
-轻量级跨境订单智能诊断 SaaS 平台，为中小跨境卖家提供标准化订单接入、智能诊断（物流费率比对 + 异常检测）和数据可视化。后端 Go + Gin + DDD 架构，前端 React + TypeScript，通过消息队列解耦同步 API 与异步诊断服务。
+Your personal website is the new resume.
 
-- [作品地址](https://oip.wsqyouth.cn/) · [GitHub](https://github.com/wsqyouth/oip)
+如果好奇我的工作环境，这里有一份很短的[常用工具](/uses/)清单。
 
-### 个人博客系统 v2
-
-基于 Hugo (PaperMod) + Markdown + GitHub Actions 构建的技术博客，自动化部署，专注内容创作。
-
-- [博客地址](https://www.wsqyouth.cn/) · [GitHub](https://github.com/wsqyouth/coopers_hugo_blog)
-
-### 个人博客系统 v1
-
-基于 Next.js 15 + React 19 纯原生构建的博客系统，使用 Vercel 托管。
-
-- [博客地址](https://blog.wsqyouth.cn/) · [GitHub](https://github.com/wsqyouth/coopersblog)
-
-
----
-## 写作平台
-
-- **CSDN 博客**: [youth.blog.csdn.net](https://youth.blog.csdn.net/) (100w+ 阅读量)
-- **Obsidian 笔记**: [coopers_obsidian](https://github.com/wsqyouth/coopers_obsidian)
-
----
-
-## 联系方式
+## 找到我
 
 - **Email**: [wsqyouth@qq.com](mailto:wsqyouth@qq.com)
 - **GitHub**: [wsqyouth](https://github.com/wsqyouth/)
-- **Phone**: 139-****-8760
-
----
-
-## 在这个站上
-
-- [项目](/projects/)——我在做、并且在用的东西，按成熟度排
-- [装备](/uses/)——真正每天在用的工具
-- [笔记](/notes/)——比文章轻一档的短记录
+- **CSDN**: [过往写作](https://youth.blog.csdn.net/)

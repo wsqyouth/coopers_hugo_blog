@@ -25,7 +25,9 @@ Obsidian  Blog/  文件夹  →  publish.py  →  本地 hugo 构建验证  → 
 细节规则（分类判据、英文 slug 规则、`publish: false` 约定、失败时怎么办）都在 skill 里：
 `ObsidianVault/_skills/blog-publisher/SKILL.md`。
 
-> **本地预览**：`hugo server -D` → http://localhost:1313 （需要先 `git submodule update --init --recursive`）
+> **本地预览**：`hugo server -D --disableFastRender --renderToMemory` → http://localhost:1313 （需要先 `git submodule update --init --recursive`）
+
+> 预览服务使用内存渲染，避免与生产构建同时写入 `public/`。若热更新出现 `.Content: slice bounds out of range`，先用独立目录运行 `hugo --destination /tmp/coopers-blog-check`：完整构建成功但预览仍报错时，停止并重启预览进程；完整构建也失败时保留报错继续定位，不通过删除正文或元数据掩盖错误。
 
 ---
 
@@ -97,7 +99,7 @@ hugo new posts/my-new-post.md
 
 ```bash
 # 启动本地服务器（包括草稿）
-hugo server -D
+hugo server -D --disableFastRender --renderToMemory
 
 # 访问 http://localhost:1313 预览
 ```
@@ -400,7 +402,7 @@ curl -H "Host: www.your-domain.com" http://localhost
 hugo new posts/article-title.md
 
 # 本地预览（包括草稿）
-hugo server -D
+hugo server -D --disableFastRender --renderToMemory
 
 # 构建生产版本
 hugo --minify

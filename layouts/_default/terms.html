@@ -1,40 +1,79 @@
+{{- /*
+分类索引 / 标签索引 / 系列索引 —— 三种聚合维度的索引页。
+
+⚠️ 这个文件必须用 {{ define "main" }} 包裹，否则 Hugo 会把它当成
+**内容模板**直接输出裸 HTML —— 页面会缺 <html>/<body>/<main>，
+标题被裁切、布局全乱。踩过一次。
+
+三者原本各写各的（terms.html 只覆盖了 tags，分类走主题默认），
+导致：分类页是裸 <main>（标题被裁切）、卡片样式与标签页不一致、
+标题一会儿中文一会儿英文（Categories / Tags）。
+
+现在统一：
+  外壳 → list-shell.html（与归档、搜索、笔记页完全一致）
+  卡片 → taxonomy-cards.html（唯一一套卡片样式）
+  标题 → 中文（按维度取）
+*/ -}}
 {{- define "main" }}
+{{- $page := . -}}
+{{- $type := .Type -}}
 
-{{- if .Title }}
-<header class="page-header">
-    <h1>{{ .Title }}</h1>
-    {{- if .Description }}
-    <div class="post-description">
-        {{ .Description }}
-    </div>
-    {{- end }}
-</header>
-{{- end }}
+{{- /* 维度定义：中文标题 */ -}}
+{{- $dims := dict
+      "categories" (dict "title" "分类")
+      "tags"       (dict "title" "标签")
+      "series"     (dict "title" "系列")
+-}}
 
-<ul class="terms-tags">
-    {{- $type := .Type }}
-    {{- range $key, $value := .Data.Terms.Alphabetical }}
-    {{- $name := .Name }}
-    {{- $count := .Count }}
-    {{- with site.GetPage (printf "/%s/%s" $type $name) }}
-    <li>
-        <a href="{{ .Permalink }}">
-            {{- if eq $type "categories" }}
-                {{- $categoryKey := .Name }}
-                {{- $categoryName := index $.Site.Params.categoryNames $categoryKey | default .Name }}
-                {{ $categoryName }}
-            {{- else }}
-                {{- /* term 页（content/<taxonomy>/<term>/_index.md）写了 title 就优先显示它：
-                       这样 series 能用英文 key 做 URL、中文做显示名 */ -}}
-                {{- $termTitle := .Name -}}
-                {{- with .Page }}{{ $termTitle = .Title }}{{ end -}}
-                {{ $termTitle }}
-            {{- end }}
-            <sup><strong><sup>{{ $count }}</sup></strong></sup>
-        </a>
-    </li>
-    {{- end }}
-    {{- end }}
-</ul>
+{{- $dim := index $dims $type -}}
+{{- if not $dim }}{{ $dim = dict "title" (default $type .Title) "desc" "" "eyebrow" "" }}{{ end -}}
 
-{{- end }}{{/* end main */ -}}
+{{- /* 收集这一维度下的全部词条：显示名 + 计数 + 最新一篇
+
+       ⚠️ .Data.Terms.Alphabetical 在 Hugo 0.146+ 返回的是**有序切片**
+       （page.Orders），不是 map。所以 range 双变量时拿到的是
+       **索引（0,1,2…）**，当词条名用 —— 显示成 0/1/2 且链接全空。
+       必须单变量 range 拿元素，再取 .Term 才是真正的词条名。
+
+       显示名取法（按优先级）：
+         1. 分类 → hugo.yaml 的 categoryNames 映射（tech → 技术分享）
+         2. term 页写了 title → 用它（series/reading-notes → 读书笔记）
+         3. 都没有 → 用标签 key 本身（MySQL、Next.js 原样显示）
+*/ -}}
+{{- $items := slice -}}
+{{- range $entry := .Data.Terms.Alphabetical -}}
+    {{- $name := $entry.Term -}}
+    {{- $count := $entry.Count -}}
+    {{- $display := $name -}}
+    {{- $url := "" -}}
+    {{- $latest := "" -}}
+    {{- $latestDate := "" -}}
+    {{- with site.GetPage (printf "/%s/%s" $type $name) -}}
+        {{- $url = .Permalink -}}
+        {{- $display = .Title -}}
+    {{- end -}}
+    {{- if eq $type "categories" -}}
+        {{- $display = index site.Params.categoryNames $name | default $display -}}
+    {{- end -}}
+    {{- /* 取最新一篇：first 1 对 page.Pages 返回的仍是集合，
+           要用 index 取第 0 个才是单个页面。 */ -}}
+    {{- with index $entry.Pages.ByDate.Reverse 0 -}}
+        {{- $latest = .Title -}}
+        {{- $latestDate = .Date.Format "2006-01-02" -}}
+    {{- end -}}
+    {{- $items = $items | append (dict "name" $display "count" $count "url" $url "latest" $latest "date" $latestDate) -}}
+{{- end -}}
+
+{{- $body := partial "taxonomy-cards.html" (dict "terms" $items) -}}
+{{- if eq $type "tags" -}}
+    {{- $body = partial "tag-links.html" (dict "terms" $items) -}}
+{{- end -}}
+
+{{ partial "list-shell.html" (dict
+    "page" $page
+    "title" $dim.title
+    "description" ""
+    "eyebrow" ""
+    "body" $body
+) }}
+{{- end }}{{/* end main */}}

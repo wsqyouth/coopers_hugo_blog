@@ -6,7 +6,7 @@
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-left: 3px solid var(--theme-color);
-    border-radius: 8px;
+    border-radius: var(--radius);
 }
 
 .post-takeaways-label {

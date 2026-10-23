@@ -3,7 +3,11 @@
 {{- define "main" }}
 <div class="main-container single-post-layout">
     <div class="single-content-wrapper">
-        <a class="back-home-link" href="/notes/">‹ 返回笔记流</a>
+        <nav class="breadcrumb" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span class="sep">›</span><a href="/notes/">笔记</a>
+            <span class="sep">›</span><span class="current">{{ .Date.Format "2006-01-02" }}</span>
+        </nav>
 
         <article class="note-single">
             <div class="note-meta">

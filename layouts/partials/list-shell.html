@@ -1,0 +1,60 @@
+{{- /*
+统一列表页外壳。
+
+问题背景：站点有 8 个导航入口，但它们各写各的模板，导致：
+  · 分类索引 / 标签索引 是**裸 <main>**（没套 main-container），
+    内容直接顶到屏幕最左边 —— 标题被裁切、卡片漂在边缘；
+  · 归档页、分类索引、标签索引、搜索页各自长相不同，
+    读者点一下导航就像换了个网站，不知道自己在看什么；
+  · 有些页有侧栏、有些没有，页面宽度忽宽忽窄。
+
+做法：所有"聚合/列表型"页面共用这一个外壳，保证
+  外壳结构（main-container → content-left + sidebar-right）
+  标题区（page-header）
+  右侧栏（sidebar）
+三件事永远一致。差异只体现在中间的正文区。
+
+维度入口（分类/标签/系列/归档）统一放在**侧栏**，不在页面顶部重复一遍——
+顶栏是骨架、侧栏是索引，同一组入口出现三次就是噪音。
+
+用法：
+  {{ partial "list-shell.html" (dict
+       "page" .            // 当前页，传给 sidebar 等 partial
+       "title" "分类"       // 主标题（留空则不出 H1）
+       "description" "..."  // 副标题：这一页在表达什么
+       "eyebrow" "按主题"   // 维度标签（可选）
+       "body" (partial "..." .)  // 正文区 HTML
+  ) }}
+
+注意：body 传的是已经渲染好的 HTML 字符串，调用方负责拼好。
+*/ -}}
+{{- $page := .page -}}
+{{- $title := .title -}}
+{{- $description := .description -}}
+{{- $eyebrow := .eyebrow -}}
+{{- $body := .body -}}
+
+<div class="main-container">
+    {{ partial "mobile-index.html" $page }}
+    <div class="content-left">
+        {{- if or $title $description $eyebrow }}
+        <header class="page-header">
+            {{- with $eyebrow }}
+            <div class="page-eyebrow">{{ . }}</div>
+            {{- end }}
+            {{- with $title }}
+            <h1>{{ . }}</h1>
+            {{- end }}
+            {{- with $description }}
+            <div class="post-description">{{ . }}</div>
+            {{- end }}
+        </header>
+        {{- end }}
+
+        {{ $body }}
+    </div>
+
+    <div class="sidebar-right">
+        {{ partial "sidebar.html" $page }}
+    </div>
+</div>

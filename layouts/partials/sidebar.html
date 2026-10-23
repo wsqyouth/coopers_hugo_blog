@@ -1,55 +1,104 @@
+{{- /*
+侧栏：站点的"索引"。
+
+与顶层导航的分工（避免功能重复）：
+  顶层导航 = 站点的骨架 —— 去哪一类内容（首页/归档/笔记/项目/关于）
+  侧栏     = 这个站有什么   —— 分类、标签云、系列，以及唯一的搜索入口
+
+所以顶栏不放"分类/标签/搜索"：分类只有 4 个、标签有几十个，
+这类"多而杂"的索引放侧栏更合适（顶栏只放"少而重要"的）。
+搜索框也只在侧栏出现一次，避免同一件事三个入口。
+
+标签云只列最有聚合价值的 10 个（数量优先、其次最近更新）：
+现在 42 个标签里有 32 个只挂1 篇文章，全列出来是噪音——
+点击率会很低，而且让"标签"这个维度显得虚。
+*/ -}}
+{{- $articles := where site.RegularPages "Section" "in" site.Params.mainSections -}}
 <aside class="sidebar">
-    <!-- Search Widget -->
+    {{ partial "author-intro.html" . }}
+    <!-- 搜索（全站唯一入口） -->
     <section class="widget search-widget">
         <div class="search-wrapper">
-            <a href="/search" class="search-link" title="点击进入搜索页面">
-                <input type="text" placeholder="搜索文章..." readonly>
+            <a href="/search/" class="search-link" title="进入搜索页面">
+                <span class="search-placeholder">搜索文章…</span>
                 <span class="search-icon">搜索</span>
             </a>
         </div>
     </section>
 
-    <!-- Stats Widget -->
-    <section class="widget stats">
-        <h3 class="widget-title">博客统计</h3>
-        <div class="widget-body stats-grid">
-            <div class="stat-item">
-                <span class="count">{{ len (where .Site.RegularPages "Section" "posts") }}</span>
-                <span class="label">文章</span>
-            </div>
-            <div class="stat-item">
-                <span class="count">{{ len .Site.Taxonomies.categories }}</span>
-                <span class="label">分类</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Categories Widget -->
+    <!-- 分类：数量少、互斥，是文章最粗的骨架 -->
+    {{- with site.Taxonomies.categories.ByCount }}
     <section class="widget categories">
-        <h3 class="widget-title">📂 分类</h3>
+        <h3 class="widget-title">分类</h3>
         <ul class="widget-list">
-            {{ range .Site.Taxonomies.categories.ByCount }}
+            {{ range . }}
+            {{- $key := .Page.Title -}}
             <li>
-                {{- $categoryKey := .Page.Title }}
-                {{- $categoryName := index $.Site.Params.categoryNames $categoryKey | default .Page.Title }}
-                <a href="{{ .Page.Permalink }}">{{ $categoryName }}</a>
+                {{- $name := index site.Params.categoryNames $key | default .Page.Title -}}
+                <a href="{{ .Page.Permalink }}">{{ $name }}</a>
                 <span class="count">({{ .Count }})</span>
             </li>
-            {{ end }}
+            {{- end }}
         </ul>
     </section>
+    {{- end }}
 
-    <!-- Archives Widget -->
-    <section class="widget archives">
-        <h3 class="widget-title">📅 归档</h3>
+    <!-- 系列：数量少（现在只有 1 个），等有 3 个以上再考虑独立入口 -->
+    {{- with site.Taxonomies.series.ByCount }}
+    <section class="widget series-widget">
+        <h3 class="widget-title">系列</h3>
         <ul class="widget-list">
-            {{- /* 只统文章（posts），别把"关于/搜索/装备/项目"这些页面混进时间线 */ -}}
-            {{ range (where .Site.RegularPages "Type" "in" site.Params.mainSections).ByDate.Reverse.GroupByDate "2006-01" }}
+            {{- range . }}
             <li>
-                <a href="/archives/#{{ .Key }}">{{ (index .Pages 0).Date.Format "2006年01月" }}</a>
-                <span class="count">({{ len .Pages }})</span>
+                <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+                <span class="count">({{ .Count }})</span>
             </li>
+            {{- end }}
+        </ul>
+    </section>
+    {{- end }}
+
+    <!-- 归档：按年计数，点击跳到对应年份。 -->
+    <section class="widget archives">
+        <h3 class="widget-title">归档</h3>
+        <ul class="widget-list archive-year-list">
+            {{ range $articles.ByDate.Reverse.GroupByDate "2006" }}
+            <li><a href="/archives/#{{ .Key }}">
+                <span class="year-label">{{ .Key }}年</span>
+                <span class="count">{{ len .Pages }}篇</span>
+            </a></li>
             {{ end }}
         </ul>
     </section>
+    <!-- 标签云：数量优先，其次最近更新；只列真正值得点的那几个 -->
+    {{- $cands := slice -}}
+    {{- range $name, $tx := site.Taxonomies.tags -}}
+        {{- with $tx.Page }}
+        {{- $latest := index ($tx.Pages.ByDate.Reverse) 0 -}}
+        {{- $cands = $cands | append (dict
+              "name" $name
+              "title" .Title
+              "url" .Permalink
+              "count" $tx.Count
+              "ts" $latest.Date.Unix
+        ) -}}
+        {{- end }}
+    {{- end -}}
+    {{- /* 先按时间降序、再按数量降序 —— sort 是稳定的，所以"数量"是主键、"最近"是次键。
+           实测两次构建结果一致（确定性），不会每次构建顺序乱飘。 */ -}}
+    {{- $topTags := first 10 (sort (sort $cands "ts" "desc") "count" "desc") -}}
+    {{- with $topTags }}
+    <section class="widget tag-cloud">
+        <h3 class="widget-title">标签</h3>
+        <div class="tag-cloud-items">
+            {{- range . }}
+            {{- $size := cond (ge .count 3) "big" (cond (eq .count 2) "mid" "small") }}
+            <a href="{{ .url }}" class="tag-cloud-item {{ $size }}" title="{{ .title }} · {{ .count }} 篇">{{ .title }}<sup>{{ .count }}</sup></a>
+            {{- end }}
+        </div>
+        <p class="widget-more"><a href="/tags/" data-tags-toggle>全部标签 →</a></p>
+    </section>
+    {{- end }}
+
+    <template data-tags-directory>{{ partial "tag-directory.html" . }}</template>
 </aside>

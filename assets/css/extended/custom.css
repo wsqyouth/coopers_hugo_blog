@@ -1,5 +1,10 @@
 /* ==================== 配色方案 ==================== */
 :root {
+    --font-reading: var(--font-ui);
+    --font-ui: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-meta: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    --radius: 6px;
+    --motion: 160ms ease;
     --theme-color: #0A5B5B;
     /* 主题色：深绿色 */
     --theme-color-hover: #0F4C4C;
@@ -16,6 +21,23 @@
     /* 卡片背景 */
     --border-color: #E0E0E0;
     /* 边框颜色 */
+}
+
+/* 暖纸色仅在读者主动选择时使用。 */
+.warm {
+    --font-reading: "Songti SC", "Noto Serif CJK SC", "Noto Serif SC", "Source Han Serif SC", STSong, SimSun, serif;
+    --theme-color: #9C4A2F;
+    --theme-color-hover: #7F3821;
+    --title-black: #27221B;
+    --text-dark: #383126;
+    --text-gray: #6D6455;
+    --bg-page: #F6F1E7;
+    --bg-card: #FFFDF8;
+    --border-color: #E3DACB;
+    --primary: #27221B;
+    --secondary: #6D6455;
+    --border: #E3DACB;
+    --code-bg: #F0E9DC;
 }
 
 /* Dark Mode Overrides */
@@ -43,9 +65,9 @@
     box-sizing: border-box;
 }
 
-/* 应用思源黑体字体 */
+/* 界面使用系统无衬线；暖色主题仅在阅读区域使用衬线。 */
 body {
-    font-family: 'Noto Sans SC', 'Microsoft Yahei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-family: var(--font-ui) !important;
     font-size: 16px;
     color: var(--text-dark);
     background: var(--bg-page) !important;
@@ -123,12 +145,9 @@ main.main {
 
 /* Sidebar Widgets */
 .sidebar .widget {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 20px;
+    padding: 24px 0 0;
     margin-bottom: 24px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid var(--border-color);
 }
 
 .sidebar .widget-title {
@@ -183,8 +202,8 @@ main.main {
     align-items: center;
     padding: 10px 12px;
     border-bottom: 1px solid var(--border-color);
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    border-radius: var(--radius);
+    transition: all var(--motion);
     margin-bottom: 4px;
 }
 
@@ -226,37 +245,31 @@ main.main {
 }
 
 .search-wrapper .search-link {
-    display: block;
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     text-decoration: none;
-}
-
-.search-wrapper input {
     width: 100%;
-    padding: 10px 40px 10px 12px;
+    padding: 10px 12px;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: var(--radius);
     background: var(--bg-card);
     color: var(--text-dark);
     font-size: 14px;
-    transition: all 0.2s ease;
+    transition: all var(--motion);
     cursor: pointer;
-    pointer-events: none;
 }
 
-.search-wrapper .search-link:hover input {
+.search-wrapper .search-link:hover {
     border-color: var(--theme-color);
 }
 
 .search-wrapper .search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    flex-shrink: 0;
     background: var(--theme-color);
     color: var(--bg-card);
     padding: 4px 10px;
-    border-radius: 4px;
+    border-radius: var(--radius);
     font-size: 12px;
     cursor: pointer;
 }
@@ -273,22 +286,23 @@ main.main {
 
 /* Post Entry Styling */
 .post-entry {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 24px;
-    transition: box-shadow 0.2s ease;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    padding: 0 0 28px;
+    margin-bottom: 28px;
 }
 
-.post-entry:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+.post-entry:active {
+    transform: none;
 }
 
 .post-entry .entry-header h2 {
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
 }
 
 .post-entry .entry-header h2 a {
@@ -303,7 +317,7 @@ main.main {
 .post-entry .entry-content {
     color: var(--text-dark);
     line-height: 1.8;
-    margin-bottom: 16px;
+    margin: 0 0 12px;
     font-size: 16px;
     overflow: visible !important;
     display: block !important;
@@ -313,7 +327,7 @@ main.main {
 
 .post-entry .entry-content p {
     font-size: 16px;
-    margin-bottom: 12px;
+    margin: 0;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;  /* 限制摘要显示2行 */
@@ -321,22 +335,27 @@ main.main {
     text-overflow: ellipsis;
 }
 
-/* Read More Link - 深绿色样式 */
-.entry-content a.read-more {
+/* 阅读入口与元信息共用一行，摘要只承担导读。 */
+.entry-footer a.read-more {
     display: inline-block;
-    margin-top: 12px;
+    margin-left: auto;
+    white-space: nowrap;
     color: var(--theme-color);
     font-weight: 400;
     font-size: 14px;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all var(--motion);
 }
 
-.entry-content a.read-more:hover {
+.entry-footer a.read-more:hover {
     color: var(--theme-color-hover);
 }
 
 .post-entry .entry-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 16px;
     font-size: 12px;
     color: var(--text-gray);
 }
@@ -348,7 +367,7 @@ main.main {
     padding: 10px 20px;
     background: var(--theme-color);
     color: var(--bg-card);
-    border-radius: 4px;
+    border-radius: var(--radius);
     text-decoration: none;
     text-align: center;
     font-weight: bold;
@@ -367,10 +386,7 @@ main.main {
     justify-content: center;
     align-items: center;
     gap: 20px;
-    background: var(--bg-card);
-    padding: 16px 24px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
+    padding: 16px 0;
 }
 
 .pagination-bar .num {
@@ -385,9 +401,9 @@ main.main {
     display: inline-block;
     padding: 8px 20px;
     font-size: 14px;
-    border-radius: 6px;
+    border-radius: var(--radius);
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all var(--motion);
     font-weight: 400;
 }
 
@@ -443,8 +459,8 @@ main.main {
 .terms-tags li {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    border-radius: var(--radius);
+    transition: all var(--motion);
 }
 
 .terms-tags li:hover {
@@ -470,7 +486,7 @@ main.main {
     background: rgba(10, 91, 91, 0.1);
     color: var(--theme-color);
     padding: 4px 12px;
-    border-radius: 12px;
+    border-radius: var(--radius);
     font-size: 12px;
     font-weight: 600;
 }
@@ -528,17 +544,8 @@ main.main {
 
 .archive-entry {
     position: relative;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    transition: all 0.2s ease;
-}
-
-.archive-entry:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border-color: rgba(10, 91, 91, 0.2);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .archive-entry-title {
@@ -570,7 +577,7 @@ main.main {
 .post-single {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: var(--radius);
     padding: 32px;
 }
 
@@ -627,26 +634,31 @@ main.main {
 .post-content code {
     background: var(--bg-page);
     padding: 2px 6px;
-    border-radius: 3px;
+    border-radius: var(--radius);
     font-size: 13px;
 }
 
 .post-content pre {
     background: var(--bg-page);
     padding: 16px;
-    border-radius: 6px;
+    border-radius: var(--radius);
     overflow-x: auto;
 }
 
 /* ==================== 响应式优化 ==================== */
 
 @media (max-width: 768px) {
-    body {
-        font-size: 13px;
-    }
-
     .post-entry .entry-header h2 {
         font-size: 18px;
+    }
+
+    .post-entry .entry-content p {
+        -webkit-line-clamp: 3;
+    }
+
+    .post-entry {
+        padding-bottom: 24px;
+        margin-bottom: 24px;
     }
 
     .post-title {
@@ -656,4 +668,77 @@ main.main {
     .stats-grid .stat-item .count {
         font-size: 2rem;
     }
+}
+
+/* 页面分区：展示页单列，阅读区与索引区共享排版纪律。 */
+.plain-page {
+    width: min(100% - 40px, 760px);
+    margin: 56px auto;
+}
+
+.plain-page .page-header h1 {
+    font-size: 28px;
+}
+
+.plain-page .post-content h2 {
+    margin-top: 36px;
+    font-size: 22px;
+}
+
+.post-content,
+.entry-content,
+.note-body {
+    overflow-wrap: anywhere;
+}
+
+.post-content {
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.post-content, .post-title, .entry-header h2, .note-body {
+    font-family: var(--font-reading);
+}
+
+.warm .post-content, .warm .note-body {
+    font-size: 17px;
+    line-height: 1.95;
+}
+
+.nav, .sidebar, .breadcrumb, .pagination-bar,
+.mobile-index, .tags-return, input, button {
+    font-family: var(--font-ui);
+}
+
+.entry-footer, .post-meta, .archive-meta, .archive-count,
+.series-item-date, .series-progress, .related-meta, .nav-date,
+.note-meta, .footer, .year-label,
+.taxonomy-card-date, .taxonomy-card-count, .tag-directory-count,
+.tag-cloud-item, .post-tags, .note-tags {
+    font-family: var(--font-ui);
+    font-variant-numeric: tabular-nums;
+}
+
+code, pre { font-family: var(--font-meta); }
+
+:where(a, button, input):focus-visible {
+    outline: 2px solid var(--theme-color);
+    outline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+    .plain-page { margin: 32px auto; }
+    .nav { padding: 12px 20px 0; gap: 8px; }
+    .nav .logo { margin: 0; line-height: 40px; }
+    .nav #menu { margin: 0; width: 100%; justify-content: flex-start; gap: 24px; }
+    .nav #menu li + li { margin-inline-start: 0; }
+    .nav #menu a { line-height: 44px; }
+    .pagination-bar { gap: 8px; }
+    .pagination-bar .num { padding: 0; }
+    .pagination-bar a, .pagination-bar span.disabled { padding: 8px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root { --motion: 0s; }
+    html { scroll-behavior: auto; }
 }

@@ -11,22 +11,75 @@
 
 .single-content-wrapper {
     width: 100%;
+    min-width: 0;
 }
+
+/* 与首页共用完整侧栏；中小屏回到文末，不挤压正文。 */
+.main-container.single-post-layout.with-sidebar {
+    max-width: 1000px !important;
+}
+
+.single-post-layout.with-sidebar .post-single {
+    padding-top: 0;
+}
+
+.sidebar-right.article-sidebar {
+    margin-top: 40px !important;
+    padding-top: 28px;
+    border-top: 1px solid var(--border-color);
+}
+
+@media (min-width: 1201px) {
+    .main-container.single-post-layout.with-sidebar {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        max-width: 1400px !important;
+        gap: 30px !important;
+    }
+
+    .sidebar-right.article-sidebar {
+        margin-top: 0 !important;
+        padding-top: 0;
+        border-top: 0;
+    }
+}
+
+.single-post-layout .mobile-index { margin-bottom: 24px; }
 
 /* 返回首页链接 */
-.back-home-link {
-    display: inline-block;
-    margin-bottom: 24px;
+/* 面包屑显示当前文章所属分类。 */
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 20px;
+    font-size: 0.84rem;
     color: var(--text-gray);
-    text-decoration: none;
-    font-size: 14px;
-    transition: all 0.2s ease;
 }
 
-.back-home-link:hover {
+.breadcrumb a {
+    color: var(--text-gray);
+    text-decoration: none;
+    transition: color var(--motion);
+}
+
+.breadcrumb a:hover {
     color: var(--theme-color);
-    transform: translateX(-4px);
-    /* 悬停微动效果 */
+}
+
+.breadcrumb .sep {
+    color: var(--border-color);
+}
+
+/* 当前页（文章标题）不重复显示完整标题——H1 就在下面一行，
+   这里只留一个省略提示，避免视觉噪音。 */
+.breadcrumb .current {
+    color: var(--text-gray);
+    max-width: 22em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* 调整单篇文章的卡片样式，使其更简洁 */
@@ -43,7 +96,8 @@
 }
 
 .single-post-layout .post-title {
-    font-size: 28px;
+    font-size: 30px;
+    line-height: 1.4;
     margin-bottom: 12px;
 }
 
@@ -52,4 +106,26 @@
     margin-bottom: 40px;
     padding-bottom: 20px;
     border-bottom: 1px dashed var(--border-color);
+}
+
+/* 文章字阶：保留原 Markdown 层级与锚点，用字号和留白组织阅读。 */
+.single-post-layout .post-content :is(h1, h2, h3, h4, h5, h6) {
+    color: var(--title-black);
+    font-weight: 700;
+    line-height: 1.5;
+    scroll-margin-top: 24px;
+}
+
+.single-post-layout .post-content h1 { font-size: 26px; margin: 40px 0 16px; }
+.single-post-layout .post-content h2 { font-size: 24px; margin: 36px 0 14px; }
+.single-post-layout .post-content h3 { font-size: 20px; margin: 28px 0 12px; }
+.single-post-layout .post-content h4 { font-size: 18px; margin: 24px 0 10px; }
+.single-post-layout .post-content :is(h5, h6) { font-size: 1em; margin: 24px 0 8px; }
+.single-post-layout .post-content h6 { color: var(--text-gray); }
+.single-post-layout .post-content > :is(h1, h2, h3, h4, h5, h6):first-child { margin-top: 0; }
+
+@media (max-width: 768px) {
+    .single-post-layout .post-title { font-size: 26px; }
+    .single-post-layout .post-content h1 { font-size: 24px; }
+    .single-post-layout .post-content h2 { font-size: 22px; }
 }

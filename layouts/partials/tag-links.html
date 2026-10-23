@@ -1,0 +1,5 @@
+<ul class="tag-directory-list">
+    {{- range .terms }}
+    <li><a href="{{ .url }}"><span>{{ .name }}</span><span class="tag-directory-count">{{ .count }} 篇</span></a></li>
+    {{- end }}
+</ul>

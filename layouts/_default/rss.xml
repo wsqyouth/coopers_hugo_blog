@@ -8,6 +8,11 @@
 {{- else -}}
 {{- $pages = $pctx.Pages -}}
 {{- end -}}
+{{- /* 主订阅只送达文章；短笔记由 /notes/index.xml 独立订阅。 */ -}}
+{{- if .IsHome -}}
+{{- $pages = where $pages "Section" "in" site.Params.mainSections -}}
+{{- end -}}
+{{- $pages = $pages.ByDate.Reverse -}}
 {{- $limit := .Site.Config.Services.RSS.Limit -}}
 {{- if ge $limit 1 -}}
 {{- $pages = $pages | first $limit -}}
@@ -20,17 +25,28 @@
     <description>Recent content {{ if ne .Title .Site.Title }}{{ with .Title }}in {{.}} {{ end }}{{ end }}on {{ .Site.Title }}</description>
     <generator>Hugo</generator>
     <language>{{ site.Language.LanguageCode }}</language>
-    {{ with .Site.Params.author }}<managingEditor>{{ . }}</managingEditor>{{ end }}
     {{- with .OutputFormats.Get "RSS" }}
     {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
     {{- end }}
     {{- range $pages }}
+    {{- /* 阅读器没有文章页的基址：补全正文中的相对图片与链接。 */ -}}
+    {{- $content := .Content -}}
+    {{- $permalink := .Permalink -}}
+    {{- range findRE `(href|src)="[^"]+"` $content -}}
+      {{- $attribute := . -}}
+      {{- $url := replaceRE `^(href|src)="([^"]+)"$` "$2" . -}}
+      {{- if not (findRE `^([a-zA-Z][a-zA-Z0-9+.-]*:|//)` $url) -}}
+        {{- $absolute := printf "%s%s" $permalink $url -}}
+        {{- if strings.HasPrefix $url "/" -}}{{- $absolute = $url | absURL -}}{{- end -}}
+        {{- $content = replace $content $attribute (replace $attribute $url $absolute) -}}
+      {{- end -}}
+    {{- end -}}
     <item>
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
       <guid>{{ .Permalink }}</guid>
-      <description>{{ .Content | html }}</description>
+      <description>{{ $content | html }}</description>
     </item>
     {{- end }}
   </channel>

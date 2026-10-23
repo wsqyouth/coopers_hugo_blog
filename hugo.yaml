@@ -41,6 +41,9 @@ languages:
       languageName: "English"
       # contentDir: content/english
       weight: 1
+      # 顶层导航 = 站点的骨架：去哪一类内容。
+      # 只放"少而重要"的——分类/标签/系列这类"多而杂"的索引放侧栏，
+      # 搜索入口也只在侧栏出现一次（同一件事不要三个入口）。
       menu:
         main:
           - identifier: home
@@ -51,26 +54,18 @@ languages:
             name: 归档
             url: archives/
             weight: 2
-          - identifier: categories
-            name: 分类
-            url: categories/
-            weight: 3
           - identifier: notes
             name: 笔记
             url: notes/
-            weight: 4
+            weight: 3
           - identifier: projects
             name: 项目
             url: projects/
-            weight: 5
+            weight: 4
           - identifier: about
             name: 关于
             url: about/
-            weight: 6
-          - identifier: search
-            name: 🔍 搜索
-            url: search
-            weight: 7
+            weight: 5
 
 outputs:
   home:
@@ -90,8 +85,13 @@ outputFormats:
 
 params:
     env: production # to enable google analytics, opengraph, twitter-cards and schema.
-    # description: "这是一个纯粹的博客......"
+    description: "Coopers 的个人网站：分享后端工程与 AI 协作实践，记录 EchoFlow、ReadFlow、NoteFlow 的打磨过程。"
     author: Coopers
+    authorIntro:
+        bio: "你好，我是 Coopers，一名后端工程师。用 AI 把日常里的想法做成作品，也写下开发中的经验、取舍和还没想明白的事。"
+        wechatName: "写作与作品近况"
+        wechatQR: "img/wechat-placeholder.svg"
+        wechatPlaceholder: true
     # author: ["Me", "You"] # multiple authors
 
     mainSections: ["posts"]
@@ -120,8 +120,8 @@ params:
           - name: 📁 归档
             url: archives
 
-    defaultTheme: auto  # defaultTheme: light or  dark 
-    disableThemeToggle: false
+    defaultTheme: light  # 新访客默认使用原来的白色主题
+    disableThemeToggle: true  # 使用本地三主题选择器
     DateFormat: "2006-01-02"
     ShowShareButtons: true
     ShowReadingTime: true
@@ -147,12 +147,12 @@ params:
     
     socialIcons:
         - name: github
-          url: "https://github.com/Coopers"
+          url: "https://github.com/wsqyouth/"
         - name: other
-          url: "https://blog.csdn.net/Coopers"
+          url: "https://youth.blog.csdn.net/"
           title: "CSDN"
         - name: email
-          url: "mailto:coopers@gmail.com"
+          url: "mailto:wsqyouth@qq.com"
         - name: rss
           url: "index.xml"
 
@@ -187,9 +187,9 @@ params:
         shouldSort: true
         location: 0
         distance: 1000
-        threshold: 1
+        threshold: 0.4
         minMatchCharLength: 0
-        keys: ["title", "permalink", "summary"]
+        keys: ["title", "summary", "content"]
 
     # Twikoo（评论 + 阅读量，腾讯云 CloudBase）曾配置于此，2026-10-22 判定为伪需求整体移除：
     # 静态个人博客的价值在内容可读与可发现，不在互动指标；且免费体验版根本部署不了
