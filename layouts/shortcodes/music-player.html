@@ -1,0 +1,210 @@
+{{- /*
+关于页「背景音乐」播放器。
+
+设计原则（与本站的克制风格一致）：
+  · **默认不展开**——页面上只有一个"🎵 放点音乐"的入口。
+    多数访客不听歌，不该让播放器占据阅读空间。
+  · **点了才展开**，展开后是一个可点的曲目列表。
+  · **绝不自动播放**——浏览器会拦截，而且未经同意出声很打扰。
+  · **按需加载音频**——preload="none"，只有点某一首时才下载那一首。
+    3 首 × ~2.2MB 不会在进页面时就全压上去。
+  · **纯 HTML5 + 原生 JS**——不引 aplayer/meting 等外部库，
+    不依赖 CDN（本站是纯静态，不给自己加外部故障点）。
+
+数据来自 data/about-music.yml，加歌改数据即可，不用动这个文件。
+*/ -}}
+{{- /* 数据文件名带连字符（about-music.yml），不能用 .Site.Data.about-music 点号访问——
+           Hugo 会把它解析成 "about 减 music" 而报 bad character U+002D。
+           必须用 index 取值。 */ -}}
+{{- $tracks := index .Site.Data "about-music" -}}
+
+{{- with $tracks }}
+{{- $id := printf "about-music-%d" (now.Unix) -}}
+<div class="about-music" id="{{ $id }}" data-total="{{ len . }}">
+    {{- /* 入口：没展开时只看到这个按钮 */ -}}
+    <button class="about-music-toggle" type="button" aria-expanded="false" aria-controls="{{ $id }}-panel">
+        <span class="am-icon" aria-hidden="true">🎵</span>
+        <span class="am-toggle-text">放点音乐</span>
+        <span class="am-caret" aria-hidden="true">▾</span>
+    </button>
+
+    {{- /* 展开后的面板：曲目列表 + 播放控制 */ -}}
+    <div class="about-music-panel" id="{{ $id }}-panel" hidden>
+        <p class="am-hint">点任意一首开始播放。可以边读边听。</p>
+        <ul class="am-tracks">
+            {{- range $i, $t := . }}
+            {{- $src := $t.file | relURL -}}
+            <li class="am-track" data-index="{{ $i }}" data-src="{{ $src }}">
+                <button class="am-track-btn" type="button">
+                    <span class="am-play-icon" aria-hidden="true">▶</span>
+                    <span class="am-track-title">{{ $t.title }}</span>
+                    <span class="am-track-artist">{{ $t.artist }}</span>
+                </button>
+            </li>
+            {{- end }}
+        </ul>
+
+        <div class="am-player">
+            {{- /* 模式按钮放在"正在播放"前面，且只显图标（克制）。
+                   文字保留在 DOM 里给读屏软件，视觉上隐藏；
+                   鼠标悬停有 title 提示当前是什么模式。 */ -}}
+            <div class="am-now-row">
+                <button class="am-mode-btn" type="button" title="播放模式：顺序播放（播放完最后一首就停止，点击切换）">
+                    <span class="am-mode-icon" aria-hidden="true">🔁</span>
+                    <span class="am-mode-text visually-hidden">顺序播放</span>
+                </button>
+                <div class="am-now">
+                    <span class="am-now-label">正在播放</span>
+                    <span class="am-now-title">—</span>
+                </div>
+            </div>
+            <div class="am-progress-row">
+                <span class="am-time am-time-current">0:00</span>
+                <div class="am-progress" role="slider" aria-label="播放进度"
+                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                    <div class="am-progress-fill"></div>
+                </div>
+                <span class="am-time am-time-duration">0:00</span>
+            </div>
+        </div>
+    </div>
+
+    {{- /* 单个 <audio> 实例复用：换 src 即可，不必给每首歌建一个。
+           注意这里**不能写 loop 属性**——写了它浏览器会自动重播，
+           ended 事件就永远不触发，"播完自动下一首"会变成死代码（踩过）。
+           单曲循环由 JS 按当前模式动态处理，见下面的 ended 分支。 */ -}}
+    <audio class="am-audio" preload="none"></audio>
+</div>
+
+<script>
+(function () {
+    var root = document.getElementById('{{ $id }}');
+    if (!root) return;
+    var audio = root.querySelector('.am-audio');
+    var toggle = root.querySelector('.about-music-toggle');
+    var panel = root.querySelector('.about-music-panel');
+    var tracks = Array.prototype.slice.call(root.querySelectorAll('.am-track'));
+    var nowTitle = root.querySelector('.am-now-title');
+    var fill = root.querySelector('.am-progress-fill');
+    var bar = root.querySelector('.am-progress');
+    var cur = root.querySelector('.am-time-current');
+    var dur = root.querySelector('.am-time-duration');
+    var modeBtn = root.querySelector('.am-mode-btn');
+    var modeIcon = root.querySelector('.am-mode-icon');
+    var modeText = root.querySelector('.am-mode-text');
+    var current = -1;
+
+    /* 三种播放模式：
+         'list'  —— 顺序播放：播完最后一首就停
+         'all'   —— 列表循环：播完最后一首回到第一首
+         'one'   —— 单曲循环：一直重复当前这首
+       默认 'list'（最符合"点开听一会儿"的预期，不会无限放下去）。 */
+    var MODES = [
+        { key: 'list', icon: '🔁', text: '顺序播放', title: '播放完最后一首就停止' },
+        { key: 'all',  icon: '🔂', text: '列表循环', title: '播放完最后一首后回到第一首' },
+        { key: 'one',  icon: '🔁', text: '单曲循环', title: '一直重复当前这一首' }
+    ];
+    var modeIndex = 0;
+
+    function fmt(s) {
+        if (!isFinite(s)) return '0:00';
+        var m = Math.floor(s / 60), r = Math.floor(s % 60);
+        return m + ':' + (r < 10 ? '0' : '') + r;
+    }
+
+    /* 图标语义 = 「点击后会发生什么」，不是「这是第几几首」。
+       所以必须同时看两件事：是不是当前曲目、音频是否真的在播。
+       只判断前者会出 bug：暂停时 current 没变，图标就一直停在 ⏸。
+
+       注意别加 `currentTime > 0` 这类条件 —— play 事件触发的瞬间
+       currentTime 还是 0，会把刚开始播放的状态误判成"没在播"，
+       表现为图标滞后一步（踩过）。`!audio.paused` 才是权威信号。 */
+    function markPlaying() {
+        var playing = !audio.paused;
+        tracks.forEach(function (t, i) {
+            var isCurrent = i === current;
+            t.classList.toggle('is-playing', isCurrent);
+            t.querySelector('.am-play-icon').textContent = (isCurrent && playing) ? '⏸' : '▶';
+        });
+    }
+
+    function renderMode() {
+        var m = MODES[modeIndex];
+        modeIcon.textContent = m.icon;
+        modeText.textContent = m.text;
+        modeBtn.setAttribute('title', '播放模式：' + m.text + '（' + m.title + '，点击切换）');
+        modeBtn.setAttribute('aria-label', '播放模式：' + m.text);
+    }
+
+    function play(i) {
+        if (i < 0 || i >= tracks.length) return;
+        if (i === current && !audio.paused) { audio.pause(); return; }
+        if (i === current) { audio.play(); return; }
+        current = i;
+        audio.src = tracks[i].getAttribute('data-src');
+        nowTitle.textContent = tracks[i].querySelector('.am-track-title').textContent;
+        markPlaying();
+        audio.play();
+    }
+
+    tracks.forEach(function (t, i) {
+        t.querySelector('.am-track-btn').addEventListener('click', function () { play(i); });
+    });
+
+    toggle.addEventListener('click', function () {
+        var open = panel.hidden;
+        panel.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.querySelector('.am-toggle-text').textContent = open ? '收起音乐' : '放点音乐';
+        toggle.querySelector('.am-caret').textContent = open ? '▴' : '▾';
+    });
+
+    modeBtn.addEventListener('click', function () {
+        modeIndex = (modeIndex + 1) % MODES.length;
+        renderMode();
+    });
+
+    audio.addEventListener('timeupdate', function () {
+        if (!audio.duration) return;
+        var p = audio.currentTime / audio.duration * 100;
+        fill.style.width = p + '%';
+        bar.setAttribute('aria-valuenow', Math.round(p));
+        cur.textContent = fmt(audio.currentTime);
+    });
+    audio.addEventListener('loadedmetadata', function () {
+        dur.textContent = fmt(audio.duration);
+    });
+
+    /* 播完之后的动作，完全按当前模式分支处理。
+       这里**不能**依赖 <audio loop> 属性——那样 ended 永远不会触发。 */
+    audio.addEventListener('ended', function () {
+        var mode = MODES[modeIndex].key;
+        if (mode === 'one') {
+            audio.currentTime = 0;
+            audio.play();
+            return;
+        }
+        if (current < tracks.length - 1) {
+            play(current + 1);
+            return;
+        }
+        if (mode === 'all') {
+            play(0);
+            return;
+        }
+        /* 顺序播放：放完最后一首就停，并重置 UI */
+        current = -1;
+        markPlaying();
+        fill.style.width = '0%';
+        cur.textContent = '0:00';
+        bar.setAttribute('aria-valuenow', 0);
+        nowTitle.textContent = '—';
+    });
+
+    audio.addEventListener('pause', markPlaying);
+    audio.addEventListener('play', markPlaying);
+
+    renderMode();
+})();
+</script>
+{{- end }}

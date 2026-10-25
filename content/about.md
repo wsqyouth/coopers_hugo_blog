@@ -31,6 +31,13 @@ Your personal website is the new resume.
 
 如果好奇我的工作环境，这里有一份很短的[常用工具](/uses/)清单。
 
+## 随便听听
+
+写东西的时候习惯放着背景音乐。这里有三首，点开就能听——
+不听也不会影响阅读，它只是个可选的陪伴。
+
+{{< music-player >}}
+
 ## 找到我
 
 - **Email**: [wsqyouth@qq.com](mailto:wsqyouth@qq.com)

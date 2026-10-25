@@ -1,0 +1,234 @@
+/* ==================== 关于页 · 背景音乐播放器 ====================
+   克制的入口：默认只显示一个按钮，点开才有播放列表。
+   音乐是陪伴，不是主角——不能让它压过文字。
+   全部走主题变量，亮/暗两套自动生效。 */
+
+.about-music {
+    margin: 2rem 0 1.5rem;
+    padding: 1rem 1.2rem;
+    border: 1px dashed var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-card);
+}
+
+/* --- 入口按钮 --- */
+.about-music-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.about-music-toggle:hover {
+    color: var(--theme-color);
+    border-color: var(--theme-color);
+}
+
+.about-music-toggle .am-icon {
+    font-size: 1rem;
+}
+
+.about-music-toggle .am-caret {
+    font-size: 0.7rem;
+    transition: transform 0.15s ease;
+}
+
+/* --- 展开后的面板 --- */
+.about-music-panel {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.am-hint {
+    margin: 0 0 0.8rem;
+    font-size: 0.84rem;
+    color: var(--text-gray);
+}
+
+/* --- 曲目列表 --- */
+.am-tracks {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+}
+
+.am-track-btn {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-dark);
+    font-size: 0.92rem;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.am-track-btn:hover {
+    background: var(--bg-page);
+    color: var(--theme-color);
+}
+
+/* 正在播放的那一首：用主题色 + 左侧竖线标出来 */
+.am-track.is-playing .am-track-btn {
+    color: var(--theme-color);
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--theme-color);
+}
+
+.am-play-icon {
+    flex: none;
+    width: 1em;
+    font-size: 0.78rem;
+    color: var(--text-gray);
+}
+
+.am-track.is-playing .am-play-icon {
+    color: var(--theme-color);
+}
+
+.am-track-title {
+    flex: 1 1 auto;
+}
+
+.am-track-artist {
+    flex: none;
+    font-size: 0.78rem;
+    color: var(--text-gray);
+}
+
+/* --- 播放状态行 --- */
+.am-player {
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.am-now {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.84rem;
+}
+
+.am-now-label {
+    color: var(--text-gray);
+}
+
+.am-now-title {
+    color: var(--title-black);
+    font-weight: 600;
+}
+
+.am-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.am-time {
+    flex: none;
+    font-size: 0.76rem;
+    color: var(--text-gray);
+    font-variant-numeric: tabular-nums;
+}
+
+/* 进度条：可点、可键盘操作（role=slider + tabindex） */
+.am-progress {
+    flex: 1 1 auto;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--border-color);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.am-progress:focus-visible {
+    outline: 2px solid var(--theme-color);
+    outline-offset: 3px;
+}
+
+.am-progress-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: var(--theme-color);
+    transition: width 0.2s linear;
+}
+
+/* --- 小屏：作者信息换行，别挤在一起 --- */
+@media (max-width: 600px) {
+    .am-track-btn {
+        flex-wrap: wrap;
+        gap: 0.2rem 0.6rem;
+    }
+
+    .am-track-artist {
+        flex-basis: 100%;
+        padding-left: 1.6rem;
+    }
+}
+
+/* --- 播放模式切换（只显图标，克制）---
+   放在"正在播放"左边。图标 + hover 提示足以表达，
+   不必常驻一段文字占用阅读空间。 */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.am-now-row {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.6rem;
+}
+
+.am-mode-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 1.85rem;
+    height: 1.85rem;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-gray);
+    font-size: 0.8rem;
+    font-family: inherit;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.am-mode-btn:hover {
+    color: var(--theme-color);
+    border-color: var(--theme-color);
+}
+
+.am-mode-btn .am-mode-icon {
+    font-size: 0.82rem;
+}

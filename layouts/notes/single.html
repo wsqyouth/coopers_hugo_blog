@@ -1,6 +1,7 @@
 {{- /* 单条笔记：同样不要标题、不要相关文章、不要上下篇、不要评论区。
        笔记是轻的，页面也必须是轻的。 */ -}}
 {{- define "main" }}
+{{- partial "reading-progress.html" . -}}
 <div class="main-container single-post-layout">
     <div class="single-content-wrapper">
         <nav class="breadcrumb" aria-label="面包屑">

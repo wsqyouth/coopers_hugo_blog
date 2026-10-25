@@ -1,0 +1,82 @@
+/* ==================== 提示框（Callout）====================
+   把"说明 / 建议 / 注意 / 警告"从普通引用里区分出来。
+
+   配色策略：四种类型各有一个语义色（--callout-*），按主题分别定义——
+   亮色用深色调、暗色用亮色调、暖色用同色系的暖调。
+   背景不用硬编码，用 color-mix 从语义色和当前卡片背景混出来，
+   这样换主题时背景自动跟着变，不会出现"暗色主题下一个亮黄块"。
+   color-mix 需要 Chrome 111+/Safari 16.2+/Firefox 113+（2023 年起的版本）。 */
+
+:root {
+    --callout-note: #0A5B5B;
+    --callout-tip: #2E7D32;
+    --callout-warn: #B26A00;
+    --callout-danger: #C0392B;
+}
+
+.dark {
+    --callout-note: #4DB6AC;
+    --callout-tip: #81C784;
+    --callout-warn: #FFB74D;
+    --callout-danger: #E57373;
+}
+
+/* 暖黄主题：色相往橙红偏，和纸感背景协调 */
+.warm {
+    --callout-note: #7A6A3A;
+    --callout-tip: #5F7A3A;
+    --callout-warn: #B87A2A;
+    --callout-danger: #B04A3A;
+}
+
+.callout {
+    margin: 1.4rem 0;
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius, 8px);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--callout-note);
+    background: color-mix(in srgb, var(--callout-note) 6%, var(--bg-card));
+}
+
+.callout-note   { border-left-color: var(--callout-note);   background: color-mix(in srgb, var(--callout-note) 6%, var(--bg-card)); }
+.callout-tip    { border-left-color: var(--callout-tip);    background: color-mix(in srgb, var(--callout-tip) 7%, var(--bg-card)); }
+.callout-warn   { border-left-color: var(--callout-warn);   background: color-mix(in srgb, var(--callout-warn) 8%, var(--bg-card)); }
+.callout-danger { border-left-color: var(--callout-danger); background: color-mix(in srgb, var(--callout-danger) 8%, var(--bg-card)); }
+
+.callout-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    color: var(--title-black);
+    font-size: 0.95rem;
+}
+
+.callout-icon {
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+/* 标题颜色跟随类型色，扫读时颜色本身就是分类 */
+.callout-note   .callout-head { color: var(--callout-note); }
+.callout-tip    .callout-head { color: var(--callout-tip); }
+.callout-warn   .callout-head { color: var(--callout-warn); }
+.callout-danger .callout-head { color: var(--callout-danger); }
+
+.callout-body {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text-dark);
+}
+
+/* 提示框里的段落：去掉首尾多余间距，多个段落之间保留 */
+.callout-body > :first-child { margin-top: 0; }
+.callout-body > :last-child { margin-bottom: 0; }
+.callout-body p { margin: 0.5rem 0; }
+
+/* 提示框里的代码块：去掉自身外边距，避免和提示框内边距叠加 */
+.callout-body pre { margin: 0.6rem 0; }
+
+/* 列表页/RSS 里不该出现提示框结构，兜底隐藏（shortcode 只在正文生效） */
+.feed .callout { display: none; }

@@ -90,8 +90,10 @@ params:
     authorIntro:
         bio: "你好，我是 Coopers，一名后端工程师。用 AI 把日常里的想法做成作品，也写下开发中的经验、取舍和还没想明白的事。"
         wechatName: "写作与作品近况"
-        wechatQR: "img/wechat-placeholder.svg"
-        wechatPlaceholder: true
+        wechatQR: "img/wechat-qr.jpg"
+        # 已换成真实公众号二维码（2026-10-25）。这个标志位控制页面上
+        # "二维码待替换"提示与 alt 文案，为 true 时会显示占位说明。
+        wechatPlaceholder: false
     # author: ["Me", "You"] # multiple authors
 
     mainSections: ["posts"]
@@ -196,6 +198,14 @@ params:
     # （CORS 白名单为付费专属），要跑起来得付 ¥19.9/月，性价比不成立。
     # 相关 partial / shortcode / css 已同步删除，如需复活见 git history。
 
+    # 数学公式支持。总闸，默认开启。
+    # 真正决定是否加载 KaTeX 的是**文章 front matter 的 math: true**——
+    # 所以平时不用动这里；只有想彻底禁用整个站的数学支持时才设 false。
+    # Hugo 侧同时要开 passthrough（见文件末尾 markup.goldmark.extensions），
+    # 否则 $$...$$ 会被当成普通文本，LaTeX 宏包根本拿不到。
+    math:
+        enabled: true
+
     # 克制的评论区：Giscus，用 GitHub Discussions 当后端。
     # 免费、无追踪、无广告，数据在自己仓库里；站点保持纯静态，不引入任何要运维的服务。
     # 刻意不做成常驻评论区——绝大多数读者不留言，常驻只会占用阅读空间。
@@ -223,6 +233,24 @@ markup:
     goldmark:
         renderer:
             unsafe: true # HUGO 默认转义 Markdown 文件中的 HTML 代码，如需开启的话
+        extensions:
+            # 让 $$...$$ 与 $...$ 原样传给前端（不被 goldmark 当普通文本处理）。
+            # KaTeX 的加载在 extend_head.html，按 params.math.enabled + 文章 front matter
+            # 的 math: true 双重判断——没用上公式的页面不会引入外部脚本。
+            #
+            # ⚠️ 坑：delimiters 是**嵌套数组**，每一项是一对 [左, 右]。
+            # 写成扁平数组（奇数个）会让 Hugo 直接 panic：
+            #   panic: index out of range [1] with length 1
+            # 报错是 Go 堆栈，完全看不出是配置问题。
+            passthrough:
+                enable: true
+                delimiters:
+                    block:
+                        - - '$$'
+                          - '$$'
+                    inline:
+                        - - '$'
+                          - '$'
     highlight:
         # anchorLineNos: true
         codeFences: true

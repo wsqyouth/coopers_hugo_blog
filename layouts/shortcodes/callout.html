@@ -1,0 +1,53 @@
+{{- /*
+提示框（Callout）——把"注意 / 建议 / 坑"从普通引用里区分出来。
+
+为什么值得有：技术复盘里「踩坑」「注意事项」是高频内容，
+用 blockquote 写和普通引用没区别，扫读时抓不住。
+一个带色条的提示框能让读者立刻看到"这里有个坑"。
+
+四种类型：
+  note    说明（默认）
+  tip     建议 / 最佳实践
+  warn    注意 / 有坑
+  danger  危险 / 别这么干
+
+用法：
+  {{< callout type="warn" title="别写 loop" >}}
+  正文支持 **Markdown**。
+  {{< /callout >}}
+
+实现要点：
+  · 纯 CSS + 现有变量，三套主题（light/warm/dark）自动适配
+  · 颜色不用硬编码——按类型映射到不同色相，但都从 --theme-color 派生
+  · 支持 Markdown 正文（.Inner 默认就是 markdownify）
+*/ -}}
+{{- $type := .Get "type" | default "note" -}}
+{{- $title := .Get "title" | default "" -}}
+
+{{- /* 没传 title 时按类型给默认标题，省得每次都要写 */ -}}
+{{- if not $title -}}
+    {{- $title = index (dict
+        "note"   "说明"
+        "tip"    "建议"
+        "warn"   "注意"
+        "danger" "警告"
+    ) $type | default "说明" -}}
+{{- end -}}
+
+{{- /* 每种类型一个图标，纯 Unicode 不引图标库 */ -}}
+{{- $icon := index (dict
+    "note"   "📌"
+    "tip"    "💡"
+    "warn"   "⚠️"
+    "danger" "🚨"
+) $type | default "📌" -}}
+
+<aside class="callout callout-{{ $type }}">
+    <div class="callout-head">
+        <span class="callout-icon" aria-hidden="true">{{ $icon }}</span>
+        <span class="callout-title">{{ $title }}</span>
+    </div>
+    <div class="callout-body">
+        {{ .Inner | markdownify }}
+    </div>
+</aside>

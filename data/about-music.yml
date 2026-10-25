@@ -1,0 +1,27 @@
+# 关于页「背景音乐」播放列表
+#
+# 每首一行：title（显示名）+ artist（作者）+ file（static/ 下的路径）
+# 加歌只需在下面加一行，不用改任何模板。
+#
+# 排序按年代（巴洛克 → 浪漫派 → 印象派前夜），
+# 这样列表本身就能看出风格跨度；播放顺序也是这个顺序。
+
+- title: "哥德堡变奏曲 · 咏叹调"
+  artist: "巴赫 · 巴洛克"
+  file: "/audio/about/04-bach-goldberg-aria.mp3"
+
+- title: "夜曲 · C 小调"
+  artist: "肖邦 · 浪漫派"
+  file: "/audio/about/01-chopin-nocturne-c-minor.mp3"
+
+- title: "夜曲 · F 小调（Op.55 No.1）"
+  artist: "肖邦 · 浪漫派"
+  file: "/audio/about/02-chopin-nocturne-op55-no1.mp3"
+
+- title: "夜曲 · G 大调（Op.37 No.2）"
+  artist: "肖邦 · 浪漫派"
+  file: "/audio/about/03-chopin-nocturne-op37-no2.mp3"
+
+- title: "梦幻曲"
+  artist: "舒曼 · 浪漫派"
+  file: "/audio/about/05-schumann-traumerei.mp3"

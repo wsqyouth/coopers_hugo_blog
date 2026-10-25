@@ -10,7 +10,7 @@ draft: false
 featured: false
 ---
 
-> Context 主要在异步场景下实现并发协调以及对 goroutine 的生命周期控制，同时间距一定的数据存储能力。
+> Context 主要在异步场景下实现并发协调以及对 goroutine 的生命周期控制，同时兼具一定的数据传递能力。
 
 <!--more-->
 
@@ -326,5 +326,5 @@ func Stream(ctx context.Context, out chan<- Value) error {
 
 
 ### 四、参考
-1. [golang context 源码](/usr/local/go/src/context/context.go) /usr/local/go/src/context/context.go
+1. [Go context 源码](https://go.dev/src/context/context.go)
 2. [Golang context 实现原理](https://mp.weixin.qq.com/s?__biz=MzkxMjQzMjA0OQ==&mid=2247483677&idx=1&sn=d1c0e52b1fd31932867ec9b1d00f4ec2&poc_token=HLKKUGmj3LT6uWqcfASNI60FUDzVkOY5RTl5YLyc)

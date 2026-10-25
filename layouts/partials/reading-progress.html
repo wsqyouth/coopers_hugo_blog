@@ -1,0 +1,65 @@
+{{- /* 阅读进度条
+       只挂在文章页与笔记页（单篇阅读场景），列表页不需要——
+       读者在列表页是"扫"，不是"读"，没有"读到哪里"的概念。
+       进度按正文实际滚动范围算，不是整个窗口，所以页头页脚不算进度。
+
+       ⚠️ 为什么要包 DOMContentLoaded：这个 partial 放在 <main> 开头，
+       而正文容器（.post-content）在它**后面**才被解析。
+       script 是同步执行的，直接跑会 querySelector 不到正文而提前 return，
+       症状是"HTML 和 JS 都在、逻辑也对，但进度条永远不动"。
+       等 DOM 就绪再初始化才对。 */ -}}
+{{- if eq .Kind "page" -}}
+<div class="reading-progress" role="progressbar" aria-label="阅读进度"
+     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="reading-progress-bar"></div>
+</div>
+
+<script>
+(function () {
+    function init() {
+        var wrap = document.querySelector('.reading-progress');
+        var bar = document.querySelector('.reading-progress-bar');
+        if (!wrap || !bar) return;
+
+        // 找正文容器：文章页是 .post-content，笔记页是 .note-body
+        var target = document.querySelector('.post-content') || document.querySelector('.note-body');
+        if (!target) return;
+
+        var ticking = false;
+
+        function update() {
+            ticking = false;
+            var rect = target.getBoundingClientRect();
+            var total = rect.height - window.innerHeight;
+            // 正文比一屏短时（短笔记），没有"进度"可言，直接隐藏
+            if (total <= 0) {
+                wrap.hidden = true;
+                return;
+            }
+            wrap.hidden = false;
+            var passed = -rect.top;
+            var pct = Math.min(100, Math.max(0, passed / total * 100));
+            bar.style.width = pct + '%';
+            wrap.setAttribute('aria-valuenow', Math.round(pct));
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        update();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+</script>
+{{- end -}}

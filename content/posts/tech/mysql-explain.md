@@ -267,4 +267,4 @@ EXPLAIN SELECT key1 FROM single_table WHERE key1 = 'a' or common_field = 'a';
 ```
 索引失效的场景比较多，这里只归纳了部分: 
 
-![Alt text](index_dismiss.png)
+<!-- 原配图 index_dismiss.png 未随文章保存；找到原图后再恢复引用。 -->

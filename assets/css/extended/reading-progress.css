@@ -1,0 +1,33 @@
+/* ==================== 阅读进度条 ====================
+   固定在视口顶端的一条细线，宽度 = 已读比例。
+   用 requestAnimationFrame 节流，不在 scroll 事件里直接改样式
+   （滚动事件每秒可能触发几十次，直接改样式会掉帧）。 */
+
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    width: 100%;
+    height: 2px;
+    background: transparent;
+    pointer-events: none;          /* 不挡点击 */
+}
+
+.reading-progress[hidden] { display: none; }
+
+.reading-progress-bar {
+    height: 100%;
+    width: 0;
+    background: var(--theme-color);
+    /* 读过的部分平滑过渡，避免滚动时线条抖动 */
+    transition: width 0.1s linear;
+}
+
+/* 暗色主题下主题色本身是浅色，无需额外处理；
+   暖色主题同理，--theme-color 已经按主题切换。 */
+
+/* 减少动画偏好：关掉过渡，进度仍然准确 */
+@media (prefers-reduced-motion: reduce) {
+    .reading-progress-bar { transition: none; }
+}

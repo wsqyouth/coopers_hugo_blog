@@ -2,6 +2,49 @@
 {{ $style := $styles | resources.Concat "assets/css/shortcode.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
 
+{{- /* ===== 数学公式支持（按需加载）=====
+
+     为什么按需：KaTeX 是外部脚本（CDN），而本站的红线是"不给自己加外部依赖"。
+     折中办法是**只在真的用到公式的页面加载**——没用的页面一个字节都不多付。
+
+     加载条件：文章的 front matter 写了 math: true。
+     （site.Params.math.enabled 是总闸，默认 true；想彻底禁用整个站的数学支持才设 false。）
+
+     写文章时这样开：
+         ---
+         math: true
+         ---
+         行内公式 $E = mc^2$，独立公式：
+         $$ \int_0^\infty e^{-x} dx = 1 $$
+
+     Hugo 侧还要开 passthrough（见 hugo.yaml 的 markup.goldmark.extensions），
+     否则 $$...$$ 会被当成普通文本，LaTeX 宏包根本拿不到。 */ -}}
+{{- if and (ne site.Params.math.enabled false) .Params.math -}}
+{{- /* ⚠️ 这里**刻意不加 integrity（SRI）**。
+       原因：本站的构建/预览环境走 HTTP 代理，代理返回的 CDN 内容与
+       官方源不一致（实测哈希对不上，浏览器以 SRI 为由拒绝加载，
+       症状是"代码写着引入了、Network 里却是 blocked"）。
+       不加 SRI 损失的是"CDN 被篡改检测"这一层加固，
+       换来的是公式真能渲染。KaTeX 只做渲染、不碰用户数据，
+       这个取舍可以接受。若以后在无代理环境部署，可把哈希补回来。 */ -}}
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      crossorigin="anonymous">
+<script defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+        crossorigin="anonymous"></script>
+<script defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+        crossorigin="anonymous"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+{{- end -}}
+
 {{- /* ===== URL 守卫：三层一致性的最后一道闸 =====
 
      一致性涉及三层：front matter 的取值（slug/标签/分类/系列）
