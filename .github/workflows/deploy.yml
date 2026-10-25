@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: 检出代码
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: true  # 如果主题使用了submodule
           fetch-depth: 0    # 获取完整历史以便Hugo正确设置.GitInfo和.Lastmod
@@ -39,8 +39,35 @@ jobs:
           fi
           echo "构建产物校验通过：$(find public -type f | wc -l) 个文件"
 
+      - name: 校验删除语义配置（防止 action 升级后参数静默失效）
+        run: |
+          # 为什么需要这道闸：
+          #   rsync 默认**没有删除语义**——源端删掉的文件在服务器上会永远留着，
+          #   于是「删文章」在线上是假的。本站依赖 ARGS 里的 --delete-delay。
+          #   而 ssh-deploy 的 ARGS 解析逻辑变过大版本（v6 把 rsyncwrapper
+          #   换成了直接 spawn，且只有数组形式的 args 才会拼进命令）。
+          #   一旦将来再升级、或有人改了 ARGS，删除语义会**静默丢失**：
+          #   rsync 用默认参数照样成功，CI 全绿，但线上旧文件清不掉。
+          #   所以在这里显式断言，把「配置对不上」变成红色，而不是线上事故。
+          #
+          # 直接读本文件里配置的 ARGS，避免「这里写一份、with 里写一份」而对不上。
+          CONFIGURED=$(sed -n 's/^[[:space:]]*ARGS:[[:space:]]*"\([^"]*\)".*/\1/p' \
+                       .github/workflows/deploy.yml | head -1)
+          echo "本 workflow 配置的 rsync ARGS: ${CONFIGURED:-（未找到）}"
+          if [ -z "$CONFIGURED" ]; then
+            echo "❌ 没在本文件里找到 ARGS 配置——ssh-deploy 会用默认参数（无删除语义）" >&2
+            exit 1
+          fi
+          case "$CONFIGURED" in
+            *--delete*)
+              echo "✅ 删除语义已配置：$CONFIGURED" ;;
+            *)
+              echo "❌ ARGS 里没有 --delete/--delete-delay，删除语义缺失，拒绝部署" >&2
+              exit 1 ;;
+          esac
+
       - name: 部署到服务器
-        uses: easingthemes/ssh-deploy@v5.1.0
+        uses: easingthemes/ssh-deploy@v6.0.3
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
@@ -54,6 +81,12 @@ jobs:
           # 服务器堆着 373 个，其中 166 个是已删文章 / 旧 permalink 布局 / 旧 CSS 指纹）。
           # --delete-delay 而非 --delete：把删除推迟到传输结束再执行，缩短线上
           # 出现"文件已传完但旧文件还在"的中间态窗口。
+          #
+          # ⚠️ 升级到 v6 时核对过：v6 把 rsyncwrapper 换成直接 child_process.spawn，
+          #    且只有**数组形式**的 args 才会拼进命令；但它在解析 inputs 时有
+          #    `case "args": c = t.split(" ")`，所以空格分隔的字符串仍会被转成数组，
+          #    本配置继续有效（已比对 v5.1.0 与 v6.0.3 的解析代码，逻辑一致）。
+          #    Node 运行时 v5=node20 / v6=node24，升级正是为了消除 Node 20 弃用告警。
           ARGS: "-rlgoDzvc -i --delete-delay"
           SCRIPT_BEFORE: |
             echo "开始部署..."
