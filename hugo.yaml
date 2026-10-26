@@ -89,7 +89,8 @@ params:
     author: Coopers
     authorIntro:
         bio: "你好，我是 Coopers，一名后端工程师。用 AI 把日常里的想法做成作品，也写下开发中的经验、取舍和还没想明白的事。"
-        wechatName: "写作与作品近况"
+        # 公众号卡片上的一句宣传语（原键名 wechatName 名不副实：它从来不是公众号名）
+        wechatTagline: "个人生活及思考笔记分享，欢迎关注"
         wechatQR: "img/wechat-qr.jpg"
         # 已换成真实公众号二维码（2026-10-25）。这个标志位控制页面上
         # "二维码待替换"提示与 alt 文案，为 true 时会显示占位说明。
@@ -133,7 +134,8 @@ params:
     ShowBreadCrumbs: true
     ShowCodeCopyButtons: true
     hideFooter: false # 隐藏页脚
-    ShowWordCounts: true
+    # ShowWordCounts 已删除：全站没有任何模板读它（文章元信息走 layouts/partials/article-meta.html，
+    # 自己算字数与阅读时长，不用 Hugo 内置的 .WordCount），留着是死配置。
     # 关闭访客计数（PaperMod 的不蒜子）。个人思考博客的价值不在访问量指标，
     # 阅读量/评论这类"互动装饰"已整体判定为伪需求并移除（见下方 comments 说明）。
     VisitCount: false
@@ -142,6 +144,22 @@ params:
 
     ShowToc: true # 显示目录
     TocOpen: true # 自动展开目录
+
+    # 阅读时长口径（每个数字都有出处，改之前先看 REF-myblog.md 的调研结论）
+    readingTime:
+        # 中文字/分钟。Medium 官方对中日韩取 500 字符/分；中文默读研究（语文课程标准）
+        # 区间是 400~600 字/分。Hugo 内置 CJK 分支也是 500。
+        cjkCharsPerMinute: 500
+        # 英文词/分钟。工程博客读者档（技术类内容 150~220 词/分区间内）。
+        # 不用 Medium 的 265：那是为泛读内容定的，对技术文章偏乐观。
+        latinWordsPerMinute: 200
+        # 代码行补偿（秒/行）。代码阅读速度约为正文的一半（Stanford 研究：精读代码
+        # ~100 wpm vs 精读散文 ~250 wpm）；但读者扫读代码比精读快，按技术内容扫读档
+        # 150 wpm 折算：本站实测代码密度 2.47 词/行 ⇒ 2.47 ÷ (150/60) ≈ 1.0 秒/行。
+        # 用"行"而不是"词"计量：实测各篇代码 token 密度相差 6 倍（1.2~7.1 词/行，
+        # YAML/配置与 SQL 输出差异极大），按词计会对 SQL 输出高估、对 YAML 低估；
+        # 行数直接对应读者要滚多少屏。
+        secondsPerCodeLine: 1
 
     # 无评论系统（刻意为之）：Twikoo + 腾讯云 CloudBase 需 ¥19.9/月且引入第三方后端，
     # 2026-10-22 判定为伪需求。将来若要评论，优先 GitHub Discussions / Giscus 这类零后端方案。

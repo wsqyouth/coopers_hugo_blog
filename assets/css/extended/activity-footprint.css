@@ -1,0 +1,196 @@
+/* ==================== 活跃足迹（归档页 · 写作热力图）====================
+   纯 CSS Grid，零 JS。12 个月用 auto-fit 自适应排布：
+   容器宽就一行 12 个月，容器窄（带侧栏的归档页）自动折行。
+   每月内部是 7 列小网格（周日→周六），行数随该月周数自适应。
+
+   两个刻意的设计：
+   ① 空格子视觉权重极低（近乎透明的边框色）——让历史空白退为背景，
+      而不是"失败标记"。这是从"活跃足迹"那一类组件学来的最关键手法。
+   ② 只做有/无，不按篇数分深浅——本站单日最多 1-2 篇，分档没意义，
+      反而会让空格更显眼。 */
+
+.footprint {
+    margin: 0 0 2.2rem;
+    padding: 1.1rem 1.2rem 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius, 10px);
+    background: var(--bg-card);
+    /* 整体缩到 80%：归档页首屏不该被热力图占掉三分之一。
+       用 zoom 而不是 transform: scale —— zoom **会重新计算布局占位**，
+       transform 不会（会留下一片空白）。代价是 Firefox 126 以下不支持，
+       2026 年可忽略。等比缩放，不用逐个改尺寸，也不会漏。 */
+    zoom: 0.8;
+}
+
+/* ---------- 头部 ---------- */
+.fp-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+}
+
+.fp-title {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--title-black);
+}
+
+/* "持续更新"小徽标：一个呼吸的小点 + 文字 */
+.fp-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    color: var(--text-gray);
+}
+
+.fp-live i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--theme-color);
+    animation: fp-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes fp-pulse {
+    0%, 100% { opacity: 0.35; }
+    50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fp-live i { animation: none; opacity: 0.7; }
+}
+
+/* ---------- 12 个月容器 ---------- */
+.fp-months {
+    display: grid;
+    /* 固定 6 列：12 个月整齐分成两行，每行 6 个。
+       不用 auto-fit——归档页带侧栏、内容区约 700px 时 auto-fit 会算出
+       9 列，把 12 个月切成 9+3 两行，视觉不平衡（实测过）。 */
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.9rem 0.7rem;
+}
+
+.fp-month {
+    min-width: 0;              /* 允许在窄容器里收缩，防溢出 */
+}
+
+.fp-month-label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ---------- 每月内部：7 列（周日→周六）---------- */
+.fp-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    /* 锁上限：7 列 × 14px + 6 × 2px gap ≈ 110px。
+       不限的话 1fr 会把格子撑到 20px+，两行就是 240px，
+       归档页首屏全被热力图占满、文章列表被推走。 */
+    max-width: 112px;
+}
+
+.fp-cell {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 2px;
+    /* 空格子：用极淡的主题色，而不是纯灰——和三套主题都协调，
+       但视觉权重低到几乎只是"占位" */
+    background: color-mix(in srgb, var(--theme-color) 8%, transparent);
+    display: block;
+    transition: transform 0.12s ease;
+}
+
+.fp-cell.is-on {
+    background: var(--theme-color);
+}
+
+/* 分深浅（3 档，不是 4 档）：
+   0 篇 → 空；1 篇 → 55% 混入卡片底；2 篇及以上 → 纯主题色。
+   为什么 3 档不做 4 档：本站单日最多 2 篇，第 4 档（3 篇+）永远不会出现，
+   图例会空转。用 color-mix 而不是 opacity——opacity 会把 hover 的
+   outline 一起变淡。 */
+.fp-cell.l1 {
+    background: color-mix(in srgb, var(--theme-color) 55%, var(--bg-card));
+}
+
+.fp-cell.l2 {
+    background: var(--theme-color);
+}
+
+/* zoom 0.8 会把放大效果也缩小，补偿到 1.5 */
+.fp-cell:hover {
+    transform: scale(1.5);
+    outline: 1px solid var(--theme-color);
+    outline-offset: 1px;
+}
+
+/* ---------- 底部统计与图例 ---------- */
+.fp-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.fp-stats {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.76rem;
+    color: var(--text-gray);
+}
+
+.fp-stats b {
+    color: var(--title-black);
+    font-weight: 600;
+}
+
+.fp-sep {
+    display: inline-block;
+    width: 1px;
+    height: 0.7rem;
+    margin: 0 0.25rem;
+    background: var(--border-color);
+}
+
+.fp-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.68rem;
+    color: var(--text-gray);
+}
+
+.fp-legend .fp-cell {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    margin-left: 0.35rem;
+}
+
+/* ---------- 小屏：更小的格子与间距 ---------- */
+@media (max-width: 600px) {
+    .footprint { padding: 0.9rem 0.9rem 0.75rem; }
+
+    .fp-months {
+        /* 小屏 4 列 × 3 行，每月块不至于挤成一条 */
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.7rem 0.5rem;
+    }
+
+    .fp-grid { gap: 1.5px; }
+    .fp-cell { border-radius: 1.5px; }
+    .fp-month-label { font-size: 0.65rem; }
+}

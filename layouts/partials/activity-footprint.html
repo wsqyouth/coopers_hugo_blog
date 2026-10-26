@@ -1,0 +1,114 @@
+{{- /* ============================================================================
+   活跃足迹（写作热力图）——挂在归档页顶部
+
+   设计参照「活跃足迹 · 本月已活跃 N 天」那一类组件，但按本站情况改了两处：
+
+   ① **滚动 12 个月窗口**，不是全年 53 周连续流。
+      原因：本站文章是断续写的（24 篇跨 2022-04 ~ 2026-03，中间断更多次），
+      全年连续流会暴露一大片空白；滚动 12 个月 + 每月独立成块，
+      让"最近的节奏"成为焦点，历史空白退为背景。
+
+   ② **只做"有/无"二进制，不按篇数分深浅**。
+      原因：本站单日篇数最多 1-2 篇，分档看不出差异，
+      反而会让空格子更显眼。写没写一目了然，但不惩罚写得多寡。
+
+   统计口径：**正式文章 + 短笔记**。缺了短笔记，"每月活跃"不成立——
+   一周一部长篇不现实，但一周一条笔记现实。
+
+   实现：纯 CSS Grid + 服务端渲染，**零 JS、零外部依赖**
+   （对比 burgeonlab 的 ECharts 方案、xlap 的前端 fetch RSS 方案）。
+   ============================================================================ */ -}}
+
+{{- /* ---- 1. 把文章与短笔记按日期归并 ---- */ -}}
+{{- $days := dict -}}
+{{- range where site.RegularPages "Section" "in" site.Params.mainSections -}}
+    {{- $d := .Date.Format "2006-01-02" -}}
+    {{- $days = merge $days (dict $d (add (index $days $d | default 0) 1)) -}}
+{{- end -}}
+{{- range where site.RegularPages "Section" "notes" -}}
+    {{- $d := .Date.Format "2006-01-02" -}}
+    {{- $days = merge $days (dict $d (add (index $days $d | default 0) 1)) -}}
+{{- end -}}
+
+{{- /* ---- 2. 生成"最近 12 个月"的月份序列（最早在左）----
+        seq 11 0 是从 11 递减到 0，配 sub 后天然得到
+       [11个月前, 10个月前, …, 本月]，已经是正确顺序——
+       **不要再 Reverse**（加过一次，结果整个反了，白屏debug半天）。 */ -}}
+{{- $curYear := now.Format "2006" | int -}}
+{{- $curMonth := now.Format "01" | int -}}
+{{- $months := slice -}}
+{{- range $i := seq 11 0 -}}
+    {{- $m := sub $curMonth $i -}}
+    {{- $y := $curYear -}}
+    {{- if le $m 0 -}}
+        {{- $m = add $m 12 -}}
+        {{- $y = sub $y 1 -}}
+    {{- end -}}
+    {{- $months = $months | append (dict "y" $y "m" $m) -}}
+{{- end -}}
+
+{{- /* ---- 3. 逐月逐日渲染格子 ---- */ -}}
+{{- $totalInWindow := 0 -}}
+{{- $activeDays := 0 -}}
+{{- $monthActiveDays := 0 -}}
+{{- $thisMonthKey := printf "%d-%02d" $curYear $curMonth -}}
+
+<div class="footprint" aria-label="活跃足迹">
+    <div class="fp-head">
+        <span class="fp-title">活跃足迹</span>
+        <span class="fp-live"><i aria-hidden="true"></i>持续更新</span>
+    </div>
+
+    <div class="fp-months">
+        {{- range $mo := $months -}}
+        {{- $key := printf "%d-%02d" $mo.y $mo.m -}}
+        {{- $first := time (printf "%d-%02d-01T00:00:00Z" $mo.y $mo.m) -}}
+        {{- $last := $first.AddDate 0 1 -1 -}}
+        <div class="fp-month" data-month="{{ $key }}">
+            <span class="fp-month-label">{{ if eq $mo.m 1 }}{{ $mo.y }}年{{ end }}{{ $mo.m }}月</span>
+            <div class="fp-grid">
+                {{- range $d := seq 1 $last.Day -}}
+                {{- $date := printf "%d-%02d-%02d" $mo.y $mo.m $d -}}
+                {{- $n := index $days $date | default 0 -}}
+                {{- if $n -}}
+                    {{- $totalInWindow = add $totalInWindow $n -}}
+                    {{- $activeDays = add $activeDays 1 -}}
+                    {{- if eq $key $thisMonthKey -}}
+                        {{- $monthActiveDays = add $monthActiveDays 1 -}}
+                    {{- end -}}
+                {{- end -}}
+                {{- /* 未来的日期不渲染成格子，避免出现"还没到的空白"。
+                       注意 now 是函数，必须 now 先调用再 .Format——写成 now.Format 会被
+                       Hugo 当成"给 Format 传 0 个参数"而报错。 */ -}}
+                {{- $today := now.Format "2006-01-02" -}}
+                {{- if le $date $today -}}
+                {{- /* 3 档深浅：0 篇空 / 1 篇浅 / 2 篇以上深。
+                       不设第 4 档（3 篇+）——本站单日最多 2 篇，设了永远不出现，
+                       图例会空转。 */ -}}
+                {{- $lvl := "" -}}
+                {{- if eq $n 1 -}}{{- $lvl = "l1" -}}
+                {{- else if ge $n 2 -}}{{- $lvl = "l2" -}}{{- end -}}
+                <i class="fp-cell{{ if $lvl }} is-on {{ $lvl }}{{ end }}"
+                   role="img"
+                   title="{{ $date }} · {{ if $n }}{{ $n }} 篇{{ else }}没有记录{{ end }}"
+                   aria-label="{{ $date }} · {{ if $n }}{{ $n }} 篇{{ else }}没有记录{{ end }}"></i>
+                {{- end -}}
+                {{- end -}}
+            </div>
+        </div>
+        {{- end -}}
+    </div>
+
+    <div class="fp-foot">
+        <span class="fp-stats">
+            最近 12 个月 <b>{{ $totalInWindow }}</b> 篇
+            <i class="fp-sep" aria-hidden="true"></i>
+            <b>{{ $activeDays }}</b> 天有记录
+        </span>
+        <span class="fp-legend" aria-hidden="true">
+            <i class="fp-cell"></i>没有
+            <i class="fp-cell l1"></i>1 篇
+            <i class="fp-cell l2"></i>2 篇以上
+        </span>
+    </div>
+</div>

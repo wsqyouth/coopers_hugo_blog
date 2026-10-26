@@ -1,3 +1,12 @@
+{{- /* 文章元信息：日期 · 字数 · 阅读时长。
+       形态：`2026-03-19 · 2,300 words  5 min`
+       —— 全站其它文案是中文，但这一处刻意用英文短标签：它是"扫一眼就过去"的
+       辅助信息，英文最短、不抢阅读注意力（比"预计 5 分钟阅读"少一半字符），
+       也不用解释。字数给千分位、时长给整数分钟，扫一眼就知道量级。
+       口径与算法见 partials/article-stats.html。 */ -}}
+{{- $stats := partial "article-stats.html" . -}}
 <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
 <span aria-hidden="true"> · </span>
-<span>预计 {{ math.Max 1 .ReadingTime | int }} 分钟阅读</span>
+<span class="am-words" title="中文按字计，英文按词计（不含代码块）">{{ lang.FormatNumber 0 $stats.words }} words</span>
+<span aria-hidden="true">&nbsp;&nbsp;</span>
+<span class="am-min">{{ $stats.minutes }} min</span>

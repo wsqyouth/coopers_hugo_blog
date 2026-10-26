@@ -8,6 +8,13 @@
 {{- $pages := (where site.RegularPages "Section" "in" site.Params.mainSections).ByDate.Reverse -}}
 
 {{- $body := "" -}}
+
+{{- /* 活跃足迹：放在归档标题下面、年度列表上面。
+       语义上是"归档的可视化摘要"——先看节奏全貌，再翻清单。
+       刻意不放首页：它是作者自己的仪表盘，不是读者装饰；
+       且首页要的是"最近写了什么"，不是"多久写一次"。 */ -}}
+{{- $body = partial "activity-footprint.html" . -}}
+
 {{- range $pages.GroupByDate "2006" -}}
     {{- $year := (index .Pages 0).Date.Format "2006" -}}
     {{- $yearCount := len .Pages -}}

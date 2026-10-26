@@ -1,0 +1,4 @@
+{{- /* 阅读时长（分钟）。计数逻辑在 article-stats.html，这里只取时长。
+     用法：{{ partial "reading-time.html" . }} → 整数分钟。 */ -}}
+{{- $stats := partial "article-stats.html" . -}}
+{{- return $stats.minutes -}}

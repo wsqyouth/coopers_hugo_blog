@@ -5,6 +5,10 @@
 {{- with resources.Get "js/sidebar-tags.js" | minify | fingerprint }}
 <script src="{{ .RelPermalink }}" defer></script>
 {{- end }}
+{{- /* 二维码放大弹窗（侧栏公众号卡片）：站点级加载，脚本自身判断触发器是否存在 */ -}}
+{{- with resources.Get "js/qr-modal.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" defer></script>
+{{- end }}
 {{- if .IsPage }}
 {{- with resources.Get "js/article-images.js" | minify | fingerprint }}
 <script src="{{ .RelPermalink }}" defer></script>

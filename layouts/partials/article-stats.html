@@ -1,0 +1,50 @@
+{{- /* 文章统计：字数 + 阅读时长。两个数出自同一套分语种口径，互相自洽。
+
+     为什么不用 Hugo 内置的 .WordCount：
+     它的 CJK 分支把纯文本按空白切词后，"含多字节的词"按 **rune 数**计 ——
+     中英混排片段里的**空格也被算进字数**。实测 go-layered-architecture
+     真实 2535 中文字 + 156 英文词，Hugo 报 3654（虚高约 30~110%，视中英混排密度而定）。
+     展示用的字数必须是"读者能对上号的量"，所以这里自己数。
+
+     口径（出处见 hugo.yaml params.readingTime）：
+       words   = 中文字数 + 英文词数（正文，**不含代码块**）
+       minutes = 中文/500*60 + 英文/200*60 + 代码行*1，向上取整，最少 1 分钟
+     代码块不算进 words：读者是"读"代码不是"读"字，代码体量由 minutes 里的
+     代码行补偿体现（与 remark-reading-time / npm reading-time 的处理一致）。
+
+     返回：dict "words" N "minutes" M */ -}}
+
+{{- $cfg := site.Params.readingTime | default dict -}}
+{{- $cjkRate := $cfg.cjkCharsPerMinute | default 500 -}}
+{{- $latinRate := $cfg.latinWordsPerMinute | default 200 -}}
+{{- $codeRate := $cfg.secondsPerCodeLine | default 1 -}}
+
+{{- /* ① 代码行数：markdown 源码里的围栏块。
+       必须从 .RawContent 数，不能从渲染后的 <pre> 数 —— Chroma 开了行号，
+       每个源码行会多出一个 <span class="lnt">N\n</span>，渲染换行数是源码的 2 倍。 */ -}}
+{{- $codeLines := 0 -}}
+{{- range findRE "(?s)```[^\n]*\n.*?```" .RawContent -}}
+    {{- $codeLines = add $codeLines (sub (len (split . "\n")) 2) -}}
+{{- end -}}
+
+{{- /* ② 正文：渲染后的 HTML，剥掉代码块与公式块 */ -}}
+{{- $html := .Content -}}
+{{- $html = replaceRE "(?s)<pre[^>]*>.*?</pre>" " " $html -}}
+{{- $html = replaceRE "(?s)<math.*?</math>" " " $html -}}
+{{- $prose := plainify $html | htmlUnescape -}}
+
+{{- /* ③ 分语种计数 */ -}}
+{{- $cjk := len (findRE `[\p{Han}\p{Hiragana}\p{Katakana}]` $prose) -}}
+{{- $latin := len (findRE `[A-Za-z0-9]+(['\x{2019}\-\.][A-Za-z0-9]+)*` $prose) -}}
+{{- $words := add $cjk $latin -}}
+
+{{- /* ④ 换算成分钟 */ -}}
+{{- $seconds := add
+      (add (div (mul $cjk 60.0) (float $cjkRate)) (div (mul $latin 60.0) (float $latinRate)))
+      (mul $codeLines (float $codeRate)) -}}
+{{- $minutes := math.Ceil (div $seconds 60.0) -}}
+{{- if lt $minutes 1.0 -}}
+    {{- $minutes = 1.0 -}}
+{{- end -}}
+
+{{- return (dict "words" $words "minutes" (int $minutes)) -}}

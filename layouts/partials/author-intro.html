@@ -1,4 +1,5 @@
-{{- with site.Params.authorIntro }}
+{{- $ai := site.Params.authorIntro -}}
+{{- with $ai -}}
 <section class="author-intro" aria-label="关于作者">
     <a class="author-heading" href="{{ "about/" | relURL }}">
         <span class="author-monogram" aria-hidden="true">C</span>
@@ -8,18 +9,35 @@
     <p class="author-links"><a href="{{ "projects/" | relURL }}">我的作品</a><a href="{{ "about/" | relURL }}">关于我</a></p>
     {{- with .wechatQR }}
     <div class="author-wechat">
-        <img src="{{ . | relURL }}" width="88" height="88" loading="lazy"
-             alt="{{ if site.Params.authorIntro.wechatPlaceholder }}公众号二维码占位图，待替换，无法扫码{{ else }}公众号二维码{{ end }}">
+        {{- /* 二维码本身就是放大触发器：点一下弹窗放大，不用再切到图片标签页。
+               用 <a> 而不是 <button>：没有 JS（或浏览器不支持 <dialog>）时退化为
+               打开原图，仍可长按保存 —— 渐进增强，而不是功能失效。
+               提示文字放在图片**下方**而不是叠在图上：二维码四角是定位图案，
+               任何覆盖都会影响扫码。 */ -}}
+        <a class="wechat-qr" href="{{ . | relURL }}" data-qr-modal="wechat-qr-modal"
+           aria-haspopup="dialog" aria-label="点击放大查看公众号二维码" title="点击放大查看二维码">
+            <img src="{{ . | relURL }}" width="88" height="88" loading="lazy"
+                 alt="{{ if $ai.wechatPlaceholder }}公众号二维码占位图，待替换，无法扫码{{ else }}公众号二维码{{ end }}">
+            <span class="wechat-qr-hint" aria-hidden="true">点击放大</span>
+        </a>
         <div>
             <span class="wechat-label">公众号</span>
-            <p>{{ site.Params.authorIntro.wechatName }}</p>
-            {{- if site.Params.authorIntro.wechatPlaceholder }}
+            <p>{{ $ai.wechatTagline }}</p>
+            {{- if $ai.wechatPlaceholder }}
             <small>二维码待替换</small>
-            {{- else }}
-            <a class="wechat-open" href="{{ . | relURL }}" target="_blank" rel="noopener">查看二维码 ↗</a>
             {{- end }}
         </div>
     </div>
+    {{- if not $ai.wechatPlaceholder }}
+    <dialog class="qr-modal" id="wechat-qr-modal" aria-label="公众号二维码">
+        <img src="{{ . | relURL }}" width="320" height="320" alt="公众号二维码" loading="lazy">
+        <p class="qr-modal-hint">微信扫一扫，关注公众号</p>
+        {{- /* 原生 <form method="dialog">：关闭不需要一行 JS，ESC 也能关。 */ -}}
+        <form method="dialog">
+            <button class="qr-modal-close" type="submit">关闭</button>
+        </form>
+    </dialog>
+    {{- end }}
     {{- end }}
 </section>
-{{- end }}
+{{- end -}}
