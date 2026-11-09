@@ -1,0 +1,51 @@
+{{ define "main" }}
+<div class="main-container">
+    <div class="content-left">
+        <header class="picks-hero">
+            <p class="picks-hero__label">COOPERS PICKS</p>
+            <h1>{{ .Title }}</h1>
+            <p class="picks-hero__intro">{{ .Description }}</p>
+        </header>
+
+        <nav class="mobile-index" aria-label="精选索引">
+            <a href="#picks-index">按月份和来源浏览 ↓</a>
+        </nav>
+
+        <div id="picks-list" class="picks-results">
+            <p class="picks-filter-summary" data-picks-summary hidden>
+                <span></span> · <a href="{{ .RelPermalink }}#picks-list">查看全部</a>
+            </p>
+            <div class="picks-list" data-picks-list>
+                {{- range .RegularPages.ByDate.Reverse }}
+                <article data-month="{{ .Date.Format "2006-01" }}" data-source="{{ .Params.source_type }}">
+                    <a class="picks-card" href="{{ .RelPermalink }}">
+                        <div class="picks-card__body">
+                            <p class="picks-card__source">
+                                <strong>{{ .Params.programme }}</strong> {{ .Params.episode }}
+                                {{- with .Params.speakers }} · {{ . }}{{ end }}
+                            </p>
+                            <h2>{{ .Title }}</h2>
+                            <p class="picks-card__summary">{{ .Description }}</p>
+                            {{- if or .Params.source_date .Params.duration }}
+                            <p class="picks-card__meta">
+                                {{- with .Params.source_date }}<time datetime="{{ . }}">{{ . }}</time>{{ end }}
+                                {{- with .Params.duration }}<span>{{ . }}</span>{{ end }}
+                            </p>
+                            {{- end }}
+                        </div>
+                        <span class="picks-card__action" aria-hidden="true">阅读短版 <span>→</span></span>
+                    </a>
+                </article>
+                {{- end }}
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-right">
+        {{ partial "picks-sidebar.html" . }}
+    </div>
+</div>
+{{- with resources.Get "js/picks-filter.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" defer></script>
+{{- end }}
+{{ end }}

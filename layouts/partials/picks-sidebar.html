@@ -1,0 +1,36 @@
+{{- with site.GetPage "/picks" -}}
+{{- $url := .RelPermalink -}}
+{{- $pages := .RegularPages -}}
+<aside class="sidebar" id="picks-index" aria-label="精选索引">
+    {{ partial "author-intro.html" . }}
+    <section class="widget categories">
+        <h3 class="widget-title">来源</h3>
+        <ul class="widget-list archive-year-list">
+            {{- range site.Data.picks.sources }}
+            {{- $count := len (where $pages "Params.source_type" .id) }}
+            {{- if $count }}
+            <li>
+                <a href="{{ $url }}?source={{ .id }}#picks-list" data-picks-filter="source" data-picks-value="{{ .id }}">
+                    <span data-picks-label>{{ .label }}</span>
+                    <span class="count">{{ $count }} 篇</span>
+                </a>
+            </li>
+            {{- end }}
+            {{- end }}
+        </ul>
+    </section>
+    <section class="widget archives">
+        <h3 class="widget-title">归档</h3>
+        <ul class="widget-list archive-year-list">
+            {{- range $pages.GroupByDate "2006-01" }}
+            <li>
+                <a href="{{ $url }}?month={{ .Key }}#picks-list" data-picks-filter="month" data-picks-value="{{ .Key }}">
+                    <span data-picks-label>{{ (index .Pages 0).Date.Format "2006年1月" }}</span>
+                    <span class="count">{{ len .Pages }} 篇</span>
+                </a>
+            </li>
+            {{- end }}
+        </ul>
+    </section>
+</aside>
+{{- end }}

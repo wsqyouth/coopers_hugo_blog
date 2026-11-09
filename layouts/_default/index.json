@@ -1,5 +1,5 @@
 {{- $index := slice -}}
-{{- range site.RegularPages -}}
+{{- range where site.RegularPages "Section" "ne" "picks" -}}
     {{- if and (not .Params.searchHidden) (ne .Layout `archives`) (ne .Layout `search`) }}
     {{- $index = $index | append (dict "title" .Title "content" .Plain "permalink" .RelPermalink "summary" (partial "list-summary.html" .)) -}}
     {{- end }}

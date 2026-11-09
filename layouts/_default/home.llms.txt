@@ -3,7 +3,7 @@
   纯静态生成，构建时就把索引算好，不需要任何运行时。
   模板查找：home 页 + llms 输出格式 → layouts/_default/home.llms.txt
 */ -}}
-{{- $pages := site.RegularPages.ByDate.Reverse -}}
+{{- $pages := (where site.RegularPages "Section" "ne" "picks").ByDate.Reverse -}}
 # {{ site.Title }}
 
 > {{ site.Params.description | default "技术分享、思考笔记与项目复盘。以中文为主，面向工程师。" }}

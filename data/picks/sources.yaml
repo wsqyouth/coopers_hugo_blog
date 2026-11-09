@@ -1,0 +1,10 @@
+- id: youtube
+  label: YouTube
+- id: bilibili
+  label: B 站
+- id: xiaoyuzhou
+  label: 小宇宙
+- id: third-party
+  label: 第三方
+- id: other
+  label: 其他

@@ -1,15 +1,19 @@
 {{ define "main" }}
 {{- partial "reading-progress.html" . -}}
 <div class="main-container single-post-layout with-sidebar">
-    {{ partial "mobile-index.html" . }}
+    {{ if ne .Section "picks" }}{{ partial "mobile-index.html" . }}{{ end }}
     <div class="content-left single-content-wrapper">
         {{- /* 文章与首页共用侧栏，面包屑保留当前文章的分类路径。 */ -}}
         <nav class="breadcrumb" aria-label="面包屑">
             <a href="/">首页</a>
+            {{- if eq .Section "picks" }}
+            <span class="sep">›</span><a href="{{ .CurrentSection.RelPermalink }}">{{ .CurrentSection.Title }}</a>
+            {{- else }}
             {{- with .Params.categories }}
             {{- $key := index . 0 }}
             {{- $name := index site.Params.categoryNames $key | default $key }}
             <span class="sep">›</span><a href="{{ printf "/categories/%s" ($key | urlize) }}">{{ $name }}</a>
+            {{- end }}
             {{- end }}
             <span class="sep">›</span><span class="current">{{ .Title }}</span>
         </nav>
@@ -27,11 +31,22 @@
                     {{- end }}
                     {{- end }}
                 </div>
+                {{- if eq .Section "picks" }}
+                <p class="picks-byline">{{ .Params.curator }} 选题 · {{ .Params.author }} 整理</p>
+                {{- end }}
             </header>
 
             {{- partial "takeaways.html" . }}
 
             <div class="post-content">
+                {{- if and (eq .Section "picks") .Params.showToc }}
+                <div class="toc">
+                    <details>
+                        <summary>章节目录</summary>
+                        <div class="inner">{{ .TableOfContents }}</div>
+                    </details>
+                </div>
+                {{- end }}
                 {{ .Content }}
             </div>
 
@@ -77,7 +92,11 @@
         {{- partial "giscus.html" . }}
     </div>
     <div class="sidebar-right article-sidebar">
+        {{- if eq .Section "picks" }}
+        {{ partial "picks-sidebar.html" . }}
+        {{- else }}
         {{ partial "sidebar.html" . }}
+        {{- end }}
     </div>
 </div>
 {{ end }}
