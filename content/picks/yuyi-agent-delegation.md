@@ -9,29 +9,38 @@ speakers: "任鑫、徐文浩对话余一"
 source_type: xiaoyuzhou
 source_date: "2026-10-28"
 duration: "1 小时 26 分钟"
+reading_version: "v2"
+reading_skill: "deep-read@0.2.2"
 ---
 
-换账号的半天里，余一重新自己约实习生面试。看邮件、对日历、建会议链接，这些琐碎一下都回到了她手上。与此同时，她给自己的出镜稿加了一道费时间的步骤。第一遍得由她自己讲，再让 AI 帮她整理。把这两件事放在一起，就知道她想把什么交出去，又想把什么留给自己。
+换账号的半天，余一又得自己查邮件、约面试、建会议链接，才发现已经交出去了多少琐碎。但本人出镜的稿子，她反而要求先自己讲，再让 AI 整理：执行可以委托，判断还要练。
 
 ## 本期精华
 
-- **委托做深了，原来的工具还能继续用。** 跑通微博抓取后，余一让主 Agent 把经验和代码交给监控 Bot，自己只保留一个沟通入口。邮件里的线索还可以分给研究 Bot，用本地 Codex 和已有 Skill 深挖。
-- **同一条视频也有不同的交付条件。** 封面认错人，可以检查并退回重做。主持人花了八个多小时调剪辑，成片仍得自己盯。余一愿意把几个可接受的探索版本交给真实反馈，也会给低容错任务单设审核。
-- **先验证「做得出来」，再算「怎么做便宜」。** 一位没有计算机背景的经营者用 Manus 做出门店巡检，后来请 IT 接手扩展。余一也先拿工具探路，等任务走得通，再考虑便宜模型或代码工具。
-- **上下文接好了，反馈少绕几道。** 余一提的反馈进入 Slack 后，AI 会定级、找处理人、查 Notion 里的类似问题。她也能直接问机器人团队最近在做什么。公司里的共享 Bot 服务具体业务，和她自己的多 Agent 分工是两种安排。
-- **旧 harness 要复验，验收标准要说得更准。** 她遇到过一句话就能做好、套旧 Skill 反而添麻烦的视频任务，想把旧规则移开再跑一遍。给演讲配特效时，她最有用的要求是让效果服务讲解和情绪。
-- **她想让观察进入产品。** 余一离开腾讯研究院，想找能把用户反馈做成产品的人一起工作。筛实习生时，她先看作品和动手过程，再给部分候选人一两天试做。社区工作则从跟实际用户聊起。
+- 主 Agent 接住分派、检查和汇报，本地 Codex、CLI 与 Skill 继续在后台工作。
+- 先试出巡店系统能不能做，再请 IT 接手、比较成本；团队里的 Slack 反馈也靠分级、找人和调取历史减少来回。
+- 找同伴先看作品与试做，做社区先听付费用户：观察得能回到产品。
 
 ## 从这些问题读起
 
-**交给一个主 Agent 后，哪些进展值得打断人？** 让它承担分派、检查和汇报，人在重要节点确认。余一约面试仍有确认点，后台其余动作可以继续走。 [读主 Agent 怎么分派]({{< relref "/picks/yuyi-agent-delegation/detail.md#chief-of-staff" >}})
+**值机为什么让人感到省心？** 从提出座位偏好到拿到登机牌，整段流程交出去了；身份资料仍须给全。[读值机]({{< relref "/picks/yuyi-agent-delegation/detail.md#flight-check-in" >}})
 
-**什么时候值得把旧 Skill 拿掉重试？** 当新模型在同一任务上绕开了旧限制，就把原规则移开，比较结果，再决定哪些值得留。她在节目里讲的是一次视频体验和一个待做完的实验。 [读她怎么打算复验 harness]({{< relref "/picks/yuyi-agent-delegation/detail.md#retest-the-harness" >}})
+**约面试还在哪一步找人？** 先约定时间，再由余一确认，之后才发邀请、占日历、建链接。[读面试确认]({{< relref "/picks/yuyi-agent-delegation/detail.md#interview-scheduling" >}})
 
-**AI 已经能写稿，为什么她还要自己讲第一遍？** 因为本人出镜的内容还得帮她形成判断。她愿意交给 AI 做整理，也愿意为这一步多花时间。 [读她主动接回来的工作]({{< relref "/picks/yuyi-agent-delegation/detail.md#define-and-judge" >}})
+**监控发现线索就直接研究吗？** 先由主 Agent 判断略过还是深挖，再派研究 Bot。[读监控筛选]({{< relref "/picks/yuyi-agent-delegation/detail.md#monitoring-confirmation" >}})
 
-**团队里多几个 Bot，和团队变得更快，有什么差别？** 她看到的共享机器人能连上工作上下文，把反馈送到能接手的人手上。二十分钟可测试是她遇到的个案。 [读 Manus 的反馈链]({{< relref "/picks/yuyi-agent-delegation/detail.md#team-context" >}})
+**有审核就能放心交付吗？** 封面人脸可检查重做，主持人调剪辑超过八小时仍需参与。[读剪辑反例]({{< relref "/picks/yuyi-agent-delegation/detail.md#keep-a-review-gate" >}})
+
+**旧 Skill 为什么可能添乱？** 新模型一句话做好的视频，套旧规则反而麻烦；移开规则重跑仍是待完成实验。[读复验]({{< relref "/picks/yuyi-agent-delegation/detail.md#retest-the-harness" >}})
+
+**本人为什么还要讲第一遍？** 她要借表达练判断，才能说清什么叫好。[读主动接回的工作]({{< relref "/picks/yuyi-agent-delegation/detail.md#define-and-judge" >}})
+
+这些是个人实践和刚入职的观察，各任务容错不同。
+
+**Manus 的反馈为什么能少绕几道？** Slack 里的反馈先分级、找人，再查 Notion 里的相似问题。二十分钟拿到可测试版本，是余一刚入职遇到的一次经历。[读反馈怎样找到人和上下文]({{< relref "/picks/yuyi-agent-delegation/detail.md#team-context" >}})
 
 ## 继续阅读
 
-[阅读长版精读]({{< relref "/picks/yuyi-agent-delegation/detail.md" >}})，按节目大纲选一节读。 [在小宇宙收听原节目](https://www.xiaoyuzhoufm.com/episode/6ae1d8b397726cd4675926fa)
+[阅读长版精读]({{< relref "/picks/yuyi-agent-delegation/detail.md" >}})
+
+- [在小宇宙收听原节目](https://www.xiaoyuzhoufm.com/episode/6ae1d8b397726cd4675926fa)
